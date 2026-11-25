@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>NOVI</title>
+<style>
+:root{
+  --bg:#08090D; --card:#151720; --text:#FFFFFF; --sub:#9297A5;
+  --accent:#8B7CFF; --border:#30333D; --btn:#8B7CFF; --glow:#8B7CFF;
+  --danger:#FF6B7A;
+}
+*{box-sizing:border-box;margin:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{background:var(--bg);color:var(--text);font-family:"Hiragino Sans","Noto Sans JP",system-ui,sans-serif;
+  padding-top:env(safe-area-inset-top,0px);overflow-x:hidden}
+button,input{font:inherit;color:inherit}
+.hidden{display:none!important}
+
+/* ---------- AUTH ---------- */
+#auth{min-height:100%;display:flex;flex-direction:column;justify-content:center;padding:24px;max-width:420px;margin:0 auto}
+.logo{font-size:44px;font-weight:300;letter-spacing:.35em;text-align:center;
+  background:linear-gradient(90deg,#fff,var(--accent));-webkit-background-clip:text;background-clip:text;color:transparent}
+.slogan{text-align:center;color:var(--sub);font-size:12px;letter-spacing:.2em;margin:6px 0 28px}
+.tabs{display:flex;border:1px solid var(--border);border-radius:12px;padding:4px;margin-bottom:16px}
+.tabs button{flex:1;background:none;border:0;padding:10px;border-radius:9px;color:var(--sub)}
+.tabs button.on{background:var(--card);color:var(--text)}
+.field{margin-bottom:12px}
+.field label{display:block;font-size:12px;color:var(--sub);margin-bottom:6px}
+.field input{width:100%;padding:14px;background:var(--card);border:1px solid var(--border);border-radius:12px;outline:none}
+.field input:focus{border-color:var(--accent)}
+.primary{width:100%;padding:14px;border:0;border-radius:12px;background:var(--btn);color:#fff;font-weight:600;margin-top:6px}
+.primary:disabled{opacity:.5}
+.msg{min-height:20px;font-size:13px;margin-top:12px;text-align:center}
+.msg.err{color:var(--danger)} .msg.ok{color:#7be0a8}
+
+/* ---------- APP ---------- */
+#app{display:flex;flex-direction:column;height:100%;max-width:560px;margin:0 auto}
+.top{display:flex;align-items:center;justify-content:space-between;padding:14px 18px}
+.top .logo{font-size:22px;text-align:left}
+.icons{display:flex;gap:10px}
+.ico{width:40px;height:40px;border-radius:12px;border:1px solid var(--border);background:var(--card);
+  display:grid;place-items:center;font-size:18px}
+main{flex:1;overflow-y:auto;padding:0 18px 110px}
+.sec{margin-bottom:22px}
+.sec h2{font-size:13px;color:var(--sub);font-weight:500;margin-bottom:10px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:16px}
+.note{font-size:12px;color:var(--sub);line-height:1.6}
+
+/* ムード ORB (見た目のみ。実データ連動はPHASE 2) */
+.orbwrap{display:grid;place-items:center;padding:18px 0 8px}
+.orb{width:210px;height:210px;border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,#fff3 0,transparent 35%),
+  radial-gradient(circle at 50% 50%,var(--glow),#2a2450 70%,#0d0b1c);
+  box-shadow:0 0 60px 8px color-mix(in srgb,var(--glow) 55%,transparent),inset 0 0 40px #0008;
+  animation:breathe 6s ease-in-out infinite}
+@keyframes breathe{50%{transform:scale(1.05);box-shadow:0 0 90px 14px color-mix(in srgb,var(--glow) 60%,transparent),inset 0 0 40px #0008}}
+@media(prefers-reduced-motion:reduce){.orb{animation:none}}
+.orbcap{text-align:center;font-size:12px;color:var(--sub);margin-top:14px}
+
+/* NAV */
+nav{position:fixed;left:0;right:0;bottom:0;background:#0c0d12ee;backdrop-filter:blur(12px);
+  border-top:1px solid var(--border);display:flex;justify-content:space-around;
+  padding:8px 6px calc(8px + env(safe-area-inset-bottom,0px));max-width:560px;margin:0 auto}
+nav button{background:none;border:0;color:var(--sub);font-size:10px;display:flex;flex-direction:column;align-items:center;gap:3px;padding:4px 8px;min-width:56px}
+nav button span{font-size:20px}
+nav button.on{color:var(--accent)}
+.create{position:fixed;right:18px;bottom:calc(84px + env(safe-area-inset-bottom,0px));width:56px;height:56px;border-radius:50%;
+  border:0;background:var(--btn);color:#fff;font-size:28px;box-shadow:0 0 24px var(--glow)}
+.pill{display:inline-block;font-size:11px;border:1px solid var(--border);border-radius:99px;padding:3px 10px;color:var(--sub);margin-top:8px}
+.logout{width:100%;margin-top:14px;padding:12px;background:none;border:1px solid var(--border);border-radius:12px}
+
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{padding:9px 14px;border-radius:99px;border:1px solid var(--c);background:var(--card);font-size:13px}
+.chip.on{background:var(--c);color:#0008;font-weight:700;color:#111}
+textarea,select{color:var(--text);font:inherit;width:100%;margin-top:12px;padding:12px;background:var(--bg);border:1px solid var(--border);border-radius:12px;outline:none}
+textarea{min-height:84px;resize:vertical}
+.cnt{text-align:right;font-size:11px;color:var(--sub);margin-top:4px}
+.item{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-top:1px solid var(--border)}
+.dot{width:14px;height:14px;border-radius:50%;margin-top:4px;flex:none;background:var(--c);box-shadow:0 0 10px var(--c)}
+.item .body{flex:1;min-width:0;word-break:break-word}
+.item .meta{font-size:11px;color:var(--sub);margin-top:2px}
+.del{background:none;border:1px solid var(--border);border-radius:8px;padding:6px 10px;font-size:12px;color:var(--sub)}
+.bar{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--sub);margin-top:6px}
+.bar i{display:block;height:6px;border-radius:3px;background:var(--c)}
+.bar b{width:64px;font-weight:400}
+.orb{transition:box-shadow .6s}
+.pv{position:relative;height:150px;border-radius:16px;overflow:hidden;background:#0b0c12;border:1px solid var(--border);display:grid;place-items:center;margin-top:12px;padding:14px;text-align:center;font-size:14px}
+.pv p{position:relative;z-index:1;word-break:break-word}
+.pv .bg{position:absolute;inset:0}
+.pv.orb .bg{background:radial-gradient(circle at 50% 50%,var(--c) 0,transparent 55%);animation:br2 5s ease-in-out infinite;opacity:.8}
+@keyframes br2{50%{transform:scale(1.18);opacity:1}}
+.pv.wave .bg{background:repeating-linear-gradient(100deg,color-mix(in srgb,var(--c) 45%,transparent) 0 18px,transparent 18px 40px);background-size:80px 100%;animation:sl 4s linear infinite}
+@keyframes sl{to{background-position:80px 0}}
+.pv i{position:absolute;bottom:0;width:6px;height:6px;border-radius:50%;background:var(--c);box-shadow:0 0 8px var(--c);animation:rise 5s ease-in infinite}
+@keyframes rise{from{transform:translateY(0);opacity:0}30%{opacity:1}to{transform:translateY(-150px);opacity:0}}
+@media(prefers-reduced-motion:reduce){.pv .bg,.pv i{animation:none}}
+.item{position:relative}
+.item.e-wave::before,.item.e-particle::before{content:"";position:absolute;inset:0;opacity:.12;pointer-events:none;background:repeating-linear-gradient(100deg,var(--c) 0 10px,transparent 10px 24px)}
+.item.e-particle::before{background:radial-gradient(circle,var(--c) 1.5px,transparent 2px) 0 0/16px 16px}
+.item.e-orb .dot{width:22px;height:22px;margin-top:0;box-shadow:0 0 22px var(--c)}
+.cm{margin-top:10px;border-top:1px solid var(--border);padding-top:6px}
+.cmrow{font-size:13px;padding:6px 0;display:flex;gap:8px;justify-content:space-between;align-items:flex-start}
+.cm input{width:100%;padding:10px;background:var(--bg);border:1px solid var(--border);border-radius:10px;margin:8px 0 6px;color:var(--text)}
+select.sm{width:auto;margin:0}
+.react{background:none;border:1px solid var(--border);border-radius:99px;padding:7px 12px;font-size:12px;color:var(--sub);white-space:nowrap}
+.react.on{border-color:var(--c);color:var(--text);background:color-mix(in srgb,var(--c) 22%,transparent)}
+.react:disabled{opacity:.6}
+.refresh{background:none;border:1px solid var(--border);border-radius:8px;padding:5px 10px;font-size:12px;color:var(--sub);float:right;margin-top:-4px}
+</style>
+</head>
+<body>
+
+<!-- ========== ログイン / 新規登録 ========== -->
+<section id="auth" class="hidden">
+  <div class="logo">NOVI</div>
+  <div class="slogan">A NEW SOCIAL ERA.</div>
+  <div class="tabs">
+    <button id="tabLogin" class="on" type="button">ログイン</button>
+    <button id="tabSignup" type="button">新規登録</button>
+  </div>
+  <div class="field" id="nameField" style="display:none">
+    <label for="name">ユーザー名</label>
+    <input id="name" autocomplete="nickname" maxlength="30">
+  </div>
+  <div class="field">
+    <label for="email">メールアドレス</label>
+    <input id="email" type="email" autocomplete="email">
+  </div>
+  <div class="field">
+    <label for="pass">パスワード（8文字以上）</label>
+    <input id="pass" type="password" autocomplete="current-password">
+  </div>
+  <button id="go" class="primary" type="button">ログイン</button>
+  <div id="authMsg" class="msg"></div>
+</section>
+
+<!-- ========== アプリ本体 ========== -->
+<section id="app" class="hidden">
+  <header class="top">
+    <div class="logo">NOVI</div>
+    <div class="icons">
+      <button class="ico" type="button" data-go="search" aria-label="検索">🔍</button>
+      <button class="ico" type="button" data-go="alerts" aria-label="通知">🔔</button>
+    </div>
+  </header>
+
+  <main>
+    <!-- ホーム -->
+    <div class="view" id="v-home">
+      <div class="sec">
+        <h2>世界のムード</h2>
+        <div class="orbwrap"><div class="orb"></div></div>
+        <div class="orbcap" id="orbCap">読み込み中...</div><div id="orbBars"></div>
+      </div>
+      <div class="sec">
+        <h2>あなたのムード</h2>
+        <div class="card" id="myLatest"><div class="note">読み込み中...</div></div>
+      </div>
+      <div class="sec">
+        <h2>近くのモーメント</h2>
+        <div class="card"><div class="note">モーメント画面で位置情報を許可すると、近くの投稿が見られます。</div></div>
+      </div>
+    </div>
+
+    <!-- 他の画面（準備中） -->
+    <div class="view hidden" id="v-mood">
+      <div class="sec"><button class="primary" type="button" data-go="create">＋ ムードやモーメントを作る</button></div>
+      <div class="sec"><h2>みんなのムード（匿名）<button id="feedReload" class="refresh" type="button">更新</button></h2><div class="card" id="feed"><div class="note">読み込み中...</div></div></div>
+      <div class="sec"><h2>ムード履歴</h2><div class="card" id="myList"><div class="note">読み込み中...</div></div></div>
+    </div>
+    <div class="view hidden" id="v-moment"><div class="sec"><h2>近くのモーメント</h2><div class="card">
+          <div style="display:flex;gap:8px;align-items:center">
+            <select id="momKm" class="sm" aria-label="表示範囲"><option value="1">1km</option><option value="3">3km</option><option value="5">5km</option><option value="10" selected>10km</option><option value="25">25km</option><option value="50">50km</option></select>
+            <button id="momGo" class="primary" type="button" style="margin:0">位置情報を使って探す</button>
+          </div>
+          <div id="momStatus" class="msg"></div>
+          <div id="momList"><div class="note">位置情報の許可が必要です。範囲は自分で選べて、勝手に広がりません。</div></div>
+        </div></div></div></div>
+    <div class="view hidden" id="v-alerts"><div class="sec"><h2>通知</h2><div class="card"><div class="note">PHASE 5 で実装します。</div></div></div></div>
+    <div class="view hidden" id="v-search"><div class="sec"><h2>検索</h2><div class="card"><div class="note">PHASE 6 で実装します。</div></div></div></div>
+    <div class="view hidden" id="v-create"><div class="sec"><h2>作成</h2><div class="card">
+          <div class="tabs"><button id="tMood" class="on" type="button">ムード</button><button id="tMoment" type="button">モーメント</button></div>
+          <div id="moodOnly"><div class="chips" id="chips"></div></div>
+          <textarea id="moodText" maxlength="300" placeholder="ひとこと（300文字まで）"></textarea>
+          <div class="cnt"><span id="cnt">0</span>/300</div>
+          <div class="chips" id="fx" style="margin-top:8px"></div>
+          <div class="pv" id="prev"></div>
+          <select id="moodVis" aria-label="公開範囲">
+            <option value="public">公開（みんなに匿名で表示）</option>
+            <option value="friends">フレンドのみ（フレンド機能はPHASE 4）</option>
+            <option value="private">非公開</option>
+          </select>
+          <select id="momHours" class="hidden" aria-label="表示する時間">
+            <option value="1">1時間だけ表示</option>
+            <option value="6">6時間表示</option>
+            <option value="24" selected>24時間表示</option>
+          </select>
+          <div id="momNote" class="note hidden" style="margin-top:8px">位置は約5kmの区画に丸めて保存します。正確な場所は保存されません。</div>
+          <button id="moodPost" class="primary" type="button">投稿する</button>
+          <div id="moodMsg" class="msg"></div>
+        </div></div></div></div>
+
+    <!-- プロフィール -->
+    <div class="view hidden" id="v-profile">
+      <div class="sec">
+        <h2>プロフィール</h2>
+        <div class="card">
+          <div id="pName" style="font-size:18px"></div>
+          <div id="pMail" class="note" style="margin-top:4px"></div>
+          <span class="pill">プロフィール編集 は PHASE 3</span>
+          <button id="logout" class="logout" type="button">ログアウト</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <button class="create" type="button" data-go="create" aria-label="作成">＋</button>
+
+  <nav>
+    <button type="button" data-go="home" class="on"><span>◉</span>ホーム</button>
+    <button type="button" data-go="mood"><span>☺</span>ムード</button>
+    <button type="button" data-go="moment"><span>⌖</span>モーメント</button>
+    <button type="button" data-go="alerts"><span>🔔</span>通知</button>
+    <button type="button" data-go="profile"><span>●</span>プロフィール</button>
+  </nav>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script>
+/* ★★★ ここの2か所だけ自分の値に書き換える ★★★
+   Supabase → Project Settings → API Keys
+   ・SUPABASE_URL：Project URL
+   ・SUPABASE_KEY：Publishable key（sb_publishable_...）
+   ※ secret key / service_role は絶対に入れない */
+const SUPABASE_URL = "https://wnfcdvcxmcknngszqgby.supabase.co";
+const SUPABASE_KEY = "sb_publishable_lwUdAZRr69ZFUQxPVPVGgA_l9Z9eSLL";
+
+const $ = (id) => document.getElementById(id);
+let sb = null;
+let mode = "login";
+let me = null;
+let selMood = null;
+
+function showMsg(text, type){
+  const m = $("authMsg"); m.textContent = text; m.className = "msg " + (type || "");
+}
+
+function setMode(m){
+  mode = m;
+  $("tabLogin").classList.toggle("on", m === "login");
+  $("tabSignup").classList.toggle("on", m === "signup");
+  $("nameField").style.display = m === "signup" ? "block" : "none";
+  $("go").textContent = m === "login" ? "ログイン" : "アカウントを作成";
+  $("pass").autocomplete = m === "login" ? "current-password" : "new-password";
+  showMsg("");
+}
+
+function showAuth(){ $("app").classList.add("hidden"); $("auth").classList.remove("hidden"); }
+
+function showApp(user){
+  $("auth").classList.add("hidden"); $("app").classList.remove("hidden");
+  const meta = user.user_metadata || {};
+  $("pName").textContent = meta.display_name || "NOVIユーザー";
+  $("pMail").textContent = user.email || "";
+  me = user.id;
+  go("home");
+  loadGlobal(); loadMine(); loadFeed();
+}
+
+function go(view){
+  document.querySelectorAll(".view").forEach(v => v.classList.add("hidden"));
+  $("v-" + view).classList.remove("hidden");
+  document.querySelectorAll("nav button").forEach(b => b.classList.toggle("on", b.dataset.go === view));
+  document.querySelector("main").scrollTop = 0;
+}
+
+function errText(e){
+  const t = (e && e.message || "").toLowerCase();
+  if (t.includes("invalid login")) return "メールアドレスかパスワードが違います。";
+  if (t.includes("already registered")) return "このメールアドレスは登録済みです。ログインしてください。";
+  if (t.includes("password")) return "パスワードは8文字以上にしてください。";
+  if (t.includes("email not confirmed")) return "メールの確認がまだです。届いたメールのリンクを開いてください。";
+  if (t.includes("rate limit")) return "短時間に試行しすぎです。少し待ってからやり直してください。";
+  return "エラー：" + (e && e.message || "不明なエラー");
+}
+
+async function submit(){
+  const email = $("email").value.trim(), pass = $("pass").value, name = $("name").value.trim();
+  if (!email || !pass) return showMsg("メールアドレスとパスワードを入力してください。", "err");
+  if (mode === "signup" && pass.length < 8) return showMsg("パスワードは8文字以上にしてください。", "err");
+  $("go").disabled = true; showMsg("処理中...");
+  try{
+    if (mode === "login"){
+      const { error } = await sb.auth.signInWithPassword({ email, password: pass });
+      if (error) throw error;
+    } else {
+      const { data, error } = await sb.auth.signUp({
+        email, password: pass,
+        options: { data: { display_name: name || "NOVIユーザー" }, emailRedirectTo: location.origin }
+      });
+      if (error) throw error;
+      if (!data.session) showMsg("確認メールを送りました。メール内のリンクを開いてからログインしてください。", "ok");
+    }
+  }catch(e){ showMsg(errText(e), "err"); }
+  $("go").disabled = false;
+}
+
+/* ---------- ムード ---------- */
+const MOODS = {
+  happy:["うれしい","#FFD84D"], sad:["かなしい","#4D8DFF"], angry:["いかり","#FF4D5E"],
+  calm:["おだやか","#4DDB8A"], excited:["わくわく","#FF9A3D"], confused:["もやもや","#A56BFF"], empty:["からっぽ","#8A8F9C"]
+};
+const VIS = { public:"公開", friends:"フレンドのみ", private:"非公開" };
+function mk(tag, cls, text){ const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+
+function buildChips(){
+  const box = $("chips"); box.textContent = "";
+  Object.keys(MOODS).forEach(k => {
+    const b = mk("button", "chip", MOODS[k][0]); b.type = "button";
+    b.style.setProperty("--c", MOODS[k][1]);
+    b.onclick = () => { selMood = k; updatePreview(); box.querySelectorAll(".chip").forEach(c => c.classList.toggle("on", c === b)); };
+    box.appendChild(b);
+  });
+}
+
+async function loadGlobal(){
+  const cap = $("orbCap"), bars = $("orbBars"), orb = document.querySelector(".orb");
+  bars.textContent = ""; orb.style.setProperty("--glow", "#8B7CFF");
+  const { data, error } = await sb.rpc("get_global_mood");
+  if (error){ cap.textContent = "集計を取得できませんでした。"; return; }
+  if (!data || !data.length){ cap.textContent = "集計できるデータがまだ足りません。公開ムードが一定数集まると表示されます。"; return; }
+  const total = data.reduce((a, r) => a + Number(r.cnt), 0);
+  data.sort((a, b) => b.cnt - a.cnt);
+  const top = MOODS[data[0].mood];
+  if (top) orb.style.setProperty("--glow", top[1]);
+  cap.textContent = "直近24時間の公開ムード（" + total + "件）の集計です。";
+  data.forEach(r => {
+    const m = MOODS[r.mood]; if (!m) return;
+    const row = mk("div", "bar"); row.style.setProperty("--c", m[1]);
+    const i = mk("i"); i.style.width = Math.max(4, Math.round(r.cnt / total * 160)) + "px";
+    row.append(mk("b", "", m[0]), i, mk("span", "", Math.round(r.cnt / total * 100) + "%"));
+    bars.appendChild(row);
+  });
+}
+
+function fmt(t){ return new Date(t).toLocaleString("ja-JP", { month:"numeric", day:"numeric", hour:"2-digit", minute:"2-digit" }); }
+
+async function loadMine(){
+  const latest = $("myLatest"), list = $("myList");
+  const { data, error } = await sb.from("moods").select("id,mood,content,visibility,created_at")
+    .eq("user_id", me).order("created_at", { ascending:false }).limit(30);
+  latest.textContent = ""; list.textContent = "";
+  if (error){ latest.appendChild(mk("div", "note", "読み込みに失敗しました。")); list.appendChild(mk("div", "note", error.message)); return; }
+  if (!data.length){
+    latest.appendChild(mk("div", "note", "まだムードを投稿していません。ムード画面から投稿できます。"));
+    list.appendChild(mk("div", "note", "履歴はまだありません。")); return;
+  }
+  const mkItem = (r, withDel) => {
+    const m = MOODS[r.mood] || ["?", "#888"];
+    const it = mk("div", "item"); it.style.setProperty("--c", m[1]);
+    const body = mk("div", "body");
+    body.appendChild(mk("div", "", m[0] + (r.content ? "：" + r.content : "")));
+    body.appendChild(mk("div", "meta", fmt(r.created_at) + "・" + (VIS[r.visibility] || "")));
+    it.append(mk("span", "dot"), body);
+    if (withDel){ const d = mk("button", "del", "削除"); d.type = "button"; d.onclick = () => delMood(r.id); it.appendChild(d); }
+    return it;
+  };
+  const first = mkItem(data[0], false); first.style.borderTop = "0"; first.style.padding = "0";
+  latest.appendChild(first);
+  data.forEach(r => list.appendChild(mkItem(r, true)));
+}
+
+async function postMood(){
+  const msg = $("moodMsg"); msg.className = "msg";
+  const content = $("moodText").value.trim();
+  if (ptype === "mood" && !selMood){ msg.textContent = "感情を1つ選んでください。"; msg.className = "msg err"; return; }
+  if (ptype === "moment" && !content){ msg.textContent = "ひとことを入力してください。"; msg.className = "msg err"; return; }
+  $("moodPost").disabled = true; msg.textContent = "投稿中...";
+  let error = null;
+  if (ptype === "mood"){
+    ({ error } = await sb.from("moods").insert({ user_id: me, mood: selMood, content: content || null, visibility: $("moodVis").value, effect: selFx }));
+  } else {
+    try{
+      pos = await getPos();
+      ({ error } = await sb.rpc("create_moment", { p_content: content, p_effect: selFx, p_hours: Number($("momHours").value), p_lat: pos.lat, p_lng: pos.lng }));
+    }catch(e){ error = e; }
+  }
+  $("moodPost").disabled = false;
+  if (error){ msg.textContent = "投稿できませんでした：" + error.message; msg.className = "msg err"; return; }
+  msg.textContent = "投稿しました。"; msg.className = "msg ok";
+  $("moodText").value = ""; $("cnt").textContent = "0"; updatePreview();
+  if (ptype === "mood"){ await loadMine(); loadGlobal(); loadFeed(); go("mood"); }
+  else { go("moment"); loadMoments(false); }
+}
+
+async function delMood(id){
+  if (!confirm("このムードを削除しますか？")) return;
+  const { error } = await sb.from("moods").delete().eq("id", id).eq("user_id", me);
+  if (error){ alert("削除できませんでした：" + error.message); return; }
+  await loadMine(); loadGlobal(); loadFeed();
+}
+
+/* ---------- みんなのムード（匿名）＋共感 ---------- */
+async function loadFeed(){
+  const box = $("feed");
+  const { data, error } = await sb.rpc("get_public_moods");
+  box.textContent = "";
+  if (error){ box.appendChild(mk("div", "note", "読み込めませんでした：" + error.message)); return; }
+  if (!data || !data.length){ box.appendChild(mk("div", "note", "公開ムードはまだありません。最初の1件を投稿してみましょう。")); return; }
+  data.forEach((r, idx) => {
+    const m = MOODS[r.mood] || ["?", "#888"];
+    const it = mk("div", "item"); it.style.setProperty("--c", m[1]);
+    if (idx === 0) it.style.borderTop = "0";
+    const body = mk("div", "body");
+    body.appendChild(mk("div", "", m[0] + (r.content ? "：" + r.content : "")));
+    body.appendChild(mk("div", "meta", fmt(r.created_at) + (r.is_mine ? "・あなたの投稿" : "")));
+    it.classList.add("e-" + (r.effect || "orb"));
+    const cb = mk("button", "react", "💬 コメント " + r.comment_count); cb.type = "button"; cb.style.marginTop = "8px";
+    cb.onclick = () => openComments(r.id, body);
+    body.appendChild(cb);
+    it.append(mk("span", "dot"), body);
+    const b = mk("button", "react" + (r.reacted ? " on" : ""), (r.reacted ? "♥ 共感済み " : "♡ 共感 ") + r.reaction_count);
+    b.type = "button";
+    if (r.is_mine){ b.disabled = true; b.textContent = "♡ " + r.reaction_count; }
+    else b.onclick = () => toggleReact(r.id, r.reacted, b);
+    it.appendChild(b); box.appendChild(it);
+  });
+}
+
+async function toggleReact(id, reacted, btn){
+  btn.disabled = true;
+  const q = reacted
+    ? sb.from("reactions").delete().eq("mood_id", id).eq("user_id", me)
+    : sb.from("reactions").insert({ mood_id: id, user_id: me });
+  const { error } = await q;
+  if (error){ alert("共感できませんでした：" + error.message); }
+  loadFeed();
+}
+
+/* ---------- 作成画面 ---------- */
+let ptype = "mood", selFx = "orb";
+const FX = { orb:"光の球", wave:"光の波", particle:"光の粒" };
+
+function renderFx(el, fx, color, text){
+  el.textContent = ""; el.className = "pv " + fx; el.style.setProperty("--c", color);
+  el.appendChild(mk("div", "bg"));
+  if (fx === "particle") for (let i = 0; i < 16; i++){
+    const d = mk("i"); d.style.left = Math.round(Math.random() * 96) + "%";
+    d.style.animationDelay = (Math.random() * 5).toFixed(1) + "s"; el.appendChild(d);
+  }
+  el.appendChild(mk("p", "", text));
+}
+function updatePreview(){
+  const color = ptype === "mood" && selMood ? MOODS[selMood][1] : "#8B7CFF";
+  const label = ptype === "mood" && selMood ? MOODS[selMood][0] : "";
+  const t = $("moodText").value.trim();
+  renderFx($("prev"), selFx, color, (label ? label + "：" : "") + (t || "ここにプレビューが出ます"));
+}
+function setType(t){
+  ptype = t;
+  $("tMood").classList.toggle("on", t === "mood"); $("tMoment").classList.toggle("on", t === "moment");
+  $("moodOnly").classList.toggle("hidden", t !== "mood"); $("moodVis").classList.toggle("hidden", t !== "mood");
+  $("momHours").classList.toggle("hidden", t !== "moment"); $("momNote").classList.toggle("hidden", t !== "moment");
+  updatePreview();
+}
+function buildFx(){
+  const box = $("fx"); box.textContent = "";
+  Object.keys(FX).forEach(k => {
+    const b = mk("button", "chip" + (k === selFx ? " on" : ""), FX[k]); b.type = "button"; b.style.setProperty("--c", "#8B7CFF");
+    b.onclick = () => { selFx = k; box.querySelectorAll(".chip").forEach(c => c.classList.toggle("on", c === b)); updatePreview(); };
+    box.appendChild(b);
+  });
+}
+
+/* ---------- モーメント（位置は端末内のみ。サーバーには丸めた値だけ保存） ---------- */
+let pos = null;
+function getPos(){
+  return new Promise((res, rej) => {
+    if (!navigator.geolocation) return rej(new Error("この端末では位置情報が使えません。"));
+    navigator.geolocation.getCurrentPosition(
+      q => res({ lat: q.coords.latitude, lng: q.coords.longitude }),
+      e => rej(new Error(e.code === 1 ? "位置情報が許可されていません。ブラウザか端末の設定で許可してください。" : "位置情報を取得できませんでした。")),
+      { enableHighAccuracy:false, timeout:10000, maximumAge:300000 });
+  });
+}
+async function loadMoments(ask){
+  const box = $("momList"), st = $("momStatus"); st.className = "msg"; st.textContent = "";
+  try{ if (!pos || ask) pos = await getPos(); }catch(e){ st.textContent = e.message; st.className = "msg err"; return; }
+  const { data, error } = await sb.rpc("get_nearby_moments", { p_lat: pos.lat, p_lng: pos.lng, p_km: Number($("momKm").value) });
+  box.textContent = "";
+  if (error){ box.appendChild(mk("div", "note", "読み込めませんでした：" + error.message)); return; }
+  if (!data.length){ box.appendChild(mk("div", "note", "この範囲に、今表示中のモーメントはありません。範囲を広げるか、自分で投稿してみましょう。")); return; }
+  data.forEach((r, idx) => {
+    const it = mk("div", "item e-" + r.effect); it.style.setProperty("--c", "#8B7CFF"); if (idx === 0) it.style.borderTop = "0";
+    const left = Math.max(1, Math.round((new Date(r.expires_at) - Date.now()) / 60000));
+    const body = mk("div", "body");
+    body.appendChild(mk("div", "", r.content));
+    body.appendChild(mk("div", "meta", "約" + Math.max(1, r.distance_km) + "km圏内・あと" + (left >= 60 ? Math.round(left / 60) + "時間" : left + "分") + (r.is_mine ? "・あなたの投稿" : "")));
+    it.append(mk("span", "dot"), body);
+    if (r.is_mine){
+      const d = mk("button", "del", "削除"); d.type = "button";
+      d.onclick = async () => { if (!confirm("このモーメントを削除しますか？")) return;
+        const { error: e2 } = await sb.from("moments").delete().eq("id", r.id).eq("user_id", me);
+        if (e2) alert("削除できませんでした：" + e2.message); else loadMoments(false); };
+      it.appendChild(d);
+    }
+    box.appendChild(it);
+  });
+}
+
+/* ---------- コメント（匿名） ---------- */
+async function openComments(id, body){
+  const old = body.querySelector(".cm"); if (old){ old.remove(); return; }
+  const p = mk("div", "cm"); body.appendChild(p); renderComments(id, p);
+}
+async function renderComments(id, p){
+  p.textContent = "";
+  const { data, error } = await sb.rpc("get_comments", { p_mood_id: id });
+  if (error){ p.appendChild(mk("div", "note", "読み込めませんでした：" + error.message)); return; }
+  if (!data.length) p.appendChild(mk("div", "note", "まだコメントはありません。"));
+  data.forEach(c => {
+    const row = mk("div", "cmrow");
+    row.appendChild(mk("span", "", (c.is_author ? "投稿者" : "匿名") + "：" + c.content));
+    if (c.can_delete){
+      const d = mk("button", "del", "削除"); d.type = "button";
+      d.onclick = async () => { await sb.rpc("delete_comment", { p_id: c.id }); renderComments(id, p); };
+      row.appendChild(d);
+    }
+    p.appendChild(row);
+  });
+  const inp = mk("input"); inp.maxLength = 200; inp.placeholder = "コメントを書く（200文字まで）";
+  const send = mk("button", "del", "送信"); send.type = "button";
+  send.onclick = async () => {
+    const t = inp.value.trim(); if (!t) return; send.disabled = true;
+    const { error: e2 } = await sb.rpc("add_comment", { p_mood_id: id, p_content: t });
+    send.disabled = false;
+    if (e2){ alert("コメントできませんでした：" + e2.message); return; }
+    renderComments(id, p);
+  };
+  p.append(inp, send);
+}
+
+function init(){
+  buildFx(); setType("mood");
+  $("tMood").onclick = () => setType("mood"); $("tMoment").onclick = () => setType("moment");
+  $("momGo").onclick = () => loadMoments(true);
+  $("momKm").onchange = () => { if (pos) loadMoments(false); };
+  $("feedReload").onclick = loadFeed;
+  buildChips();
+  $("moodPost").onclick = postMood;
+  $("moodText").addEventListener("input", e => { $("cnt").textContent = e.target.value.length; updatePreview(); });
+  $("tabLogin").onclick = () => setMode("login");
+  $("tabSignup").onclick = () => setMode("signup");
+  $("go").onclick = submit;
+  $("pass").addEventListener("keydown", e => { if (e.key === "Enter") submit(); });
+  document.querySelectorAll("[data-go]").forEach(b => b.addEventListener("click", () => go(b.dataset.go)));
+  $("logout").onclick = async () => { await sb.auth.signOut(); };
+  showAuth();
+
+  if (SUPABASE_URL.startsWith("ここに") || SUPABASE_KEY.startsWith("ここに")){
+    showMsg("index.html の SUPABASE_URL と SUPABASE_KEY を書き換えてください。", "err");
+    $("go").disabled = true; return;
+  }
+  sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  sb.auth.onAuthStateChange((_ev, session) => {
+    if (session && session.user) showApp(session.user); else showAuth();
+  });
+}
+init();
+</script>
+</body>
+</html>
