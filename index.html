@@ -120,6 +120,19 @@ select.sm{width:auto;margin:0}
 .chatin{display:flex;gap:8px;align-items:flex-end;margin-top:10px}
 .chatin textarea{margin:0;min-height:44px;flex:1}
 .chip.sm2{padding:5px 10px;font-size:12px}
+.ncard{display:flex;gap:12px;align-items:center;background:var(--card);border:1px solid var(--border);border-radius:16px;padding:12px;margin-bottom:10px;cursor:pointer;animation:nin .35s ease both}
+.ncard.un{border-color:var(--accent);box-shadow:0 0 16px color-mix(in srgb,var(--glow) 35%,transparent)}
+@keyframes nin{from{opacity:0;transform:translateY(6px)}}
+@media(prefers-reduced-motion:reduce){.ncard{animation:none}}
+.nico{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:color-mix(in srgb,var(--accent) 20%,var(--bg));font-size:18px;flex:none}
+.ntxt{flex:1;min-width:0;word-break:break-word;font-size:14px}
+.ntxt .meta{font-size:11px;color:var(--sub);margin-top:2px}
+.ndot{width:9px;height:9px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--accent);flex:none}
+.ico{position:relative}
+nav button{position:relative}
+.ubadge{position:absolute;top:-4px;right:-4px;background:var(--danger);color:#fff;border-radius:99px;font-size:10px;min-width:16px;padding:1px 4px;text-align:center;line-height:1.3}
+nav .ubadge{top:0;right:6px}
+#nTabs button{font-size:12px;padding:8px 2px}
 .in{width:100%;padding:12px;background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:12px;margin-top:10px;font:inherit}
 .cover{height:120px;border-radius:16px;background:var(--card) center/cover no-repeat;border:1px solid var(--border)}
 .avatar{width:76px;height:76px;border-radius:50%;border:3px solid var(--bg);background:var(--card) center/cover no-repeat;flex:none}
@@ -211,7 +224,18 @@ select.sm{width:auto;margin:0}
           <div id="momStatus" class="msg"></div>
           <div id="momList"><div class="note">位置情報の許可が必要です。範囲は自分で選べて、勝手に広がりません。</div></div>
         </div></div></div></div>
-    <div class="view hidden" id="v-alerts"><div class="sec"><h2>通知</h2><div class="card"><div class="note">PHASE 5 で実装します。</div></div></div></div>
+    <div class="view hidden" id="v-alerts">
+      <div class="tabs" id="nTabs"><button type="button" data-nt="all" class="on">すべて</button><button type="button" data-nt="friends">友だち</button><button type="button" data-nt="messages">メッセージ</button><button type="button" data-nt="activity">反応</button><button type="button" data-nt="system">お知らせ</button></div>
+      <div class="sec"><h2>通知<button id="nReadAll" class="refresh" type="button">すべて既読にする</button></h2><div id="nList"></div></div>
+      <div class="sec"><h2>通知設定</h2><div class="card">
+        <label class="trow"><span style="flex:1;font-size:13px">友だち（申請・承認）</span><input type="checkbox" id="nPrefFriends" checked></label>
+        <label class="trow"><span style="flex:1;font-size:13px">メッセージ（新着）</span><input type="checkbox" id="nPrefMessages" checked></label>
+        <label class="trow"><span style="flex:1;font-size:13px">反応（共感・コメント）</span><input type="checkbox" id="nPrefActivity" checked></label>
+        <label class="trow"><span style="flex:1;font-size:13px">お知らせ（NOVIから）</span><input type="checkbox" id="nPrefSystem" checked></label>
+        <div id="nPrefMsg" class="msg"></div>
+        <div class="note">スマホへのプッシュ通知は準備中です。今は、アプリを開いている間、20秒ごとに更新されます。</div>
+      </div></div>
+    </div>
     <div class="view hidden" id="v-search"><div class="sec"><h2>検索</h2><div class="card"><div class="note">PHASE 6 で実装します。</div></div></div></div>
     <div class="view hidden" id="v-create"><div class="sec"><h2>作成</h2><div class="card">
           <div class="tabs"><button id="tMood" class="on" type="button">ムード</button><button id="tMoment" type="button">モーメント</button></div>
@@ -327,7 +351,7 @@ select.sm{width:auto;margin:0}
    ・SUPABASE_KEY：Publishable key（sb_publishable_...）
    ※ secret key / service_role は絶対に入れない */
 const SUPABASE_URL = "https://wnfcdvcxmcknngszqgby.supabase.co";
-const SUPABASE_KEY = "ここにPublishable key";
+const SUPABASE_KEY = "sb_publishable_lwUdAZRr69ZFUQxPVPVGgA_l9Z9eSLL";
 
 const $ = (id) => document.getElementById(id);
 let sb = null;
@@ -349,7 +373,7 @@ function setMode(m){
   showMsg("");
 }
 
-function showAuth(){ applyTheme(DEF); $("app").classList.add("hidden"); $("auth").classList.remove("hidden"); }
+function showAuth(){ applyTheme(DEF); if (notifTimer){ clearInterval(notifTimer); notifTimer = null; } setBadges(0); $("app").classList.add("hidden"); $("auth").classList.remove("hidden"); }
 
 function showApp(user){
   $("auth").classList.add("hidden"); $("app").classList.remove("hidden");
@@ -360,6 +384,7 @@ function showApp(user){
   go("home");
   loadGlobal(); loadMine(); loadFeed();
   loadDesign(); loadProfile().then(loadWidgets);
+  refreshUnread(); startNotif();
 }
 
 function go(view){
@@ -370,6 +395,7 @@ function go(view){
   document.querySelectorAll("nav button").forEach(b => b.classList.toggle("on", b.dataset.go === view));
   document.querySelector("main").scrollTop = 0;
   if (view === "friends") ftab("friends");
+  if (view === "alerts"){ loadNotifs(); loadPrefs(); }
 }
 
 function errText(e){
@@ -978,7 +1004,72 @@ async function saveSettings(){
   Object.assign(prof, f); renderProfile(); m.textContent = "保存しました。"; m.className = "msg ok";
 }
 
+/* ---------- 通知（アプリ内。20秒ごとに更新） ---------- */
+let notifTimer = null, notifFilter = "all", notifs = [];
+const NK = { friend_request:["👥", "friends"], friend_accepted:["🤝", "friends"], message:["✉️", "messages"], reaction:["♥", "activity"], comment:["💬", "activity"], system:["⚙️", "system"] };
+const PREF = { nPrefFriends:"pref_friends", nPrefMessages:"pref_messages", nPrefActivity:"pref_activity", nPrefSystem:"pref_system" };
+function nText(n){
+  const a = n.actor_name || "誰か";
+  if (n.kind === "friend_request") return a + " さんから友だち申請が届きました";
+  if (n.kind === "friend_accepted") return a + " さんと友だちになりました";
+  if (n.kind === "message") return a + " さんから新着メッセージ";
+  if (n.kind === "reaction") return "あなたのムードに共感がつきました";
+  if (n.kind === "comment") return "あなたのムードにコメントがつきました";
+  return n.body || "NOVIからのお知らせ";
+}
+function setBadges(n){ document.querySelectorAll(".ubadge").forEach(b => { b.textContent = n > 99 ? "99+" : String(n); b.classList.toggle("hidden", !(n > 0)); }); }
+async function refreshUnread(){ if (!me) return; const r = await sb.rpc("count_unread"); if (!r.error) setBadges(Number(r.data) || 0); }
+function startNotif(){
+  if (notifTimer) clearInterval(notifTimer);
+  notifTimer = setInterval(() => { refreshUnread(); if (!$("v-alerts").classList.contains("hidden")) loadNotifs(); }, 20000);
+}
+async function loadNotifs(){
+  const r = await sb.rpc("get_notifications", { p_limit: 50 }), box = $("nList");
+  if (r.error){ box.textContent = ""; box.appendChild(mk("div", "note", "読み込めませんでした：" + r.error.message)); return; }
+  notifs = r.data || []; renderNotifs(); refreshUnread();
+}
+function renderNotifs(){
+  const box = $("nList"); box.textContent = "";
+  const list = notifs.filter(n => NK[n.kind] && (notifFilter === "all" || NK[n.kind][1] === notifFilter));
+  if (!list.length){ const c = mk("div", "card"); c.appendChild(mk("div", "note", "通知はありません。")); box.appendChild(c); return; }
+  list.forEach(n => {
+    const c = mk("div", "ncard" + (n.is_read ? "" : " un"));
+    const t = mk("div", "ntxt"); t.appendChild(mk("div", "", nText(n))); t.appendChild(mk("div", "meta", fmt(n.created_at)));
+    c.append(mk("div", "nico", NK[n.kind][0]), t);
+    if (!n.is_read) c.appendChild(mk("span", "ndot"));
+    const x = mk("button", "del", "削除"); x.type = "button";
+    x.onclick = async e => { e.stopPropagation(); await call("delete_notification", { p_id: n.id }); loadNotifs(); };
+    c.appendChild(x); c.onclick = () => openNotif(n); box.appendChild(c);
+  });
+}
+async function openNotif(n){
+  if (!n.is_read) await call("mark_notifications_read", { p_id: n.id });
+  if (n.kind === "friend_request"){ go("friends"); ftab("reqs"); }
+  else if (n.kind === "friend_accepted"){ go("friends"); }
+  else if (n.kind === "message"){
+    const r = await sb.rpc("get_conversations"), c = (r.data || []).find(x => x.conversation_id === n.ref);
+    if (c) openChat(c.conversation_id, c.username, c.can_send); else { go("friends"); ftab("msgs"); }
+  }
+  else if (n.kind === "reaction" || n.kind === "comment"){ go("mood"); }
+  refreshUnread();
+}
+async function loadPrefs(){
+  const r = await sb.from("notification_preferences").select("*").eq("user_id", me).maybeSingle();
+  Object.keys(PREF).forEach(id => { $(id).checked = !(r.data && r.data[PREF[id]] === false); });
+}
+async function savePrefs(){
+  const row = { user_id: me }; Object.keys(PREF).forEach(id => { row[PREF[id]] = $(id).checked; });
+  const { error } = await sb.from("notification_preferences").upsert(row), m = $("nPrefMsg");
+  m.textContent = error ? "保存できませんでした：" + error.message : "保存しました。"; m.className = "msg " + (error ? "err" : "ok");
+}
+
 function init(){
+  document.querySelectorAll("#nTabs button").forEach(b => b.onclick = () => {
+    notifFilter = b.dataset.nt; document.querySelectorAll("#nTabs button").forEach(x => x.classList.toggle("on", x === b)); renderNotifs();
+  });
+  $("nReadAll").onclick = async () => { await call("mark_notifications_read", {}); loadNotifs(); };
+  Object.keys(PREF).forEach(id => { $(id).onchange = savePrefs; });
+  [".icons [data-go=\"alerts\"]", "nav [data-go=\"alerts\"]"].forEach(sel => { const e = document.querySelector(sel); if (e) e.appendChild(mk("span", "ubadge hidden", "0")); });
   document.querySelectorAll("#fTabs button").forEach(b => b.onclick = () => ftab(b.dataset.ft));
   $("findGo").onclick = findUser; $("chSend").onclick = chatSend; $("eIdSave").onclick = saveSettings;
   $("chBack").onclick = () => go("friends"); $("chReply").onclick = () => setReply(null);
