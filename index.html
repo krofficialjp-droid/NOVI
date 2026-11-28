@@ -125,7 +125,7 @@ display:grid;place-items:center;box-shadow:0 8px 28px color-mix(in srgb,var(--gl
 .chips{display:flex;flex-wrap:wrap;gap:8px}
 .chip{padding:9px 14px;border-radius:99px;border:1px solid var(--c,var(--border));background:var(--card);font-size:13px;cursor:pointer;transition:.15s}
 .chip.on{background:var(--c,var(--accent));font-weight:700;color:#111}
-.chip.sm2{padding:6px 11px;font-size:12px}
+.chip.sm2{padding:5px 10px;font-size:12px}
 textarea,select{color:var(--text);font:inherit;width:100%;margin-top:12px;padding:12px;background:var(--bg);border:1px solid var(--border);border-radius:12px;outline:none}
 textarea{min-height:84px;resize:vertical}
 .cnt{text-align:right;font-size:11px;color:var(--sub);margin-top:4px}
@@ -207,7 +207,7 @@ select.sm{width:auto;margin:0}
 .msg-meta{font-size:10px;color:var(--sub);line-height:1.25;white-space:nowrap;text-align:left}
 .msg-row.me .msg-meta{text-align:right}
 .swipe-hint{position:absolute;left:-28px;top:50%;transform:translateY(-50%);font-size:14px;color:var(--accent);opacity:0;transition:opacity .15s;pointer-events:none}
-.chatin{display:flex;gap:8px;align-items:flex-end;margin-top:10px}
+.chatin{display:flex;gap:8px;align-items:flex-end;margin-top:8px}
 .chatin textarea{margin:0;min-height:42px;max-height:110px;flex:1;border-radius:20px;padding:10px 14px}
 .reply-bar{display:flex;align-items:center;justify-content:space-between;background:color-mix(in srgb,var(--accent) 16%,var(--bg));border-left:3px solid var(--accent);padding:6px 10px;border-radius:8px;margin-top:8px;font-size:12px}
 
@@ -315,6 +315,7 @@ select.sm{width:auto;margin:0}
 .cap-unread-pill{font-size:10px;padding:2px 7px;border-radius:99px;background:var(--danger);color:#fff;font-weight:700;margin-left:6px}
 .ban-pill{font-size:10px;padding:2px 7px;border-radius:99px;background:rgba(255,107,122,.2);color:var(--danger);border:1px solid var(--danger);font-weight:600}
 .log-pill{font-size:11px;padding:8px 10px;border-radius:10px;background:var(--bg);border:1px solid var(--border);margin-top:6px}
+.user-posts-box{margin-top:8px;padding:10px;border-radius:12px;background:var(--bg);border:1px solid var(--border)}
 @keyframes popOpen{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:scale(1)}}
 .cap-opened-box{margin-top:8px;padding:12px;border-radius:12px;background:var(--bg);border:1px solid var(--accent);font-size:13px;white-space:pre-wrap;animation:popOpen .28s ease}
 </style>
@@ -417,6 +418,11 @@ select.sm{width:auto;margin:0}
 </h2>
 <div class="card">
 <div class="chips" id="hqChips"></div>
+<div class="chips" style="margin-top:10px">
+<button type="button" class="chip sm2" data-quickphrase="おつかれさま！">おつかれさま！</button>
+<button type="button" class="chip sm2" data-quickphrase="まったり中☕">まったり中☕</button>
+<button type="button" class="chip sm2" data-quickphrase="今日もいい感じ✨">今日もいい感じ✨</button>
+</div>
 <input id="hqText" class="in" maxlength="300" data-i18n-ph="mood_ph" placeholder="ひとこと（任意・下書き自動保存）">
 <div style="display:flex;gap:8px;align-items:center;margin-top:10px">
 <select id="hqVis" class="in" style="margin:0;flex:1" aria-label="公開範囲">
@@ -483,7 +489,7 @@ select.sm{width:auto;margin:0}
 <button type="button" data-tt="animal">🐾 動物と話す</button>
 </div>
 
-<!-- ① 逆算アラーム（プリセット付き） -->
+<!-- ① 逆算アラーム（プリセット＆ブラウザ通知対応） -->
 <div id="tt-alarm">
 <div class="sec"><h2>🚃 逆算アラーム（出発カウントダウン）</h2><div class="card">
 <div class="note">電車の出発時刻や予定の時刻から、移動時間と準備時間を逆算して「あと何分で向かわないといけないか」をリアルタイムで教えます。</div>
@@ -510,7 +516,7 @@ select.sm{width:auto;margin:0}
 </div></div>
 </div>
 
-<!-- ② タイムカプセル機能（アプリ内到着・開封・未読バッジ） -->
+<!-- ② タイムカプセル機能（アプリ内到着・開封・未読バッジ・残り日数カウントダウン） -->
 <div id="tt-capsule" class="hidden">
 <div class="sec"><h2>⏳ タイムカプセル（アプリ内で未来の自分に届く）</h2><div class="card">
 <div class="note">今の気持ちや目標を書いて封印すると、指定した年数後にNOVIアプリ内へ届きます。開封日になると中身を読めるようになります。</div>
@@ -683,6 +689,12 @@ select.sm{width:auto;margin:0}
 <div id="chIn">
 <div id="chReply" class="reply-bar hidden"><span id="chReplyTxt"></span><button type="button" id="chReplyCancel" class="del" style="padding:2px 8px">✕</button></div>
 <div id="chUpProg" class="note" style="color:var(--accent);margin-top:4px"></div>
+<div class="chips" style="margin-top:8px">
+<button type="button" class="chip sm2" data-chatphrase="了解！">了解！</button>
+<button type="button" class="chip sm2" data-chatphrase="ありがとう🙏">ありがとう🙏</button>
+<button type="button" class="chip sm2" data-chatphrase="今向かってる🚃">今向かってる🚃</button>
+<button type="button" class="chip sm2" data-chatphrase="👍">👍</button>
+</div>
 <div class="chatin">
 <button id="chImgBtn" class="ico" type="button" title="写真送信" style="width:40px;height:40px;flex:none">🖼️</button>
 <button id="chVidBtn" class="ico" type="button" title="動画送信" style="width:40px;height:40px;flex:none">🎬</button>
@@ -974,7 +986,7 @@ select.sm{width:auto;margin:0}
 </div></div>
 </div>
 
-<!-- 設定サブ⑤：👑 運営監視パネル（検索・登録日/ログイン履歴・ユーザー停止/解除・全体お知らせ・通報＆投稿監視・運営ログ） -->
+<!-- 設定サブ⑤：👑 運営監視パネル（絞り込み・ユーザー投稿確認＆削除・検索・停止/解除・全体お知らせ・通報＆投稿監視・運営ログ） -->
 <div id="st-admin" class="hidden">
 <div class="sec">
 <h2><span>👑 運営監視ダッシュボード</span><button id="btnAdminReload" class="refresh" type="button">最新に更新</button></h2>
@@ -1003,7 +1015,14 @@ select.sm{width:auto;margin:0}
 </div>
 
 <div class="sec">
-<h2>👤 ユーザー管理・登録日・ログイン履歴・停止 / 解除</h2>
+<h2>
+<span>👤 ユーザー管理・投稿確認・停止 / 解除</span>
+<div class="chips" id="admUserFilter">
+<button type="button" class="chip sm2 on" data-ufilter="all">すべて</button>
+<button type="button" class="chip sm2" data-ufilter="banned">停止中</button>
+<button type="button" class="chip sm2" data-ufilter="online">オンライン</button>
+</div>
+</h2>
 <div class="card" id="admUserList"><div class="note">読み込み中...</div></div>
 </div>
 
@@ -1202,35 +1221,65 @@ lastChatSendAt = now;
 return true;
 }
 
-/* ---------- 👑 運営監視パネル（検索・登録日/ログイン履歴・ユーザー停止/解除・全体お知らせ・通報＆投稿監視・運営ログ） ---------- */
-async function loadAdminDashboard(){
-if (!isAdminUser() || !sb) return;
-const msg = $("admMsg");
-const q = ($("admSearchIn") ? $("admSearchIn").value : "").trim();
-if (msg){ msg.textContent = "監視データを取得中..."; msg.className = "msg"; }
+/* ---------- 👑 運営監視パネル（絞り込み・ユーザー投稿確認＆削除・検索・停止/解除・全体お知らせ・通報＆投稿監視・運営ログ） ---------- */
+let admUserFilter = "all";
+let lastAdminData = null;
 
-const { data, error } = await sb.rpc("admin_get_dashboard", { p_search: q || null });
-if (error || !data){
-if (msg){
-msg.textContent = "取得エラー：" + (error ? error.message : "");
-msg.className = "msg err";
-}
+async function toggleAdminUserPosts(u, hostRow){
+const existing = hostRow.querySelector(".user-posts-box");
+if (existing){ existing.remove(); return; }
+const box = mk("div", "user-posts-box");
+box.appendChild(mk("div", "note", "投稿を確認中..."));
+hostRow.appendChild(box);
+
+const [mRes, moRes] = await Promise.all([
+sb.from("moods").select("id,mood,content,created_at").eq("user_id", u.user_id).order("created_at", { ascending: false }).limit(10),
+sb.from("moments").select("id,content,created_at").eq("user_id", u.user_id).order("created_at", { ascending: false }).limit(10)
+]);
+box.textContent = "";
+const moods = mRes.data || [];
+const moments = moRes.data || [];
+if (!moods.length && !moments.length){
+box.appendChild(mk("div", "note", "このユーザーの投稿はありません。"));
 return;
 }
-if (msg) msg.textContent = q ? `「${q}」の検索結果を表示中` : "";
+moods.forEach(m => {
+const r = mk("div", "cmrow");
+r.appendChild(mk("span", "", `[ムード] ${moodLabel(m.mood)}：${m.content || "（なし）"}`));
+const d = mk("button", "del", "削除"); d.type = "button";
+d.onclick = async () => {
+await sb.rpc("admin_moderate", { p_action: "delete_mood", p_id: m.id, p_text: null });
+r.remove();
+};
+r.appendChild(d);
+box.appendChild(r);
+});
+moments.forEach(mo => {
+const r = mk("div", "cmrow");
+r.appendChild(mk("span", "", `[モーメント] ${(mo.content || "").replace(/\[NOVI_VIDEO\]:\S+/g, "[動画]")}`));
+const d = mk("button", "del", "削除"); d.type = "button";
+d.onclick = async () => {
+await sb.rpc("admin_moderate", { p_action: "delete_moment", p_id: mo.id, p_text: null });
+r.remove();
+};
+r.appendChild(d);
+box.appendChild(r);
+});
+}
 
-const reports = Array.isArray(data.reports) ? data.reports : [];
-$("admTotalUsers").textContent = Number(data.total_users || 0);
-$("admOnlineUsers").textContent = Number(data.online_users || 0);
-$("admBannedUsers").textContent = `${Number(data.banned_users || 0)} / ${reports.length}`;
-
-// ユーザー管理・登録日・ログイン履歴・停止/解除一覧
-const uBox = $("admUserList"); uBox.textContent = "";
-const users = Array.isArray(data.users) ? data.users : [];
-if (!users.length){
+function renderAdminUsersList(users){
+const uBox = $("admUserList"); if (!uBox) return;
+uBox.textContent = "";
+const filtered = (Array.isArray(users) ? users : []).filter(u => {
+if (admUserFilter === "banned") return u.is_banned === true;
+if (admUserFilter === "online") return u.online_status === true && !u.is_banned;
+return true;
+});
+if (!filtered.length){
 uBox.appendChild(mk("div", "note", "該当するユーザーはいません。"));
-} else {
-users.forEach(u => {
+return;
+}
+filtered.forEach(u => {
 const row = mk("div", "wrow");
 const top = mk("div", "");
 top.style.display = "flex"; top.style.alignItems = "center"; top.style.gap = "6px"; top.style.flexWrap = "wrap";
@@ -1261,9 +1310,13 @@ logBox.appendChild(mk("div", "note", `• ${l.label || "端末"}（${fmt(l.creat
 row.appendChild(logBox);
 }
 
+const bt = mk("div", "bt");
+const viewPostsBtn = mk("button", "del", "📋 投稿を見る"); viewPostsBtn.type = "button";
+viewPostsBtn.onclick = () => toggleAdminUserPosts(u, row);
+bt.appendChild(viewPostsBtn);
+
 const isSelfAdmin = String(u.email || "").toLowerCase() === ADMIN_EMAIL.toLowerCase();
 if (!isSelfAdmin){
-const bt = mk("div", "bt");
 if (u.is_banned){
 const unbanBtn = mk("button", "del", "✅ 停止を解除"); unbanBtn.type = "button";
 unbanBtn.style.borderColor = "#4DDB8A"; unbanBtn.style.color = "#4DDB8A";
@@ -1284,11 +1337,35 @@ loadAdminDashboard();
 };
 bt.appendChild(banBtn);
 }
-row.appendChild(bt);
 }
+row.appendChild(bt);
 uBox.appendChild(row);
 });
 }
+
+async function loadAdminDashboard(){
+if (!isAdminUser() || !sb) return;
+const msg = $("admMsg");
+const q = ($("admSearchIn") ? $("admSearchIn").value : "").trim();
+if (msg){ msg.textContent = "監視データを取得中..."; msg.className = "msg"; }
+
+const { data, error } = await sb.rpc("admin_get_dashboard", { p_search: q || null });
+if (error || !data){
+if (msg){
+msg.textContent = "取得エラー：" + (error ? error.message : "");
+msg.className = "msg err";
+}
+return;
+}
+lastAdminData = data;
+if (msg) msg.textContent = q ? `「${q}」の検索結果を表示中` : "";
+
+const reports = Array.isArray(data.reports) ? data.reports : [];
+$("admTotalUsers").textContent = Number(data.total_users || 0);
+$("admOnlineUsers").textContent = Number(data.online_users || 0);
+$("admBannedUsers").textContent = `${Number(data.banned_users || 0)} / ${reports.length}`;
+
+renderAdminUsersList(data.users);
 
 // 通報一覧
 const rBox = $("admReportList"); rBox.textContent = "";
@@ -2327,8 +2404,21 @@ if ($("chText") && dCh) $("chText").value = dCh;
 }catch(_){}
 }
 
-/* ---------- 便利ツール①：逆算アラーム ---------- */
+/* ---------- 便利ツール①：逆算アラーム（サウンド＋バイブ＋ブラウザ通知） ---------- */
 let alarmInterval = null, alarmFired = false;
+
+function fireBrowserAlarmNotification(title, body){
+try{
+if (!("Notification" in window)) return;
+if (Notification.permission === "granted"){
+new Notification(title, { body });
+} else if (Notification.permission !== "denied"){
+Notification.requestPermission().then(perm => {
+if (perm === "granted") new Notification(title, { body });
+}).catch(() => {});
+}
+}catch(_){}
+}
 
 function playAlarmSound(){
 try{
@@ -2374,6 +2464,7 @@ $("alSubStatus").textContent = "設定した出発時刻になりました。急
 if (!alarmFired){
 alarmFired = true;
 playAlarmSound();
+fireBrowserAlarmNotification("🚃 NOVI 逆算アラーム", `${cfg.label || cfg.targetTime} の出発時間です！今すぐ向かいましょう！`);
 alert(`🚃 出発時間です！（${cfg.label || cfg.targetTime}）\n今すぐ向かいましょう！`);
 }
 } else {
@@ -2390,6 +2481,9 @@ $("alSubStatus").textContent = `移動 ${cfg.travelMin}分 ＋ 準備 ${cfg.prep
 function setReverseAlarm(){
 const targetTime = $("alTargetTime").value;
 if (!targetTime) return alert("出発時刻・予定時刻を入力してください。");
+if ("Notification" in window && Notification.permission === "default"){
+Notification.requestPermission().catch(() => {});
+}
 const cfg = {
 targetTime,
 travelMin: Math.max(0, Number($("alTravelMin").value) || 0),
@@ -2425,7 +2519,7 @@ alarmInterval = setInterval(updateReverseAlarmTick, 1000);
 }catch(_){}
 }
 
-/* ---------- 便利ツール②：タイムカプセル機能（未読バッジ＆開封演出付き） ---------- */
+/* ---------- 便利ツール②：タイムカプセル機能（未読バッジ＆開封演出＆残り日数カウントダウン） ---------- */
 function getCapsules(){
 try{ return JSON.parse(localStorage.getItem("novi_capsules_" + (me || "guest")) || "[]"); }catch(_){ return []; }
 }
@@ -2447,6 +2541,16 @@ const nowMs = Date.now();
 const unreadDue = getCapsules().filter(x => nowMs >= new Date(x.unlockAt).getTime() && !x.opened).length;
 badge.textContent = String(unreadDue);
 badge.classList.toggle("hidden", !(unreadDue > 0));
+}
+
+function formatRemainingUntil(unlockMs, nowMs){
+const diff = Math.max(0, unlockMs - nowMs);
+const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+if (days > 0) return `あと ${days}日 ${hours}時間`;
+if (hours > 0) return `あと ${hours}時間`;
+const mins = Math.max(1, Math.ceil(diff / (1000 * 60)));
+return `あと ${mins}分`;
 }
 
 async function deliverCapsuleInApp(item){
@@ -2549,7 +2653,7 @@ if (isOpen && !item.opened){
 titleWrap.appendChild(mk("span", "cap-unread-pill", "未読"));
 }
 top.appendChild(titleWrap);
-top.appendChild(mk("span", isOpen ? "cap-badge-open" : "cap-badge-lock", isOpen ? "🎉 届きました（開封可）" : `🔒 ${unlockDate.toLocaleDateString("ja-JP")} 到着`));
+top.appendChild(mk("span", isOpen ? "cap-badge-open" : "cap-badge-lock", isOpen ? "🎉 届きました（開封可）" : `🔒 ${formatRemainingUntil(unlockDate.getTime(), nowMs)}`));
 row.appendChild(top);
 row.appendChild(mk("div", "note", `封印日: ${new Date(item.createdAt).toLocaleDateString("ja-JP")}｜到着予定: ${unlockDate.toLocaleDateString("ja-JP")}`));
 
@@ -2568,7 +2672,7 @@ const content = mk("div", "cap-opened-box", item.body);
 row.appendChild(content);
 }
 } else {
-row.appendChild(mk("div", "note", "🔒 到着日まで中身は封印されています。到着するとアプリ内で読めます。"));
+row.appendChild(mk("div", "note", `🔒 開封日まで ${formatRemainingUntil(unlockDate.getTime(), nowMs)}。到着するとアプリ内で読めます。`));
 }
 
 const bt = mk("div", "bt");
@@ -4793,11 +4897,28 @@ setInterval(() => { mins++; if ($("wellbeingTime")) $("wellbeingTime").textConte
 if ($("hqText")) $("hqText").addEventListener("input", saveDrafts);
 if ($("chText")) $("chText").addEventListener("input", saveDrafts);
 
-/* 👑 運営監視パネル（更新・検索・一斉お知らせ） */
+/* クイックフレーズ挿入（ムード投稿・チャット） */
+document.querySelectorAll("[data-quickphrase]").forEach(b => b.onclick = () => {
+if (!$("hqText")) return;
+$("hqText").value = ($("hqText").value ? $("hqText").value + " " : "") + b.dataset.quickphrase;
+saveDrafts();
+});
+document.querySelectorAll("[data-chatphrase]").forEach(b => b.onclick = () => {
+if (!$("chText")) return;
+$("chText").value = ($("chText").value ? $("chText").value + " " : "") + b.dataset.chatphrase;
+saveDrafts();
+});
+
+/* 👑 運営監視パネル（更新・検索・一斉お知らせ・ユーザー絞り込み） */
 if ($("btnAdminReload")) $("btnAdminReload").onclick = loadAdminDashboard;
 if ($("btnAdmSearch")) $("btnAdmSearch").onclick = loadAdminDashboard;
 if ($("admSearchIn")) $("admSearchIn").addEventListener("keydown", e => { if (e.key === "Enter") loadAdminDashboard(); });
 if ($("btnAdmBroadcast")) $("btnAdmBroadcast").onclick = sendAdminBroadcast;
+document.querySelectorAll("[data-ufilter]").forEach(b => b.onclick = () => {
+admUserFilter = b.dataset.ufilter;
+document.querySelectorAll("[data-ufilter]").forEach(x => x.classList.toggle("on", x === b));
+if (lastAdminData) renderAdminUsersList(lastAdminData.users);
+});
 
 /* 逆算アラームプリセット */
 document.querySelectorAll("[data-alpreset]").forEach(b => b.onclick = () => {
