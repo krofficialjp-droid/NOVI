@@ -1,0 +1,44 @@
+name: NOVI Android APK
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: Install Cordova
+        run: npm install -g cordova@12
+
+      - name: Create Android App
+        run: |
+          cordova create novi-app com.krofficialjp.novi NOVI
+          cp index.html novi-app/www/index.html
+          cd novi-app
+          cordova platform add android@13.0.0
+          cordova build android --debug
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: NOVI-Android-APK
+          path: novi-app/platforms/android/app/build/outputs/apk/debug/app-debug.apk
+
