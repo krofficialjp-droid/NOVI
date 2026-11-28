@@ -5,7 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#08090D">
 <meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="NOVI">
+<link id="pwaIcon" rel="apple-touch-icon" href="">
+<link id="pwaManifest" rel="manifest" href="">
 <title>NOVI — A NEW SOCIAL ERA.</title>
 <style>
 :root{
@@ -45,18 +49,26 @@ backdrop-filter:blur(var(--glass-blur)) saturate(var(--glass-sat));
 -webkit-backdrop-filter:blur(var(--glass-blur)) saturate(var(--glass-sat));
 }
 
-/* ---------- AUTH ---------- */
+/* ---------- AUTH & ONBOARDING ---------- */
 #auth,#mfa{min-height:100dvh;display:flex;flex-direction:column;justify-content:center;padding:24px;max-width:420px;margin:0 auto}
 .logo{font-size:44px;font-weight:300;letter-spacing:.35em;text-align:center;
 background:linear-gradient(90deg,#fff,var(--accent));-webkit-background-clip:text;background-clip:text;color:transparent}
-.slogan{text-align:center;color:var(--sub);font-size:12px;letter-spacing:.2em;margin:6px 0 28px}
-.tabs{display:flex;border:1px solid var(--border);border-radius:14px;padding:4px;margin-bottom:16px;background:color-mix(in srgb,var(--card) 60%,transparent);gap:2px}
-.tabs button{flex:1;background:none;border:0;padding:9px 4px;border-radius:10px;color:var(--sub);font-size:12px;white-space:nowrap;cursor:pointer;transition:.2s}
+.slogan{text-align:center;color:var(--sub);font-size:12px;letter-spacing:.2em;margin:6px 0 24px}
+.tabs{display:flex;border:1px solid var(--border);border-radius:14px;padding:4px;margin-bottom:16px;background:color-mix(in srgb,var(--card) 60%,transparent);gap:2px;overflow-x:auto}
+.tabs button{flex:1;background:none;border:0;padding:9px 4px;border-radius:10px;color:var(--sub);font-size:11px;white-space:nowrap;cursor:pointer;transition:.2s}
 .tabs button.on{background:var(--card);color:var(--text);font-weight:600;box-shadow:0 2px 10px rgba(0,0,0,.25)}
 .field{margin-bottom:12px}
 .field label{display:block;font-size:12px;color:var(--sub);margin-bottom:6px}
 .field input{width:100%;padding:14px;background:var(--card);border:1px solid var(--border);border-radius:12px;outline:none}
 .field input:focus{border-color:var(--accent)}
+.pw-wrap{position:relative;display:flex;align-items:center}
+.pw-wrap input{padding-right:46px}
+.eye-btn{position:absolute;right:8px;background:none;border:0;color:var(--sub);width:36px;height:36px;display:grid;place-items:center;cursor:pointer;border-radius:8px}
+.eye-btn:active{background:rgba(255,255,255,.08)}
+.eye-btn svg{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.oauth-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.oauth-btn{padding:11px 10px;border-radius:12px;border:1px solid var(--border);background:var(--card);font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:.2s}
+.oauth-btn:active{transform:scale(.98)}
 .primary{width:100%;padding:14px;border:0;border-radius:14px;background:var(--btn);color:#fff;font-weight:600;margin-top:6px;cursor:pointer;box-shadow:0 4px 18px color-mix(in srgb,var(--btn) 45%,transparent);transition:.2s}
 .primary:active{transform:scale(.98)}
 .primary:disabled{opacity:.5}
@@ -65,7 +77,7 @@ background:linear-gradient(90deg,#fff,var(--accent));-webkit-background-clip:tex
 
 /* ---------- APP ---------- */
 #app{display:flex;flex-direction:column;height:100dvh;max-width:560px;margin:0 auto;position:relative}
-.top{display:flex;align-items:center;justify-content:space-between;padding:12px 18px;flex:none}
+.top{display:flex;align-items:center;justify-content:space-between;padding:14px 18px 8px;flex:none}
 .top .logo{font-size:22px;text-align:left}
 .icons{display:flex;gap:8px}
 .ico{width:40px;height:40px;border-radius:13px;border:1px solid var(--border);background:var(--card);
@@ -95,10 +107,10 @@ nav{position:fixed;left:14px;right:14px;bottom:calc(12px + env(safe-area-inset-b
 background:color-mix(in srgb,var(--card) 92%,transparent);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
 border:1px solid color-mix(in srgb,var(--accent) 28%,var(--border));
 border-radius:26px;display:flex;justify-content:space-around;align-items:center;
-padding:6px 8px;max-width:532px;margin:0 auto;z-index:20;
+padding:6px 4px;max-width:532px;margin:0 auto;z-index:20;
 box-shadow:0 12px 36px rgba(0,0,0,.55),0 0 24px color-mix(in srgb,var(--glow) 18%,transparent)}
-nav button{background:none;border:0;color:var(--sub);font-size:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;padding:6px 10px;min-width:54px;border-radius:18px;position:relative;cursor:pointer;transition:all .22s}
-nav button svg{width:21px;height:21px;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;transition:transform .22s,filter .22s}
+nav button{background:none;border:0;color:var(--sub);font-size:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;padding:6px 4px;min-width:44px;border-radius:18px;position:relative;cursor:pointer;transition:all .22s}
+nav button svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;transition:transform .22s,filter .22s}
 nav button.on{color:var(--text);background:color-mix(in srgb,var(--accent) 20%,transparent)}
 nav button.on svg{stroke:var(--accent);transform:translateY(-1px);filter:drop-shadow(0 0 8px var(--glow))}
 nav button.on::after{content:"";position:absolute;bottom:2px;width:16px;height:3px;border-radius:99px;background:var(--accent);box-shadow:0 0 8px var(--accent)}
@@ -146,7 +158,7 @@ textarea{min-height:84px;resize:vertical}
 .cm input{width:100%;padding:10px;background:var(--bg);border:1px solid var(--border);border-radius:10px;margin:8px 0 6px;color:var(--text)}
 select.sm{width:auto;margin:0}
 
-/* ---------- FRIEND LIST (FIXED HORIZONTAL LAYOUT) ---------- */
+/* ---------- FRIEND LIST ---------- */
 .prow{display:flex;flex-direction:column;gap:10px;padding:12px 0;border-top:1px solid var(--border)}
 .prow:first-child{border-top:0;padding-top:0}
 .prow-top{display:flex;gap:12px;align-items:center;width:100%;min-width:0}
@@ -187,7 +199,10 @@ select.sm{width:auto;margin:0}
 .msg-row.me .bub{background:var(--accent);color:#fff;border-color:transparent;border-bottom-right-radius:5px}
 .msg-row.them .bub{border-bottom-left-radius:5px}
 .bub .q{font-size:11px;opacity:.85;border-left:2px solid rgba(255,255,255,.5);padding-left:7px;margin-bottom:5px}
-.bub img,.bub video{max-width:210px;max-height:240px;border-radius:12px;display:block;margin-top:4px;background:#000}
+.bub img{max-width:210px;max-height:240px;border-radius:12px;display:block;margin-top:4px;background:#000}
+.bub video{width:100%;max-width:340px;max-height:360px;border-radius:12px;display:block;margin-top:6px;background:#000}
+.msg-react-bar{display:flex;flex-wrap:wrap;gap:4px;margin-top:4px}
+.msg-react-pill{font-size:11px;padding:2px 7px;border-radius:99px;background:var(--card);border:1px solid var(--border)}
 .msg-meta{font-size:10px;color:var(--sub);line-height:1.25;white-space:nowrap;text-align:left}
 .msg-row.me .msg-meta{text-align:right}
 .swipe-hint{position:absolute;left:-28px;top:50%;transform:translateY(-50%);font-size:14px;color:var(--accent);opacity:0;transition:opacity .15s;pointer-events:none}
@@ -196,10 +211,11 @@ select.sm{width:auto;margin:0}
 .reply-bar{display:flex;align-items:center;justify-content:space-between;background:color-mix(in srgb,var(--accent) 16%,var(--bg));border-left:3px solid var(--accent);padding:6px 10px;border-radius:8px;margin-top:8px;font-size:12px}
 
 /* ---------- CALL OVERLAY ---------- */
-.call-screen{position:fixed;inset:0;background:radial-gradient(circle at 50% 25%,color-mix(in srgb,var(--accent) 32%,#10131e),#06070b 80%);z-index:90;display:flex;flex-direction:column;justify-content:space-between;align-items:center;padding:48px 24px calc(36px + env(safe-area-inset-bottom,0px))}
-.call-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.45;z-index:-1}
-.call-controls{display:flex;gap:18px;align-items:center}
-.call-btn{width:58px;height:58px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.12);color:#fff;font-size:22px;display:grid;place-items:center;cursor:pointer}
+.call-screen{position:fixed;inset:0;background:radial-gradient(circle at 50% 25%,color-mix(in srgb,var(--accent) 32%,#10131e),#06070b 80%);z-index:95;display:flex;flex-direction:column;justify-content:space-between;align-items:center;padding:48px 24px calc(36px + env(safe-area-inset-bottom,0px))}
+.call-remote-vid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-1;background:#000}
+.call-local-vid{position:fixed;top:24px;right:18px;width:104px;height:146px;border-radius:14px;object-fit:cover;border:2px solid var(--accent);z-index:96;background:#111}
+.call-controls{display:flex;gap:18px;align-items:center;z-index:96}
+.call-btn{width:58px;height:58px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.15);backdrop-filter:blur(8px);color:#fff;font-size:22px;display:grid;place-items:center;cursor:pointer}
 .call-btn.on{background:#fff;color:#111}
 .call-btn.end{background:var(--danger);border-color:transparent;width:64px;height:64px}
 
@@ -213,7 +229,7 @@ select.sm{width:auto;margin:0}
 .ntxt .meta{font-size:11px;color:var(--sub);margin-top:2px}
 .ndot{width:9px;height:9px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--accent);flex:none}
 .ubadge,.mbadge{position:absolute;top:-4px;right:-4px;background:var(--danger);color:#fff;border-radius:99px;font-size:10px;min-width:16px;padding:1px 4px;text-align:center;line-height:1.3}
-nav .ubadge{top:2px;right:8px}
+nav .ubadge,nav .mbadge{top:2px;right:4px}
 #nTabs button{font-size:11px;padding:8px 2px}
 
 /* ---------- MODALS & PROFILE ---------- */
@@ -276,33 +292,86 @@ nav .ubadge{top:2px;right:8px}
 .stat-box{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:10px;text-align:center}
 .stat-num{font-size:18px;font-weight:700;color:var(--accent)}
 .stat-lbl{font-size:10px;color:var(--sub);margin-top:2px}
+
+/* ---------- SETTINGS ACCORDION ---------- */
+.set-cat{border-top:1px solid var(--border);padding:12px 0}
+.set-cat:first-child{border-top:0;padding-top:0}
+.set-cat-hdr{display:flex;align-items:center;justify-content:space-between;cursor:pointer;gap:10px}
+.set-cat-title{font-size:13px;font-weight:600}
+.set-cat-sub{font-size:11px;color:var(--sub);margin-top:2px}
+.set-cat-body{margin-top:10px;padding:10px;background:var(--bg);border:1px solid var(--border);border-radius:12px}
+
+/* ---------- ACCOUNT SWITCHER ---------- */
+.acc-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 0;border-top:1px solid var(--border)}
+.acc-row:first-child{border-top:0;padding-top:0}
+.acc-cur{font-size:11px;padding:2px 8px;border-radius:99px;background:color-mix(in srgb,var(--accent) 25%,transparent);color:var(--accent);font-weight:600}
 </style>
 </head>
 <body>
 <div id="bgPhoto"></div>
 <canvas id="bgCanvas"></canvas>
 
-<!-- ========== ログイン / 新規登録 ========== -->
+<!-- ========== ログイン / 新規登録 / パスワード再設定 ========== -->
 <section id="auth" class="hidden">
 <div class="logo">NOVI</div>
 <div class="slogan">A NEW SOCIAL ERA.</div>
+
+<div id="recoveryBox" class="hidden">
+<div class="note" style="text-align:center;margin-bottom:12px;color:var(--text)">新しいパスワードを設定してください</div>
+<div class="field">
+<label for="recPw">新しいパスワード（8文字以上）</label>
+<div class="pw-wrap">
+<input id="recPw" type="password" autocomplete="new-password" placeholder="新しいパスワード">
+<button type="button" id="toggleRecEye" class="eye-btn" aria-label="パスワードを表示">
+<svg id="recEyeIcon" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+</button>
+</div>
+</div>
+<button id="recSaveBtn" class="primary" type="button">パスワードを更新してログイン</button>
+</div>
+
+<div id="normalAuthBox">
 <div class="tabs">
 <button id="tabLogin" class="on" type="button">ログイン</button>
 <button id="tabSignup" type="button">新規登録</button>
 </div>
-<div class="field" id="nameField" style="display:none">
-<label for="name">ユーザー名</label>
-<input id="name" autocomplete="nickname" maxlength="30">
+
+<div class="field hidden" id="signupIdField">
+<label for="regLoginId">ログインID（英小文字・数字・_ の3〜20文字）</label>
+<input id="regLoginId" autocomplete="username" maxlength="20" placeholder="例：novi_taro">
 </div>
+<div class="field hidden" id="nameField">
+<label for="name">名前（表示名）</label>
+<input id="name" autocomplete="name" maxlength="30" placeholder="名前を入力">
+</div>
+
 <div class="field">
-<label for="email">メールアドレス</label>
-<input id="email" type="email" autocomplete="email">
+<label for="email" id="emailLabel">メールアドレス または ログインID</label>
+<input id="email" type="text" autocomplete="username" placeholder="メールアドレス または ID">
 </div>
+
 <div class="field">
 <label for="pass">パスワード（8文字以上）</label>
-<input id="pass" type="password" autocomplete="current-password">
+<div class="pw-wrap">
+<input id="pass" type="password" autocomplete="current-password" placeholder="パスワードを入力">
+<button type="button" id="togglePassEye" class="eye-btn" aria-label="パスワードを表示">
+<svg id="eyeIcon" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+</button>
 </div>
+</div>
+
 <button id="go" class="primary" type="button">ログイン</button>
+
+<div class="oauth-row">
+<button id="btnOAuthGoogle" class="oauth-btn" type="button">Google で続行</button>
+<button id="btnOAuthDiscord" class="oauth-btn" type="button">Discord で続行</button>
+</div>
+
+<button id="cancelAddAccBtn" class="logout hidden" type="button">← 元のアカウントに戻る</button>
+<div id="forgotWrap" style="text-align:center;margin-top:12px">
+<button id="forgotPwBtn" type="button" style="background:none;border:0;color:var(--sub);font-size:12px;text-decoration:underline;cursor:pointer">パスワードを忘れた場合</button>
+</div>
+</div>
 <div id="authMsg" class="msg"></div>
 </section>
 
@@ -318,12 +387,6 @@ nav .ubadge{top:2px;right:8px}
 <section id="app" class="hidden">
 <header class="top">
 <div class="logo">NOVI</div>
-<div class="icons">
-<button class="ico" type="button" data-go="friends" aria-label="友だち"><svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></button>
-<button class="ico" type="button" id="hdMsg" aria-label="メッセージ"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></button>
-<button class="ico" type="button" data-go="search" aria-label="検索"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></button>
-<button class="ico" type="button" data-go="alerts" aria-label="通知"><svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></button>
-</div>
 </header>
 
 <main>
@@ -337,42 +400,46 @@ nav .ubadge{top:2px;right:8px}
 <div class="sec">
 <h2 data-i18n="your_mood">今のムードを投稿</h2><div class="card">
 <div class="chips" id="hqChips"></div>
-<input id="hqText" class="in" maxlength="300" placeholder="ひとこと（任意）">
-<select id="hqVis" class="in" aria-label="公開範囲"><option value="public">公開</option><option value="friends">フレンドのみ</option><option value="private">非公開</option></select>
+<input id="hqText" class="in" maxlength="300" data-i18n-ph="mood_ph" placeholder="ひとこと（任意）">
+<select id="hqVis" class="in" aria-label="公開範囲">
+<option value="public" data-i18n="vis_public">公開</option>
+<option value="friends" data-i18n="vis_friends">フレンドのみ</option>
+<option value="private" data-i18n="vis_private">非公開</option>
+</select>
 <button id="hqPost" class="primary" type="button" data-i18n="post_btn">投稿する</button><div id="hqMsg" class="msg"></div>
 </div></div>
 <div class="sec"><h2 data-i18n="my_mood">あなたのムード</h2>
-<div class="card" id="myLatest"><div class="note">読み込み中...</div></div>
+<div class="card" id="myLatest"><div class="note" data-i18n="loading">読み込み中...</div></div>
 </div>
 <div class="sec">
 <h2 data-i18n="nearby_moments">近くのモーメント</h2>
-<div class="card" id="homeMoments"><div class="note">モーメント画面で位置情報を許可するか、場所を選ぶと、近くの投稿が見られます。</div><button class="del" id="homeMomGo" type="button" style="margin-top:8px">近くを見る</button></div>
+<div class="card" id="homeMoments"><div class="note" data-i18n="moment_hint">モーメント画面で位置情報を許可するか、場所を選ぶと、近くの投稿が見られます。</div><button class="del" id="homeMomGo" type="button" style="margin-top:8px" data-i18n="see_nearby">近くを見る</button></div>
 </div>
 </div>
 
 <!-- ムード -->
 <div class="view hidden" id="v-mood">
-<div class="sec"><button class="primary" type="button" data-go="create">＋ ムードやモーメントを作る</button></div>
-<div class="sec"><h2>みんなのムード（匿名）<button id="feedReload" class="refresh" type="button">更新</button></h2><div class="card" id="feed"><div class="note">読み込み中...</div></div></div>
-<div class="sec"><h2>ムード履歴</h2><div class="card" id="myList"><div class="note">読み込み中...</div></div></div>
+<div class="sec"><button class="primary" type="button" data-go="create" data-i18n="create_btn">＋ ムードやモーメントを作る</button></div>
+<div class="sec"><h2 data-i18n="public_moods">みんなのムード（匿名）<button id="feedReload" class="refresh" type="button" data-i18n="reload">更新</button></h2><div class="card" id="feed"><div class="note">読み込み中...</div></div></div>
+<div class="sec"><h2 data-i18n="mood_history">ムード履歴</h2><div class="card" id="myList"><div class="note">読み込み中...</div></div></div>
 </div>
 
 <!-- モーメント -->
-<div class="view hidden" id="v-moment"><div class="sec"><h2>近くのモーメント</h2><div class="card">
+<div class="view hidden" id="v-moment"><div class="sec"><h2 data-i18n="nearby_moments">近くのモーメント</h2><div class="card">
 <div style="display:flex;gap:8px;align-items:center">
 <select id="momKm" class="sm" aria-label="表示範囲"><option value="1">1km</option><option value="3">3km</option><option value="5">5km</option><option value="10" selected>10km</option><option value="25">25km</option><option value="50">50km</option></select>
-<button id="momGo" class="primary" type="button" style="margin:0">探す</button>
+<button id="momGo" class="primary" type="button" style="margin:0" data-i18n="search_btn">探す</button>
 </div>
 <select id="momArea" class="in" aria-label="場所"></select>
 <div id="momStatus" class="msg"></div>
-<div id="momList"><div class="note">「現在地」を選ぶと、位置情報の許可が必要です。許可しない場合は、都道府県を選べます。</div></div>
+<div id="momList"><div class="note" data-i18n="moment_hint">「現在地」を選ぶと、位置情報の許可が必要です。許可しない場合は、都道府県を選べます。</div></div>
 </div></div>
-<div class="sec"><h2>アーカイブ（期限切れモーメント）<button id="arGo" class="refresh" type="button">表示</button></h2><div class="card hidden" id="arBox"></div></div></div>
+<div class="sec"><h2 data-i18n="archive_title">アーカイブ（期限切れモーメント）<button id="arGo" class="refresh" type="button">表示</button></h2><div class="card hidden" id="arBox"></div></div></div>
 
 <!-- 通知 -->
 <div class="view hidden" id="v-alerts">
-<div class="tabs" id="nTabs"><button type="button" data-nt="all" class="on">すべて</button><button type="button" data-nt="friends">友だち</button><button type="button" data-nt="messages">メッセージ</button><button type="button" data-nt="activity">反応</button><button type="button" data-nt="system">お知らせ</button></div>
-<div class="sec"><h2>通知<button id="nReadAll" class="refresh" type="button">すべて既読</button></h2><div id="nList"></div></div>
+<div class="tabs" id="nTabs"><button type="button" data-nt="all" class="on" data-i18n="tab_all">すべて</button><button type="button" data-nt="friends" data-i18n="tab_friends">友だち</button><button type="button" data-nt="messages" data-i18n="tab_msgs">メッセージ</button><button type="button" data-nt="activity" data-i18n="tab_react">反応</button><button type="button" data-nt="system" data-i18n="tab_sys">お知らせ</button></div>
+<div class="sec"><h2 data-i18n="alerts">通知<button id="nReadAll" class="refresh" type="button">すべて既読</button></h2><div id="nList"></div></div>
 <div class="sec"><h2>通知設定</h2><div class="card">
 <label class="trow"><span>友だち（申請・承認）</span><input type="checkbox" id="nPrefFriends" checked></label>
 <label class="trow"><span>メッセージ（新着）</span><input type="checkbox" id="nPrefMessages" checked></label>
@@ -384,11 +451,11 @@ nav .ubadge{top:2px;right:8px}
 
 <!-- 検索 -->
 <div class="view hidden" id="v-search">
-<div class="sec"><h2>探す</h2><div class="card">
+<div class="sec"><h2 data-i18n="search_btn">探す</h2><div class="card">
 <input id="srQ" class="in" maxlength="30" placeholder="キーワードを入力して、検索ボタンを押す">
 <div class="tabs" id="sTabs" style="margin-top:12px"><button type="button" data-st="users" class="on">ユーザー</button><button type="button" data-st="moods">ムード</button><button type="button" data-st="moments">モーメント</button></div>
 <div class="chips hidden" id="srMoods" style="margin-top:10px"></div>
-<button id="srGo" class="primary" type="button">検索</button>
+<button id="srGo" class="primary" type="button" data-i18n="search_btn">検索</button>
 <button id="srBack" class="logout hidden" type="button">← 探す・おすすめに戻る</button>
 </div></div>
 <div id="srProfile" class="hidden"></div>
@@ -424,24 +491,33 @@ nav .ubadge{top:2px;right:8px}
 <div id="momPhotoBox" class="hidden"><div class="note" style="margin-top:10px">写真・長めの動画（即アップロード対応）</div><input id="momPhoto" type="file" accept="image/jpeg,image/png,image/webp,video/mp4,video/webm,video/quicktime" class="in"><div id="momUpProg" class="note" style="color:var(--accent);margin-top:4px"></div></div>
 <div id="cAreaBox" class="hidden"><div class="note" style="margin-top:10px">場所（位置情報を使わない場合は都道府県を選択）</div><select id="cArea" class="in"></select></div>
 <div id="momNote" class="note hidden" style="margin-top:8px">位置は約5kmの区画に丸めて保存します。</div>
-<button id="moodPost" class="primary" type="button">投稿する</button>
+<button id="moodPost" class="primary" type="button" data-i18n="post_btn">投稿する</button>
 <div id="moodMsg" class="msg"></div>
 </div></div></div>
 
-<!-- 友だち・メッセージ一覧 -->
+<!-- 友だち・メッセージ一覧・QRコード -->
 <div class="view hidden" id="v-friends">
-<div class="tabs" id="fTabs"><button type="button" data-ft="friends" class="on">友だち</button><button type="button" data-ft="msgs">メッセージ</button><button type="button" data-ft="reqs">申請</button><button type="button" data-ft="find">探す</button></div>
-<div id="ft-friends"><div class="sec"><h2>友だち一覧</h2><div class="card" id="friendList"></div></div><div class="sec"><h2>ブロック中</h2><div class="card" id="blockList"></div></div></div>
-<div id="ft-msgs" class="hidden"><div class="sec"><h2>トーク一覧<button id="grpNewBtn" class="refresh" type="button">＋ グループ作成</button></h2><div class="card" id="convList"></div></div></div>
+<div class="tabs" id="fTabs"><button type="button" data-ft="friends" class="on" data-i18n="tab_friends">友だち</button><button type="button" data-ft="msgs" data-i18n="tab_msgs">メッセージ</button><button type="button" data-ft="reqs" data-i18n="tab_reqs">申請</button><button type="button" data-ft="find" data-i18n="search_btn">探す・QR</button></div>
+<div id="ft-friends"><div class="sec"><h2 data-i18n="tab_friends">友だち一覧</h2><div class="card" id="friendList"></div></div><div class="sec"><h2>ブロック中</h2><div class="card" id="blockList"></div></div></div>
+<div id="ft-msgs" class="hidden"><div class="sec"><h2 data-i18n="tab_msgs">トーク一覧<button id="grpNewBtn" class="refresh" type="button">＋ グループ作成</button></h2><div class="card" id="convList"></div></div></div>
 <div id="ft-reqs" class="hidden"><div class="sec"><h2>受け取った申請</h2><div class="card" id="reqIn"></div></div><div class="sec"><h2>送った申請</h2><div class="card" id="reqOut"></div></div></div>
-<div id="ft-find" class="hidden"><div class="sec"><h2>NOVI IDで探す</h2><div class="card">
-<input id="findId" class="in" maxlength="21" placeholder="NOVI ID（例：novi_taro）">
-<button id="findGo" class="primary" type="button">検索</button>
+<div id="ft-find" class="hidden">
+<div class="sec"><h2>ログインIDで探す</h2><div class="card">
+<input id="findId" class="in" style="margin-top:0" maxlength="21" placeholder="ログインID（例：novi_taro）">
+<button id="findGo" class="primary" type="button" data-i18n="search_btn">検索</button>
 <div id="findRes" style="margin-top:12px"></div>
-</div></div></div>
+</div></div>
+<div class="sec"><h2>マイQRコード ＆ QR友だち追加</h2><div class="card" style="text-align:center">
+<div class="note" style="margin-bottom:10px">相手にこのQRコードを読み取ってもらうとすぐ申請できます</div>
+<img id="myQrImg" alt="マイQRコード" style="width:170px;height:170px;border-radius:14px;background:#fff;padding:8px;margin:0 auto;display:block">
+<div id="myQrLabel" class="note" style="margin-top:6px;font-weight:600;color:var(--text)"></div>
+<button id="btnScanQr" class="logout" type="button">📷 QRコードを読み取る（カメラ / 画像）</button>
+<input id="qrFileIn" type="file" accept="image/*" capture="environment" class="hidden">
+</div></div>
+</div>
 </div>
 
-<!-- チャット画面（個人・グループ共通） -->
+<!-- チャット画面 -->
 <div class="view hidden" id="v-chat"><div class="sec">
 <div class="chat-hdr">
 <button id="chBack" class="ico" type="button" aria-label="戻る">←</button>
@@ -479,81 +555,48 @@ nav .ubadge{top:2px;right:8px}
 <!-- 他ユーザープロフィール -->
 <div class="view hidden" id="v-uprof"><div class="sec"><h2><button id="upBack" class="refresh" type="button">← 戻る</button><span>プロフィール</span></h2></div><div id="upBody"></div></div>
 
-<!-- マイプロフィール -->
-<div class="view hidden" id="v-profile">
-<div class="tabs" id="pTabs">
-<button type="button" data-pt="show" class="on">表示</button>
-<button type="button" data-pt="edit">編集</button>
-<button type="button" data-pt="gfx">グラフィック</button>
-<button type="button" data-pt="theme">テーマ</button>
-<button type="button" data-pt="sec">安全</button>
-<button type="button" data-pt="sys">設定</button>
+<!-- 統合設定画面 -->
+<div class="view hidden" id="v-settings">
+<div class="sec"><h2><span data-i18n="pt_sys">設定</span><button id="setBackBtn" class="refresh" type="button">← プロフィールに戻る</button></h2></div>
+
+<div class="tabs" id="sSubTabs">
+<button type="button" data-st="general" class="on">一般・29項目</button>
+<button type="button" data-st="gfx" data-i18n="pt_gfx">グラフィック</button>
+<button type="button" data-st="theme" data-i18n="pt_theme">テーマ</button>
+<button type="button" data-st="sec" data-i18n="pt_sec">安全</button>
 </div>
 
-<!-- 表示タブ -->
-<div id="pt-show">
-<div class="cover" id="pCover"></div>
-<div class="phead">
-<div class="av-wrap" id="pAvWrap"><div class="avatar" id="pAvatar"></div><span class="av-acc" id="pAvAcc"></span></div>
-<div>
-<div class="pname"><span id="pName"></span><span id="pOnlineBadge" class="online-dot" title="オンライン"></span></div>
-<div id="pId" class="note"></div>
-<div id="pMail" class="note"></div>
-<div id="pStatusBtn" class="status-pill">🟢 ONLINE</div>
+<!-- 設定サブ①：一般・クイック・29項目 -->
+<div id="st-general">
+<div class="sec"><h2>クイック設定 ＆ プリセット</h2><div class="card">
+<div class="note" style="margin-bottom:8px">ワンタップ設定プリセット</div>
+<div class="chips" style="margin-bottom:12px">
+<button type="button" class="chip sm2" data-preset="standard">標準</button>
+<button type="button" class="chip sm2" data-preset="privacy">プライバシー重視</button>
+<button type="button" class="chip sm2" data-preset="creative">演出重視</button>
+<button type="button" class="chip sm2" data-preset="perf">軽量・省電力</button>
 </div>
-</div>
-<div class="card" style="margin-bottom:12px">
-<div class="note" style="font-weight:600;color:var(--text)">📊 NOVI INSIGHTS（あなたの活動分析）</div>
-<div class="stat-grid">
-<div class="stat-box"><div class="stat-num" id="insMoods">0</div><div class="stat-lbl">ムード投稿</div></div>
-<div class="stat-box"><div class="stat-num" id="insReacts">0</div><div class="stat-lbl">もらった共感</div></div>
-<div class="stat-box"><div class="stat-num" id="insMoments">0</div><div class="stat-lbl">モーメント</div></div>
-</div>
-</div>
-<div class="wg" id="wgView"></div>
-<button id="logout" class="logout" type="button">ログアウト</button>
-</div>
-
-<!-- 編集・着せ替えタブ -->
-<div id="pt-edit" class="hidden">
-<div class="sec"><h2>プロフィールを編集</h2><div class="card">
-<input id="eName" class="in" maxlength="30" placeholder="ユーザー名（30文字まで）">
-<textarea id="eBio" maxlength="200" placeholder="自己紹介（200文字まで）"></textarea>
-<button id="eSave" class="primary" type="button">保存</button>
-<div class="note" style="margin-top:14px">アイコン画像（ズーム・位置調整トリミング対応）</div>
-<button id="btnCropAvatar" class="logout" type="button" style="margin-top:6px">🖼️ アイコン画像を選択・調整</button>
-<input id="fAvatar" type="file" accept="image/jpeg,image/png,image/webp" class="hidden">
-<div class="note" style="margin-top:14px">カバー画像（ズーム・位置調整トリミング対応）</div>
-<button id="btnCropCover" class="logout" type="button" style="margin-top:6px">🌄 カバー画像を選択・調整</button>
-<input id="fCover" type="file" accept="image/jpeg,image/png,image/webp" class="hidden">
-<div id="eMsg" class="msg"></div>
+<label class="trow"><span>おやすみモード（通知音・バッジ抑制）</span><input type="checkbox" id="sysDnd"></label>
+<label class="trow"><span>文字サイズ拡大（アクセシビリティ）</span><input type="checkbox" id="sysLargeText"></label>
+<label class="trow"><span>オンライン状態を表示する</span><input type="checkbox" id="sysQuickOnline" checked></label>
+<label class="trow"><span>メッセージの既読を表示する</span><input type="checkbox" id="sysQuickRead"></label>
+<div class="trow"><span>本日の連続利用時間</span><span id="wellbeingTime" style="color:var(--accent);font-weight:600">0分</span></div>
 </div></div>
 
-<div class="sec"><h2>アイコン着せ替え ＆ カバー背景</h2><div class="card">
-<div class="note">アイコンフレーム（全画面に反映）</div>
-<div class="dress-grid" id="avFrameGrid"></div>
-<div class="note" style="margin-top:12px">アイコンアクセサリ（全画面に反映）</div>
-<div class="dress-grid" id="avAccGrid"></div>
-<div class="note" style="margin-top:12px">カバー背景プリセット</div>
-<div class="dress-grid" id="cvPresetGrid"></div>
+<div class="sec"><h2>すべての設定カテゴリー（タップで詳細設定）</h2><div class="card">
+<input id="sysSearch" class="in" style="margin-top:0;margin-bottom:10px" placeholder="設定を検索（例：アカウント、通知、プライバシー、言語）">
+<div id="sysCatList"></div>
 </div></div>
 
-<div class="sec"><h2>NOVI ID とプライバシー基本設定</h2><div class="card">
-<input id="eId" class="in" maxlength="20" placeholder="NOVI ID（英小文字・数字・_ の3〜20文字）">
-<select id="eScope" class="in"><option value="everyone">友だち申請：誰でも</option><option value="friends_of_friends">友だち申請：友だちの友だちだけ</option><option value="nobody">友だち申請：誰も受け付けない</option></select>
-<label class="trow" style="margin-top:10px"><span>オンライン状態を表示する（OFF時は常にオフライン）</span><input type="checkbox" id="eOnline" checked></label>
-<label class="trow"><span>既読を表示する（相手にも見えます）</span><input type="checkbox" id="eRead"></label>
-<label class="trow"><span>検索・おすすめに表示する</span><input type="checkbox" id="eDisc" checked></label>
-<label class="trow"><span>ムードを他の人に共有する</span><input type="checkbox" id="eShare" checked></label>
-<button id="eIdSave" class="primary" type="button">保存</button>
-<div id="eIdMsg" class="msg"></div>
+<div class="sec"><h2>データ管理 ＆ システム情報</h2><div class="card">
+<div class="note" style="color:#4DDB8A">● 認証 / データベース / ストレージ / リアルタイム通信：正常稼働中</div>
+<div class="note" style="margin-top:4px">NOVI マスタープラン v2.0（全29カテゴリー対応・無料・広告なし）</div>
+<button id="btnExportData" class="logout" type="button">📦 個人設定データをJSON形式で書き出す</button>
 </div></div>
-<div class="sec"><h2>ウィジェットを追加（最大20個）</h2><div class="card"><div class="chips" id="wgAdd"></div></div></div>
-<div class="sec"><h2>ウィジェットの並べ替え・編集</h2><div class="card" id="wgEdit"></div></div>
 </div>
 
-<!-- グラフィック・FPS・リキッドグラス・多言語・バッテリーキャラ -->
-<div class="view hidden" id="pt-gfx" class="hidden">
+<!-- 設定サブ②：グラフィック・FPS・リキッドグラス・多言語・バッテリーキャラ -->
+<div id="st-gfx" class="hidden">
 <div class="sec"><h2>表示とグラフィック（初期は標準・オフ）</h2><div class="card">
 <div class="trow">
 <div><div>ダークモード</div><div class="note" id="darkDesc">オン（画面全体がダーク表示）</div></div>
@@ -585,7 +628,7 @@ nav .ubadge{top:2px;right:8px}
 <div class="trow">
 <div><div>アニメーション演出</div><div class="note" id="animDesc">控えめ（標準）</div></div>
 <select id="selAnim" class="sm">
-<option value="subtle">控えめ（標準）</option><option value="normal">通常</option><option value="dynamic">ダイナミック</option><option value="off">OFF（省電力）</option>
+<option value="subtle">控えめ（標準）</option><option value="normal">通常</option><option value="dynamic">ダイナミック</option><option value="off">オフ（省電力）</option>
 </select>
 </div>
 <div class="trow">
@@ -596,7 +639,7 @@ nav .ubadge{top:2px;right:8px}
 
 <div class="sec"><h2>リキッドグラス ＆ バッテリー通知</h2><div class="card">
 <div class="trow">
-<div><div style="font-weight:600">リキッドグラス</div><div class="note" id="glassDesc">オフ（スイッチでONにして調整）</div></div>
+<div><div style="font-weight:600">リキッドグラス</div><div class="note" id="glassDesc">オフ（スイッチでオンにして調整）</div></div>
 <label class="switch"><input id="chkGlass" type="checkbox"><span class="slider-sw"></span></label>
 </div>
 <div id="glassControls">
@@ -639,8 +682,8 @@ nav .ubadge{top:2px;right:8px}
 </div></div>
 </div>
 
-<!-- テーマスタジオ -->
-<div class="view hidden" id="pt-theme">
+<!-- 設定サブ③：テーマスタジオ -->
+<div id="st-theme" class="hidden">
 <div class="sec"><h2>テーマスタジオ</h2><div class="card">
 <div class="note" style="margin-bottom:10px">デザイナーズプリセット（ワンタップ適用）</div>
 <div class="th-presets" id="thPresets"></div>
@@ -659,15 +702,31 @@ nav .ubadge{top:2px;right:8px}
 <div class="sec"><h2>保存したテーマ（10個まで）</h2><div class="card" id="thList"></div></div>
 </div>
 
-<!-- 安全タブ -->
-<div class="view hidden" id="pt-sec">
-<div class="sec"><h2>プライバシー（誰に見せるか）</h2><div class="card"><div id="pvBox"></div><button id="pvSave" class="primary" type="button">保存</button><div id="pvMsg" class="msg"></div></div></div>
-<div class="sec"><h2>メールアドレスの変更</h2><div class="card">
-<div class="note">新しいメールアドレスを入力すると確認メールが送信されます。</div>
+<!-- 設定サブ④：安全・外部連携・アカウント切り替え・ログアウト＆アカウント削除集約 -->
+<div id="st-sec" class="hidden">
+<div class="sec"><h2>外部アカウント連携（Google / Discord）</h2><div class="card">
+<div class="note" style="margin-bottom:10px">Google または Discord アカウントでのサインイン・連携を行います。</div>
+<div class="oauth-row" style="margin-top:0">
+<button id="btnSetOAuthGoogle" class="oauth-btn" type="button">Google 連携</button>
+<button id="btnSetOAuthDiscord" class="oauth-btn" type="button">Discord 連携</button>
+</div>
+</div></div>
+
+<div class="sec"><h2>アカウント切り替え</h2><div class="card">
+<div class="note" style="margin-bottom:10px">この端末に保存されたアカウントをワンタップで切り替えられます。</div>
+<div id="savedAccList"></div>
+<button id="btnAddAccount" class="primary" type="button" style="margin-top:12px">＋ 別のアカウントを追加・ログイン</button>
+</div></div>
+
+<div class="sec"><h2>メールアドレス設定・変更</h2><div class="card">
+<div class="note">現在のメールアドレス：<strong id="secCurEmail">未取得</strong></div>
+<div class="note" style="margin-top:6px">新しいメールアドレスを入力すると確認メールが送信されます。</div>
 <input id="newEmailIn" type="email" class="in" placeholder="新しいメールアドレス">
 <button id="btnChangeEmail" class="primary" type="button">確認メールを送る</button>
 <div id="emailMsg" class="msg"></div>
 </div></div>
+
+<div class="sec"><h2>プライバシー（誰に見せるか）</h2><div class="card"><div id="pvBox"></div><button id="pvSave" class="primary" type="button" data-i18n="save_btn">保存</button><div id="pvMsg" class="msg"></div></div></div>
 <div class="sec"><h2>2段階認証（認証アプリ）</h2><div class="card"><div id="mfaState" class="note"></div><div id="mfaSetup" style="margin-top:10px"></div><div id="mfaMsg" class="msg"></div></div></div>
 <div class="sec"><h2>パスワードの変更</h2><div class="card">
 <input id="pwNew" type="password" class="in" autocomplete="new-password" placeholder="新しいパスワード（8文字以上）">
@@ -675,35 +734,87 @@ nav .ubadge{top:2px;right:8px}
 <button id="pwSave" class="primary" type="button">変更する</button><div id="pwMsg" class="msg"></div></div></div>
 <div class="sec"><h2>ログイン履歴（直近20件）</h2><div class="card" id="lhBox"></div></div>
 <div class="sec"><h2>端末の管理</h2><div class="card" id="udBox"></div></div>
-<div class="sec"><button id="logoutAll" class="logout" type="button">すべての端末からログアウト</button></div>
+
+<div class="sec"><h2>ログアウト ＆ アカウント削除</h2><div class="card" style="border-color:color-mix(in srgb,var(--danger) 45%,var(--border))">
+<div class="note">現在のアカウントからサインアウトするか、すべての端末からログアウトできます。</div>
+<button id="secLogoutBtn" class="logout" type="button" data-i18n="logout_btn">ログアウト</button>
+<button id="logoutAll" class="logout" type="button">すべての端末からログアウト</button>
+<div style="border-top:1px solid var(--border);margin-top:16px;padding-top:14px">
+<div class="note" style="color:var(--danger)">アカウントを削除すると、プロフィール・ムード・モーメント・友だち・メッセージ履歴がすべて完全に消去され、元に戻せません。</div>
+<button id="btnDeleteAccount" class="logout" type="button" style="color:var(--danger);border-color:var(--danger);margin-top:10px">⚠️ アカウントを完全に削除する</button>
+</div>
+</div></div>
+</div>
 </div>
 
-<!-- 統合設定タブ（29カテゴリー・ナビカスタマイズ・データ管理） -->
-<div class="view hidden" id="pt-sys">
-<div class="sec"><h2>下部ナビゲーションのカスタマイズ</h2><div class="card">
-<div class="note" style="margin-bottom:8px">下部バーの項目を追加・削除（ON/OFF）や順番変更できます。</div>
-<div id="navCustList"></div>
-</div></div>
-<div class="sec"><h2>設定プリセット ＆ クイック設定</h2><div class="card">
-<div class="chips" style="margin-bottom:10px">
-<button type="button" class="chip sm2" data-preset="standard">STANDARD</button>
-<button type="button" class="chip sm2" data-preset="privacy">PRIVACY</button>
-<button type="button" class="chip sm2" data-preset="creative">CREATIVE</button>
-<button type="button" class="chip sm2" data-preset="perf">PERFORMANCE</button>
-</div>
-<label class="trow"><span>おやすみモード（通知音・バッジ抑制）</span><input type="checkbox" id="sysDnd"></label>
-<label class="trow"><span>文字サイズ拡大（アクセシビリティ）</span><input type="checkbox" id="sysLargeText"></label>
-<div class="trow"><span>本日の連続利用時間</span><span id="wellbeingTime" style="color:var(--accent);font-weight:600">0分</span></div>
-<button id="btnExportData" class="logout" type="button">📦 個人設定データをJSONエクスポート</button>
-</div></div>
-<div class="sec"><h2>NOVI 稼働ステータス ＆ 29カテゴリー仕様</h2><div class="card">
-<div class="note" style="color:#4DDB8A">● Auth / Database / Storage / Realtime：正常稼働中</div>
-<div class="note" style="margin-top:6px">NOVI COMPLETE MASTER PLAN v2.0（全29カテゴリー設定・無料・広告なし方針）</div>
-<input id="sysSearch" class="in" placeholder="設定カテゴリーを検索（例：通知、プライバシー、言語）">
-<div id="sysCatList" style="margin-top:10px"></div>
-</div></div>
+<!-- マイプロフィール（表示・編集・設定の3タブ） -->
+<div class="view hidden" id="v-profile">
+<div class="tabs" id="pTabs">
+<button type="button" data-pt="show" class="on" data-i18n="pt_show">表示</button>
+<button type="button" data-pt="edit" data-i18n="pt_edit">編集</button>
+<button type="button" data-pt="sys" data-i18n="pt_sys">設定</button>
 </div>
 
+<div id="pt-show">
+<div class="cover" id="pCover"></div>
+<div class="phead">
+<div class="av-wrap" id="pAvWrap"><div class="avatar" id="pAvatar"></div><span class="av-acc" id="pAvAcc"></span></div>
+<div>
+<div class="pname"><span id="pName"></span><span id="pOnlineBadge" class="online-dot" title="オンライン"></span></div>
+<div id="pId" class="note"></div>
+<div id="pStatusBtn" class="status-pill">🟢 オンライン</div>
+</div>
+</div>
+<div class="card" style="margin-bottom:12px">
+<div class="note" style="font-weight:600;color:var(--text)">📊 あなたの活動分析</div>
+<div class="stat-grid">
+<div class="stat-box"><div class="stat-num" id="insMoods">0</div><div class="stat-lbl">ムード投稿</div></div>
+<div class="stat-box"><div class="stat-num" id="insReacts">0</div><div class="stat-lbl">もらった共感</div></div>
+<div class="stat-box"><div class="stat-num" id="insMoments">0</div><div class="stat-lbl">モーメント</div></div>
+</div>
+</div>
+<div class="wg" id="wgView"></div>
+</div>
+
+<div id="pt-edit" class="hidden">
+<div class="sec"><h2>プロフィールを編集</h2><div class="card">
+<div class="note">名前（表示名・30文字まで）</div>
+<input id="eName" class="in" style="margin-top:4px" maxlength="30" placeholder="名前を入力">
+<div class="note" style="margin-top:10px">ログインID / ユーザーネーム（英小文字・数字・_ の3〜20文字）</div>
+<input id="eId" class="in" style="margin-top:4px" maxlength="20" placeholder="ログインID（例：novi_taro）">
+<div class="note" style="margin-top:10px">自己紹介（200文字まで）</div>
+<textarea id="eBio" style="margin-top:4px" maxlength="200" placeholder="自己紹介（200文字まで）"></textarea>
+<button id="eSave" class="primary" type="button" data-i18n="save_btn">保存</button>
+<div class="note" style="margin-top:14px">アイコン画像（ズーム・位置調整トリミング対応）</div>
+<button id="btnCropAvatar" class="logout" type="button" style="margin-top:6px">🖼️ アイコン画像を選択・調整</button>
+<input id="fAvatar" type="file" accept="image/jpeg,image/png,image/webp" class="hidden">
+<div class="note" style="margin-top:14px">カバー画像（ズーム・位置調整トリミング対応）</div>
+<button id="btnCropCover" class="logout" type="button" style="margin-top:6px">🌄 カバー画像を選択・調整</button>
+<input id="fCover" type="file" accept="image/jpeg,image/png,image/webp" class="hidden">
+<div id="eMsg" class="msg"></div>
+</div></div>
+
+<div class="sec"><h2>アイコン着せ替え ＆ カバー背景（相手にも反映）</h2><div class="card">
+<div class="note">アイコンフレーム（他のユーザーからも見えます）</div>
+<div class="dress-grid" id="avFrameGrid"></div>
+<div class="note" style="margin-top:12px">アイコンアクセサリ（他のユーザーからも見えます）</div>
+<div class="dress-grid" id="avAccGrid"></div>
+<div class="note" style="margin-top:12px">カバー背景プリセット</div>
+<div class="dress-grid" id="cvPresetGrid"></div>
+</div></div>
+
+<div class="sec"><h2>プライバシー基本設定</h2><div class="card">
+<select id="eScope" class="in" style="margin-top:0"><option value="everyone">友だち申請：誰でも</option><option value="friends_of_friends">友だち申請：友だちの友だちだけ</option><option value="nobody">友だち申請：誰も受け付けない</option></select>
+<label class="trow" style="margin-top:10px"><span>オンライン状態を表示する（OFF時は常にオフライン）</span><input type="checkbox" id="eOnline" checked></label>
+<label class="trow"><span>既読を表示する（相手にも見えます）</span><input type="checkbox" id="eRead"></label>
+<label class="trow"><span>検索・おすすめに表示する</span><input type="checkbox" id="eDisc" checked></label>
+<label class="trow"><span>ムードを他の人に共有する</span><input type="checkbox" id="eShare" checked></label>
+<button id="eIdSave" class="primary" type="button" data-i18n="save_btn">保存</button>
+<div id="eIdMsg" class="msg"></div>
+</div></div>
+<div class="sec"><h2>ウィジェットを追加（最大20個）</h2><div class="card"><div class="chips" id="wgAdd"></div></div></div>
+<div class="sec"><h2>ウィジェットの並べ替え・編集</h2><div class="card" id="wgEdit"></div></div>
+</div>
 </div>
 </main>
 
@@ -711,6 +822,22 @@ nav .ubadge{top:2px;right:8px}
 
 <nav id="bottomNav"></nav>
 </section>
+
+<!-- ========== アカウント削除確認モーダル（パスワード再認証＋「削除する」入力） ========== -->
+<div id="delAccModal" class="modal hidden"><div class="card" style="border-color:var(--danger)">
+<div style="font-size:17px;font-weight:700;color:var(--danger);margin-bottom:8px">⚠️ アカウントの完全削除</div>
+<div class="note">本人確認のためパスワードを入力し、下の欄に <strong style="color:var(--text)">削除する</strong> と入力してください。元には戻せません。</div>
+<div class="pw-wrap" style="margin-top:10px">
+<input id="delAccPassIn" class="in" style="margin-top:0;padding-right:46px" type="password" autocomplete="current-password" placeholder="現在のパスワードを入力">
+<button type="button" id="toggleDelEye" class="eye-btn" style="top:3px" aria-label="パスワードを表示">
+<svg id="delEyeIcon" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+</button>
+</div>
+<input id="delAccConfirmIn" class="in" placeholder="「削除する」と入力">
+<button id="delAccExecBtn" class="primary" type="button" style="background:var(--danger);margin-top:12px">完全に削除する</button>
+<button id="delAccCancelBtn" class="logout" type="button">キャンセル</button>
+<div id="delAccMsg" class="msg"></div>
+</div></div>
 
 <!-- ========== 通報モーダル ========== -->
 <div id="rptBox" class="modal hidden"><div class="card">
@@ -749,8 +876,15 @@ nav .ubadge{top:2px;right:8px}
 <!-- ========== グループ作成・設定モーダル ========== -->
 <div id="grpModal" class="modal hidden"><div class="card">
 <div style="font-size:16px;font-weight:600;margin-bottom:6px" id="grpModalTitle">グループを作成</div>
+<div style="display:flex;align-items:center;gap:12px;margin-top:8px">
+<div id="grpIconPreview" class="mini" style="width:54px;height:54px;font-size:24px">🌌</div>
+<div style="flex:1">
+<button id="grpPhotoBtn" class="del" type="button" style="width:100%">🖼️ 自分の写真から選ぶ</button>
+<input id="grpPhotoIn" type="file" accept="image/jpeg,image/png,image/webp" class="hidden">
+<div id="grpPhotoMsg" class="note" style="margin-top:4px">または下のアイコンを選択</div>
+</div>
+</div>
 <input id="grpNameIn" class="in" maxlength="30" placeholder="グループ名を入力">
-<div class="note" style="margin-top:10px">グループアイコンを選択</div>
 <div class="dress-grid" id="grpIconGrid"></div>
 <div class="note" style="margin-top:12px" id="grpMemLabel">参加する友だちを選択</div>
 <div id="grpMemberList" style="max-height:180px;overflow-y:auto;margin-top:6px"></div>
@@ -758,9 +892,16 @@ nav .ubadge{top:2px;right:8px}
 <button id="grpCloseBtn" class="logout" type="button">キャンセル</button>
 </div></div>
 
-<!-- ========== メッセージ長押しアクションモーダル ========== -->
+<!-- ========== メッセージ長押しアクション＋絵文字リアクションモーダル ========== -->
 <div id="msgActModal" class="modal hidden"><div class="card">
 <div id="msgActPreview" class="note" style="margin-bottom:10px;padding:8px;background:var(--bg);border-radius:10px"></div>
+<div class="chips" id="msgEmojiRow" style="justify-content:center;margin-bottom:12px">
+<button type="button" class="chip sm2" data-em="❤️">❤️</button>
+<button type="button" class="chip sm2" data-em="👍">👍</button>
+<button type="button" class="chip sm2" data-em="😂">😂</button>
+<button type="button" class="chip sm2" data-em="😮">😮</button>
+<button type="button" class="chip sm2" data-em="😢">😢</button>
+</div>
 <button id="actReplyBtn" class="primary" type="button">↩️ このメッセージに返信</button>
 <button id="actUnsendBtn" class="logout hidden" type="button" style="color:var(--danger);border-color:var(--danger)">🗑️ 送信取り消し（自分のメッセージ）</button>
 <button id="actReportBtn" class="logout hidden" type="button">⚠️ 通報する</button>
@@ -769,11 +910,11 @@ nav .ubadge{top:2px;right:8px}
 
 <!-- ========== ステータス選択モーダル ========== -->
 <div id="statusModal" class="modal hidden"><div class="card">
-<div style="font-size:16px;font-weight:600;margin-bottom:8px">NOVI STATUS 設定</div>
+<div style="font-size:16px;font-weight:600;margin-bottom:8px">ステータス設定</div>
 <div class="chips" id="stChips">
-<button type="button" class="chip sm2" data-st="🟢 ONLINE">🟢 ONLINE</button>
-<button type="button" class="chip sm2" data-st="🟡 BUSY">🟡 BUSY</button>
-<button type="button" class="chip sm2" data-st="🌙 RESTING">🌙 RESTING</button>
+<button type="button" class="chip sm2" data-st="🟢 オンライン">🟢 オンライン</button>
+<button type="button" class="chip sm2" data-st="🟡 取り込み中">🟡 取り込み中</button>
+<button type="button" class="chip sm2" data-st="🌙 おやすみ中">🌙 おやすみ中</button>
 </div>
 <input id="stCustomIn" class="in" maxlength="30" placeholder="カスタムひとこと（任意）">
 <button id="stSaveBtn" class="primary" type="button">更新する</button>
@@ -785,18 +926,32 @@ nav .ubadge{top:2px;right:8px}
 <div id="batEmoji" style="font-size:52px;margin-bottom:8px">🎀</div>
 <div id="batTitle" style="font-size:17px;font-weight:700;margin-bottom:6px">バッテリー残量 20%以下！</div>
 <div id="batSpeech" class="note" style="font-size:13px;color:var(--text);margin-bottom:14px"></div>
-<button id="batEcoBtn" class="primary" type="button">⚡ 省電力モードにする（15FPS・演出OFF）</button>
+<button id="batEcoBtn" class="primary" type="button">⚡ 省電力モードにする（15FPS・演出オフ）</button>
 <button id="batCloseBtn" class="logout" type="button">そのまま続ける</button>
+</div></div>
+
+<!-- ========== 着信ポップアップモーダル ========== -->
+<div id="incomingCallModal" class="modal hidden" style="z-index:98"><div class="card" style="text-align:center;border-color:#4DDB8A;box-shadow:0 0 32px rgba(77,219,138,.4)">
+<div style="font-size:44px;margin-bottom:8px" id="incCallIcon">📞</div>
+<div style="font-size:18px;font-weight:700" id="incCallerName">着信中</div>
+<div class="note" id="incCallType" style="margin:6px 0 16px">音声通話の着信があります</div>
+<div style="display:flex;gap:10px">
+<button id="incRejectBtn" class="logout" type="button" style="margin:0;border-color:var(--danger);color:var(--danger)">拒否</button>
+<button id="incAcceptBtn" class="primary" type="button" style="margin:0;background:#22c55e">応答する</button>
+</div>
 </div></div>
 
 <!-- ========== 音声・ビデオ通話オーバーレイ ========== -->
 <div id="callOverlay" class="call-screen hidden">
-<video id="callLocalVid" class="call-video hidden" autoplay muted playsinline></video>
-<div style="text-align:center;margin-top:20px">
-<div id="callTypeBadge" class="note" style="color:var(--accent);font-weight:600">音声通話中</div>
+<video id="callRemoteVid" class="call-remote-vid hidden" autoplay playsinline></video>
+<video id="callLocalVid" class="call-local-vid hidden" autoplay muted playsinline></video>
+<audio id="callRemoteAudio" autoplay></audio>
+<div style="text-align:center;margin-top:20px;z-index:96;text-shadow:0 2px 8px rgba(0,0,0,.8)">
+<div id="callTypeBadge" class="note" style="color:var(--accent);font-weight:600">音声通話</div>
 <div id="callPeerAv" class="mini" style="width:88px;height:88px;margin:18px auto 12px;font-size:36px"></div>
 <div id="callPeerName" style="font-size:22px;font-weight:700"></div>
-<div id="callTimer" style="font-size:14px;color:var(--sub);margin-top:6px">接続中... 00:00</div>
+<div id="callTimer" style="font-size:14px;color:var(--text);margin-top:6px">呼び出し中...</div>
+<div id="callErrNote" class="note" style="color:#ffd84d;margin-top:8px;max-width:300px"></div>
 </div>
 <div class="call-controls">
 <button id="callMuteBtn" class="call-btn" type="button" title="マイクミュート">🎤</button>
@@ -811,82 +966,343 @@ const SUPABASE_URL = "https://wnfcdvcxmcknngszqgby.supabase.co";
 const SUPABASE_KEY = "sb_publishable_lwUdAZRr69ZFUQxPVPVGgA_l9Z9eSLL";
 
 const $ = (id) => document.getElementById(id);
-let sb = null, mode = "login", me = null, selMood = null;
+let sb = null, mode = "login", me = null, currentUserEmail = "", selMood = null, addingAccount = false;
 const mk = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
+
+/* ---------- OAuth（Google / Discord） ---------- */
+async function signInWithProvider(provider){
+if (!sb) return;
+const { error } = await sb.auth.signInWithOAuth({
+provider,
+options: { redirectTo: location.origin }
+});
+if (error){
+const msg = $("authMsg");
+if (msg && !$("auth").classList.contains("hidden")){
+msg.textContent = "連携ログインに失敗しました：" + error.message;
+msg.className = "msg err";
+} else {
+alert("連携ログインに失敗しました：" + error.message);
+}
+}
+}
+
+/* ---------- PWA Manifest & アイコン動的生成 ---------- */
+(function initPwaAssets(){
+try{
+const c = document.createElement("canvas"); c.width = 512; c.height = 512;
+const ctx = c.getContext("2d");
+const g = ctx.createLinearGradient(0, 0, 512, 512);
+g.addColorStop(0, "#08090D"); g.addColorStop(1, "#2A2166");
+ctx.fillStyle = g; ctx.fillRect(0, 0, 512, 512);
+ctx.beginPath(); ctx.arc(256, 256, 150, 0, Math.PI * 2);
+ctx.fillStyle = "rgba(139,124,255,0.28)"; ctx.fill();
+ctx.fillStyle = "#FFFFFF"; ctx.font = "300 92px sans-serif"; ctx.textAlign = "center"; ctx.textBaseline = "middle";
+ctx.fillText("NOVI", 256, 262);
+const iconUrl = c.toDataURL("image/png");
+if ($("pwaIcon")) $("pwaIcon").href = iconUrl;
+const mf = {
+name: "NOVI — A NEW SOCIAL ERA.", short_name: "NOVI",
+start_url: location.pathname, display: "standalone",
+background_color: "#08090D", theme_color: "#08090D",
+icons: [{ src: iconUrl, sizes: "512x512", type: "image/png" }]
+};
+const blob = new Blob([JSON.stringify(mf)], { type: "application/manifest+json" });
+if ($("pwaManifest")) $("pwaManifest").href = URL.createObjectURL(blob);
+}catch(_){}
+})();
+
+/* ---------- マルチアカウント管理（保存・切り替え・パスワード再認証付き削除） ---------- */
+function getSavedAccounts(){
+try{ return JSON.parse(localStorage.getItem("novi_accounts") || "[]"); }catch(_){ return []; }
+}
+function saveAccountSession(session){
+if (!session || !session.user || !session.refresh_token) return;
+const list = getSavedAccounts();
+const u = session.user;
+const idx = list.findIndex(x => x.user_id === u.id);
+const entry = {
+user_id: u.id,
+email: u.email || "",
+username: prof.username || (u.user_metadata && u.user_metadata.display_name) || "NOVIユーザー",
+novi_id: prof.novi_id || (u.user_metadata && u.user_metadata.novi_id) || "",
+avatar_url: prof.avatar_url || null,
+refresh_token: session.refresh_token,
+access_token: session.access_token
+};
+if (idx >= 0) list[idx] = Object.assign(list[idx], entry);
+else list.unshift(entry);
+localStorage.setItem("novi_accounts", JSON.stringify(list.slice(0, 6)));
+}
+function removeSavedAccount(uid){
+const list = getSavedAccounts().filter(x => x.user_id !== uid);
+localStorage.setItem("novi_accounts", JSON.stringify(list));
+}
+async function switchToAccount(acc){
+if (!acc || !acc.refresh_token) return;
+try{
+const { data, error } = await sb.auth.setSession({
+access_token: acc.access_token,
+refresh_token: acc.refresh_token
+});
+if (error || !data.session){
+alert("このアカウントの有効期限が切れています。再度ログインしてください。");
+removeSavedAccount(acc.user_id);
+renderAccountSwitcher();
+return;
+}
+me = null;
+handleSession(data.session);
+}catch(e){
+alert("切り替えに失敗しました：" + e.message);
+}
+}
+function renderAccountSwitcher(){
+const box = $("savedAccList"); if (!box) return; box.textContent = "";
+const list = getSavedAccounts();
+if (!list.length){
+box.appendChild(mk("div", "note", "保存済みのアカウントはありません。"));
+return;
+}
+list.forEach(acc => {
+const isCurrent = acc.user_id === me;
+const row = mk("div", "acc-row");
+const left = mk("div", "prow-top"); left.style.width = "auto"; left.style.flex = "1";
+left.appendChild(avatarEl(acc.avatar_url, null, isCurrent ? { av_frame: prof.av_frame, av_acc: prof.av_acc } : null));
+const info = mk("div", "pinfo");
+const topLine = mk("div", "uname");
+topLine.appendChild(mk("span", "", acc.username || "NOVIユーザー"));
+if (isCurrent) topLine.appendChild(mk("span", "acc-cur", "使用中"));
+info.appendChild(topLine);
+info.appendChild(mk("div", "meta", (acc.novi_id ? "@" + acc.novi_id + "・" : "") + (acc.email || "")));
+left.appendChild(info);
+row.appendChild(left);
+
+if (!isCurrent){
+const bt = mk("div", "bt"); bt.style.width = "auto";
+const sw = mk("button", "del", "切替"); sw.type = "button"; sw.style.borderColor = "var(--accent)"; sw.style.color = "var(--accent)";
+sw.onclick = () => switchToAccount(acc);
+const rm = mk("button", "del", "削除"); rm.type = "button";
+rm.onclick = () => { removeSavedAccount(acc.user_id); renderAccountSwitcher(); };
+bt.append(sw, rm);
+row.appendChild(bt);
+}
+box.appendChild(row);
+});
+}
+
+async function executeDeleteAccount(){
+const pw = $("delAccPassIn").value;
+const val = $("delAccConfirmIn").value.trim();
+const m = $("delAccMsg");
+if (!pw){
+m.textContent = "現在のパスワードを入力してください。";
+m.className = "msg err";
+return;
+}
+if (val !== "削除する"){
+m.textContent = "確認のため「削除する」と正確に入力してください。";
+m.className = "msg err";
+return;
+}
+if (!currentUserEmail){
+m.textContent = "メールアドレスを確認できませんでした。";
+m.className = "msg err";
+return;
+}
+
+$("delAccExecBtn").disabled = true;
+m.textContent = "パスワードを確認中...";
+m.className = "msg";
+
+const { error: reauthErr } = await sb.auth.signInWithPassword({
+email: currentUserEmail,
+password: pw
+});
+if (reauthErr){
+$("delAccExecBtn").disabled = false;
+m.textContent = "パスワードが正しくありません。";
+m.className = "msg err";
+return;
+}
+
+m.textContent = "アカウントを削除しています...";
+const { error } = await sb.rpc("delete_my_account");
+$("delAccExecBtn").disabled = false;
+if (error){
+m.textContent = "削除できませんでした：" + error.message;
+m.className = "msg err";
+return;
+}
+removeSavedAccount(me);
+$("delAccModal").classList.add("hidden");
+try{ await sb.auth.signOut({ scope: "local" }); }catch(_){}
+showAuth();
+alert("アカウントを完全に削除しました。");
+}
 
 /* ---------- 多言語UI辞書 ---------- */
 const I18N = {
-ja:{home:"ホーム",mood:"ムード",moment:"モーメント",alerts:"通知",profile:"プロフィール",global_mood:"世界のムード",your_mood:"今のムードを投稿",my_mood:"あなたのムード",nearby_moments:"近くのモーメント",post_btn:"投稿する"},
-ko:{home:"홈",mood:"무드",moment:"모멘트",alerts:"알림",profile:"프로필",global_mood:"세계의 무드",your_mood:"지금 무드 올리기",my_mood:"나의 무드",nearby_moments:"주변 모멘트",post_btn:"게시하기"},
-en:{home:"Home",mood:"Mood",moment:"Moment",alerts:"Alerts",profile:"Profile",global_mood:"Global Mood",your_mood:"Post Your Mood",my_mood:"Your Mood",nearby_moments:"Nearby Moments",post_btn:"Post"},
-"zh-CN":{home:"首页",mood:"心情",moment:"瞬间",alerts:"通知",profile:"个人资料",global_mood:"世界心情",your_mood:"发布心情",my_mood:"你的心情",nearby_moments:"附近瞬间",post_btn:"发布"},
-"zh-TW":{home:"首頁",mood:"心情",moment:"瞬間",alerts:"通知",profile:"個人檔案",global_mood:"世界心情",your_mood:"發布心情",my_mood:"你的心情",nearby_moments:"附近瞬間",post_btn:"發布"},
-es:{home:"Inicio",mood:"Ánimo",moment:"Momento",alerts:"Alertas",profile:"Perfil",global_mood:"Ánimo Global",your_mood:"Publicar Ánimo",my_mood:"Tu Ánimo",nearby_moments:"Momentos Cercanos",post_btn:"Publicar"},
-fr:{home:"Accueil",mood:"Humeur",moment:"Moment",alerts:"Alertes",profile:"Profil",global_mood:"Humeur Mondiale",your_mood:"Publier Humeur",my_mood:"Votre Humeur",nearby_moments:"Moments Proches",post_btn:"Publier"},
-de:{home:"Start",mood:"Stimmung",moment:"Moment",alerts:"Mitteilungen",profile:"Profil",global_mood:"Weltstimmung",your_mood:"Stimmung teilen",my_mood:"Deine Stimmung",nearby_moments:"Momente in der Nähe",post_btn:"Posten"},
-pt:{home:"Início",mood:"Humor",moment:"Momento",alerts:"Alertas",profile:"Perfil",global_mood:"Humor Global",your_mood:"Postar Humor",my_mood:"Seu Humor",nearby_moments:"Momentos Próximos",post_btn:"Postar"}
+ja:{
+home:"ホーム",mood:"ムード",moment:"モーメント",alerts:"通知",profile:"プロフィール",friends:"友だち",search:"検索",
+global_mood:"世界のムード",your_mood:"今のムードを投稿",my_mood:"あなたのムード",nearby_moments:"近くのモーメント",
+post_btn:"投稿する",save_btn:"保存",logout_btn:"ログアウト",loading:"読み込み中...",reload:"更新",search_btn:"探す",
+create_btn:"＋ ムードやモーメントを作る",public_moods:"みんなのムード（匿名）",mood_history:"ムード履歴",
+archive_title:"アーカイブ（期限切れモーメント）",see_nearby:"近くを見る",
+moment_hint:"モーメント画面で位置情報を許可するか、場所を選ぶと、近くの投稿が見られます。",
+mood_ph:"ひとこと（任意）",vis_public:"公開",vis_friends:"フレンドのみ",vis_private:"非公開",
+tab_all:"すべて",tab_friends:"友だち",tab_msgs:"メッセージ",tab_react:"反応",tab_sys:"お知らせ",tab_reqs:"申請",
+pt_show:"表示",pt_edit:"編集",pt_gfx:"グラフィック",pt_theme:"テーマ",pt_sec:"安全",pt_sys:"設定",
+m_happy:"うれしい",m_sad:"かなしい",m_angry:"いかり",m_calm:"おだやか",m_excited:"わくわく",m_confused:"もやもや",m_empty:"からっぽ"
+},
+ko:{
+home:"홈",mood:"무드",moment:"모멘트",alerts:"알림",profile:"프로필",friends:"친구",search:"검색",
+global_mood:"세계의 무드",your_mood:"지금 무드 올리기",my_mood:"나의 무드",nearby_moments:"주변 모멘트",
+post_btn:"게시하기",save_btn:"저장",logout_btn:"로그아웃",loading:"불러오는 중...",reload:"새로고침",search_btn:"검색",
+create_btn:"＋ 무드나 모멘트 만들기",public_moods:"모두의 무드 (익명)",mood_history:"무드 기록",
+archive_title:"아카이브 (만료된 모멘트)",see_nearby:"주변 보기",
+moment_hint:"모멘트 화면에서 위치 정보를 허용하거나 지역을 선택하면 주변 게시물을 볼 수 있습니다.",
+mood_ph:"한마디 (선택사항)",vis_public:"공개",vis_friends:"친구만",vis_private:"비공개",
+tab_all:"전체",tab_friends:"친구",tab_msgs:"메시지",tab_react:"반응",tab_sys:"공지",tab_reqs:"요청",
+pt_show:"보기",pt_edit:"편집",pt_gfx:"그래픽",pt_theme:"테마",pt_sec:"보안",pt_sys:"설정",
+m_happy:"기쁨",m_sad:"슬픔",m_angry:"화남",m_calm:"평온",m_excited:"설렘",m_confused:"복잡미묘",m_empty:"공허함"
+},
+en:{
+home:"Home",mood:"Mood",moment:"Moment",alerts:"Alerts",profile:"Profile",friends:"Friends",search:"Search",
+global_mood:"Global Mood",your_mood:"Post Your Mood",my_mood:"Your Mood",nearby_moments:"Nearby Moments",
+post_btn:"Post",save_btn:"Save",logout_btn:"Log Out",loading:"Loading...",reload:"Refresh",search_btn:"Search",
+create_btn:"+ Create Mood or Moment",public_moods:"Public Moods (Anonymous)",mood_history:"Mood History",
+archive_title:"Archive (Expired Moments)",see_nearby:"See Nearby",
+moment_hint:"Allow location or choose an area in Moments to see nearby posts.",
+mood_ph:"Add a note (optional)",vis_public:"Public",vis_friends:"Friends Only",vis_private:"Private",
+tab_all:"All",tab_friends:"Friends",tab_msgs:"Messages",tab_react:"Activity",tab_sys:"System",tab_reqs:"Requests",
+pt_show:"View",pt_edit:"Edit",pt_gfx:"Graphics",pt_theme:"Theme",pt_sec:"Security",pt_sys:"Settings",
+m_happy:"Happy",m_sad:"Sad",m_angry:"Angry",m_calm:"Calm",m_excited:"Excited",m_confused:"Confused",m_empty:"Empty"
+},
+"zh-CN":{
+home:"首页",mood:"心情",moment:"瞬间",alerts:"通知",profile:"个人资料",friends:"好友",search:"搜索",
+global_mood:"世界心情",your_mood:"发布心情",my_mood:"你的心情",nearby_moments:"附近瞬间",
+post_btn:"发布",save_btn:"保存",logout_btn:"退出登录",loading:"加载中...",reload:"刷新",search_btn:"搜索",
+create_btn:"＋ 创建心情或瞬间",public_moods:"大家的心情（匿名）",mood_history:"心情历史",
+archive_title:"归档（已过期瞬间）",see_nearby:"查看附近",
+moment_hint:"在瞬间页面允许定位或选择地区即可查看附近动态。",
+mood_ph:"说点什么（可选）",vis_public:"公开",vis_friends:"仅好友",vis_private:"私密",
+tab_all:"全部",tab_friends:"好友",tab_msgs:"消息",tab_react:"互动",tab_sys:"系统",tab_reqs:"申请",
+pt_show:"展示",pt_edit:"编辑",pt_gfx:"画质",pt_theme:"主题",pt_sec:"安全",pt_sys:"设置",
+m_happy:"开心",m_sad:"难过",m_angry:"生气",m_calm:"平静",m_excited:"兴奋",m_confused:"迷茫",m_empty:"放空"
+},
+"zh-TW":{
+home:"首頁",mood:"心情",moment:"瞬間",alerts:"通知",profile:"個人檔案",friends:"好友",search:"搜尋",
+global_mood:"世界心情",your_mood:"發布心情",my_mood:"你的心情",nearby_moments:"附近瞬間",
+post_btn:"發布",save_btn:"儲存",logout_btn:"登出",loading:"載入中...",reload:"重新整理",search_btn:"搜尋",
+create_btn:"＋ 建立心情或瞬間",public_moods:"大家的心情（匿名）",mood_history:"心情紀錄",
+archive_title:"典藏（已過期瞬間）",see_nearby:"查看附近",
+moment_hint:"在瞬間頁面允許定位或選擇地區即可查看附近貼文。",
+mood_ph:"說點什麼（選填）",vis_public:"公開",vis_friends:"僅好友",vis_private:"私人",
+tab_all:"全部",tab_friends:"好友",tab_msgs:"訊息",tab_react:"互動",tab_sys:"公告",tab_reqs:"申請",
+pt_show:"顯示",pt_edit:"編輯",pt_gfx:"畫質",pt_theme:"主題",pt_sec:"安全",pt_sys:"設定",
+m_happy:"開心",m_sad:"難過",m_angry:"生氣",m_calm:"平靜",m_excited:"興奮",m_confused:"迷惘",m_empty:"放空"
+},
+es:{
+home:"Inicio",mood:"Ánimo",moment:"Momento",alerts:"Alertas",profile:"Perfil",friends:"Amigos",search:"Buscar",
+global_mood:"Ánimo Global",your_mood:"Publicar Ánimo",my_mood:"Tu Ánimo",nearby_moments:"Momentos Cercanos",
+post_btn:"Publicar",save_btn:"Guardar",logout_btn:"Cerrar sesión",loading:"Cargando...",reload:"Actualizar",search_btn:"Buscar",
+create_btn:"+ Crear Ánimo o Momento",public_moods:"Ánimos Públicos",mood_history:"Historial",
+archive_title:"Archivo",see_nearby:"Ver cercanos",moment_hint:"Permite ubicación o elige un área.",
+mood_ph:"Nota (opcional)",vis_public:"Público",vis_friends:"Amigos",vis_private:"Privado",
+tab_all:"Todo",tab_friends:"Amigos",tab_msgs:"Mensajes",tab_react:"Actividad",tab_sys:"Sistema",tab_reqs:"Solicitudes",
+pt_show:"Ver",pt_edit:"Editar",pt_gfx:"Gráficos",pt_theme:"Tema",pt_sec:"Seguridad",pt_sys:"Ajustes",
+m_happy:"Feliz",m_sad:"Triste",m_angry:"Enojado",m_calm:"Calmado",m_excited:"Emocionado",m_confused:"Confundido",m_empty:"Vacío"
+},
+fr:{
+home:"Accueil",mood:"Humeur",moment:"Moment",alerts:"Alertes",profile:"Profil",friends:"Amis",search:"Recherche",
+global_mood:"Humeur Mondiale",your_mood:"Publier Humeur",my_mood:"Votre Humeur",nearby_moments:"Moments Proches",
+post_btn:"Publier",save_btn:"Enregistrer",logout_btn:"Déconnexion",loading:"Chargement...",reload:"Actualiser",search_btn:"Rechercher",
+create_btn:"+ Créer",public_moods:"Humeurs Publiques",mood_history:"Historique",
+archive_title:"Archives",see_nearby:"Voir à proximité",moment_hint:"Autorisez la localisation.",
+mood_ph:"Un mot (optionnel)",vis_public:"Public",vis_friends:"Amis",vis_private:"Privé",
+tab_all:"Tout",tab_friends:"Amis",tab_msgs:"Messages",tab_react:"Activité",tab_sys:"Système",tab_reqs:"Demandes",
+pt_show:"Profil",pt_edit:"Modifier",pt_gfx:"Graphismes",pt_theme:"Thème",pt_sec:"Sécurité",pt_sys:"Paramètres",
+m_happy:"Heureux",m_sad:"Triste",m_angry:"En colère",m_calm:"Calme",m_excited:"Excité",m_confused:"Confus",m_empty:"Vide"
+},
+de:{
+home:"Start",mood:"Stimmung",moment:"Moment",alerts:"Mitteilungen",profile:"Profil",friends:"Freunde",search:"Suche",
+global_mood:"Weltstimmung",your_mood:"Stimmung teilen",my_mood:"Deine Stimmung",nearby_moments:"Momente in der Nähe",
+post_btn:"Posten",save_btn:"Speichern",logout_btn:"Abmelden",loading:"Laden...",reload:"Aktualisieren",search_btn:"Suchen",
+create_btn:"+ Erstellen",public_moods:"Öffentliche Stimmungen",mood_history:"Verlauf",
+archive_title:"Archiv",see_nearby:"In der Nähe",moment_hint:"Standort erlauben.",
+mood_ph:"Notiz (optional)",vis_public:"Öffentlich",vis_friends:"Freunde",vis_private:"Privat",
+tab_all:"Alle",tab_friends:"Freunde",tab_msgs:"Nachrichten",tab_react:"Aktivität",tab_sys:"System",tab_reqs:"Anfragen",
+pt_show:"Ansicht",pt_edit:"Bearbeiten",pt_gfx:"Grafik",pt_theme:"Theme",pt_sec:"Sicherheit",pt_sys:"Einstellungen",
+m_happy:"Glücklich",m_sad:"Traurig",m_angry:"Wütend",m_calm:"Ruhig",m_excited:"Aufgeregt",m_confused:"Verwirrt",m_empty:"Leer"
+},
+pt:{
+home:"Início",mood:"Humor",moment:"Momento",alerts:"Alertas",profile:"Perfil",friends:"Amigos",search:"Buscar",
+global_mood:"Humor Global",your_mood:"Postar Humor",my_mood:"Seu Humor",nearby_moments:"Momentos Próximos",
+post_btn:"Postar",save_btn:"Salvar",logout_btn:"Sair",loading:"Carregando...",reload:"Atualizar",search_btn:"Buscar",
+create_btn:"+ Criar",public_moods:"Humores Públicos",mood_history:"Histórico",
+archive_title:"Arquivo",see_nearby:"Ver próximos",moment_hint:"Permita localização.",
+mood_ph:"Nota (opcional)",vis_public:"Público",vis_friends:"Amigos",vis_private:"Privado",
+tab_all:"Tudo",tab_friends:"Amigos",tab_msgs:"Mensagens",tab_react:"Atividade",tab_sys:"Sistema",tab_reqs:"Pedidos",
+pt_show:"Perfil",pt_edit:"Editar",pt_gfx:"Gráficos",pt_theme:"Tema",pt_sec:"Segurança",pt_sys:"Configurações",
+m_happy:"Feliz",m_sad:"Triste",m_angry:"Bravo",m_calm:"Calmo",m_excited:"Animado",m_confused:"Confuso",m_empty:"Vazio"
+}
 };
+
+function tStr(key){ const d = I18N[gfx.lang] || I18N.ja; return d[key] || I18N.ja[key] || key; }
+function moodLabel(k){ return tStr("m_" + k); }
+
 function applyLanguage(lang){
+document.documentElement.lang = lang || "ja";
 const d = I18N[lang] || I18N.ja;
-document.querySelectorAll("[data-i18n]").forEach(el => { const k = el.dataset.i18n; if (d[k]) el.textContent = d[k]; });
+document.querySelectorAll("[data-i18n]").forEach(el => {
+const k = el.dataset.i18n;
+if (!d[k]) return;
+const childBtn = el.querySelector("button");
+if (childBtn && el.firstChild && el.firstChild.nodeType === 3) el.firstChild.nodeValue = d[k];
+else if (!childBtn) el.textContent = d[k];
+});
+document.querySelectorAll("[data-i18n-ph]").forEach(el => {
+const k = el.dataset.i18nPh;
+if (d[k]) el.placeholder = d[k];
+});
+if (typeof buildHq === "function") buildHq();
+if (typeof buildChips === "function") buildChips();
+if (typeof buildSearchChips === "function") buildSearchChips();
+if (typeof buildMcRows === "function"){ buildMcRows(); syncMcRows(); }
 renderBottomNav();
 }
 
-/* ---------- 下部ナビゲーション（SVGラインアイコン＋カスタマイズ） ---------- */
-const NAV_ITEMS_DEF = [
-{ id:"home", key:"home", on:true, svg:'<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>' },
-{ id:"mood", key:"mood", on:true, svg:'<circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/>' },
-{ id:"moment", key:"moment", on:true, svg:'<circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/>' },
-{ id:"alerts", key:"alerts", on:true, svg:'<path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/>' },
-{ id:"profile", key:"profile", on:true, svg:'<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>' },
-{ id:"friends", key:"friends", on:false, label:"友だち", svg:'<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>' },
-{ id:"search", key:"search", on:false, label:"検索", svg:'<circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>' }
+/* ---------- 下部ナビゲーション ---------- */
+const NAV_ITEMS = [
+{ id:"home", key:"home", svg:'<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>' },
+{ id:"mood", key:"mood", svg:'<circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/>' },
+{ id:"moment", key:"moment", svg:'<circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/>' },
+{ id:"friends", key:"friends", svg:'<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>' },
+{ id:"search", key:"search", svg:'<circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>' },
+{ id:"alerts", key:"alerts", svg:'<path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/>' },
+{ id:"profile", key:"profile", svg:'<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>' }
 ];
-let navItems = JSON.parse(localStorage.getItem("novi_nav_items") || "null") || NAV_ITEMS_DEF.map(x => Object.assign({}, x));
 
 function renderBottomNav(){
 const nav = $("bottomNav"); if (!nav) return; nav.textContent = "";
 const d = I18N[gfx.lang] || I18N.ja;
-navItems.filter(x => x.on).forEach(item => {
+NAV_ITEMS.forEach(item => {
 const btn = document.createElement("button"); btn.type = "button"; btn.dataset.go = item.id;
-if (curView === item.id) btn.classList.add("on");
-btn.innerHTML = `<svg viewBox="0 0 24 24">${item.svg}</svg><span>${d[item.key] || item.label || item.id}</span>`;
+if (curView === item.id || (curView === "settings" && item.id === "profile")) btn.classList.add("on");
+btn.innerHTML = `<svg viewBox="0 0 24 24">${item.svg}</svg><span>${d[item.key] || item.id}</span>`;
 if (item.id === "alerts") btn.appendChild(mk("span", "ubadge hidden", "0"));
+if (item.id === "friends") btn.appendChild(mk("span", "mbadge hidden", "0"));
 btn.onclick = () => go(item.id);
 nav.appendChild(btn);
 });
 }
-function renderNavCustomizer(){
-const box = $("navCustList"); if (!box) return; box.textContent = "";
-const d = I18N[gfx.lang] || I18N.ja;
-navItems.forEach((item, idx) => {
-const row = mk("div", "trow");
-const lbl = mk("span", "", d[item.key] || item.label || item.id);
-const bt = mk("div", "bt"); bt.style.width = "auto";
-const up = mk("button", "del", "↑"); up.type = "button";
-up.onclick = () => { if (idx === 0) return; [navItems[idx - 1], navItems[idx]] = [navItems[idx], navItems[idx - 1]]; saveNavCust(); };
-const dn = mk("button", "del", "↓"); dn.type = "button";
-dn.onclick = () => { if (idx === navItems.length - 1) return; [navItems[idx + 1], navItems[idx]] = [navItems[idx], navItems[idx + 1]]; saveNavCust(); };
-const tg = mk("button", "del", item.on ? "表示中" : "非表示"); tg.type = "button";
-if (item.on) tg.style.borderColor = "var(--accent)";
-tg.onclick = () => {
-if (item.id === "profile" && item.on) return alert("プロフィールは設定画面を開くため非表示にできません。");
-if (item.on && navItems.filter(x => x.on).length <= 2) return alert("最低2つは表示してください。");
-item.on = !item.on; saveNavCust();
-};
-bt.append(up, dn, tg); row.append(lbl, bt); box.appendChild(row);
-});
-}
-function saveNavCust(){
-localStorage.setItem("novi_nav_items", JSON.stringify(navItems));
-renderBottomNav(); renderNavCustomizer();
-}
 
-/* ---------- グラフィック・FPS・リキッドグラス・背景14種・バッテリー通知（初期OFF/標準） ---------- */
+/* ---------- グラフィック・FPS・リキッドグラス・背景14種・バッテリー通知 ---------- */
 const GFX_DEF = {
 dark:true, lang:"ja", font:"default", fps:60, anim:"subtle", wp:"standard",
 glass:false, blur:24, alpha:80, sat:160, glassColor:"aurora", glassLvl:"mid",
-batChar:"cute", avFrame:"none", avAcc:"none", cvPreset:"none", status:"🟢 ONLINE"
+batChar:"cute", avFrame:"none", avAcc:"none", cvPreset:"none", status:"🟢 オンライン"
 };
 let gfx = Object.assign({}, GFX_DEF, JSON.parse(localStorage.getItem("novi_gfx") || "{}"));
 
@@ -946,20 +1362,21 @@ if (gfx.wp === "photo" && savedPhoto){ ph.style.backgroundImage = `url("${savedP
 else { ph.style.opacity = "0"; }
 
 if ($("darkDesc")) $("darkDesc").textContent = gfx.dark ? "オン（画面全体がダーク表示）" : "オフ（ライト表示）";
-if ($("langDesc")) $("langDesc").textContent = $("selLang") ? $("selLang").options[$("selLang").selectedIndex].text : gfx.lang;
-if ($("fontDesc")) $("fontDesc").textContent = $("selFont") ? $("selFont").options[$("selFont").selectedIndex].text : gfx.font;
+if ($("selLang")) $("selLang").value = gfx.lang;
+if ($("langDesc") && $("selLang") && $("selLang").selectedIndex >= 0) $("langDesc").textContent = $("selLang").options[$("selLang").selectedIndex].text;
+if ($("fontDesc") && $("selFont") && $("selFont").selectedIndex >= 0) $("fontDesc").textContent = $("selFont").options[$("selFont").selectedIndex].text;
 if ($("fpsTargetVal")) $("fpsTargetVal").textContent = gfx.fps;
 if ($("rngFps")) $("rngFps").value = gfx.fps;
-if ($("animDesc")) $("animDesc").textContent = $("selAnim") ? $("selAnim").options[$("selAnim").selectedIndex].text : gfx.anim;
+if ($("animDesc") && $("selAnim") && $("selAnim").selectedIndex >= 0) $("animDesc").textContent = $("selAnim").options[$("selAnim").selectedIndex].text;
 const wpObj = WALLPAPERS.find(x => x.id === gfx.wp) || WALLPAPERS[0];
 if ($("wpDesc")) $("wpDesc").textContent = wpObj.name;
 if ($("chkGlass")) $("chkGlass").checked = !!gfx.glass;
-if ($("glassDesc")) $("glassDesc").textContent = gfx.glass ? "オン（下で自由に調整できます）" : "オフ（スイッチでONにして調整）";
+if ($("glassDesc")) $("glassDesc").textContent = gfx.glass ? "オン（下で自由に調整できます）" : "オフ（スイッチでオンにして調整）";
 if ($("glassControls")) $("glassControls").style.opacity = gfx.glass ? "1" : "0.45";
 if ($("valBlur")) $("valBlur").textContent = gfx.blur + "px";
 if ($("valAlpha")) $("valAlpha").textContent = gfx.alpha + "%";
 if ($("valSat")) $("valSat").textContent = gfx.sat + "%";
-if ($("pStatusBtn")) $("pStatusBtn").textContent = gfx.status || "🟢 ONLINE";
+if ($("pStatusBtn")) $("pStatusBtn").textContent = gfx.status || "🟢 オンライン";
 applyDressUp();
 }
 
@@ -1061,15 +1478,26 @@ bat.addEventListener("chargingchange", check);
 }).catch(() => {});
 }
 
-/* ---------- オンライン / オフライン自動連動 ---------- */
-let isOnlineNow = true;
+/* ---------- オンライン / オフライン自動連動 & ハートビート ---------- */
+let isOnlineNow = true, hbTimer = null;
 function updatePresenceUI(){
 const show = prof.online_status !== false && isOnlineNow;
 const dot = $("pOnlineBadge");
 if (dot){ dot.className = show ? "online-dot" : "offline-dot"; dot.title = show ? "オンライン" : "オフライン"; }
+if ($("sysQuickOnline")) $("sysQuickOnline").checked = prof.online_status !== false;
+if ($("sysQuickRead")) $("sysQuickRead").checked = prof.read_receipts === true;
 if (me && sb){
 sb.from("profiles").update({ online_status: show, last_active: new Date().toISOString() }).eq("user_id", me).then(() => {});
 }
+}
+function startHeartbeat(){
+if (hbTimer) clearInterval(hbTimer);
+hbTimer = setInterval(() => {
+if (me && document.visibilityState === "visible"){
+isOnlineNow = true;
+updatePresenceUI();
+}
+}, 60000);
 }
 document.addEventListener("visibilitychange", () => {
 isOnlineNow = document.visibilityState === "visible";
@@ -1102,13 +1530,15 @@ const CV_PRESETS = [
 
 function applyDressUp(){
 const av = $("pAvatar"), acc = $("pAvAcc"), cv = $("pCover");
+const curFrame = prof.av_frame || gfx.avFrame;
+const curAcc = prof.av_acc || gfx.avAcc;
 if (av){
 av.className = "avatar";
-const f = AV_FRAMES.find(x => x.id === gfx.avFrame);
+const f = AV_FRAMES.find(x => x.id === curFrame);
 if (f && f.cls) av.classList.add(f.cls);
 }
 if (acc){
-const a = AV_ACCS.find(x => x.id === gfx.avAcc);
+const a = AV_ACCS.find(x => x.id === curAcc);
 acc.textContent = a ? a.icon : "";
 }
 if (cv && !safeImg(prof.cover_url)){
@@ -1116,18 +1546,23 @@ const c = CV_PRESETS.find(x => x.id === gfx.cvPreset);
 cv.style.backgroundImage = c && c.bg ? c.bg : "";
 }
 }
+async function syncDressToServer(){
+if (!me || !sb) return;
+await sb.from("profiles").update({ av_frame: gfx.avFrame, av_acc: gfx.avAcc }).eq("user_id", me);
+prof.av_frame = gfx.avFrame; prof.av_acc = gfx.avAcc;
+}
 function buildDressUI(){
 const fg = $("avFrameGrid"), ag = $("avAccGrid"), cg = $("cvPresetGrid");
 if (!fg) return;
 fg.textContent = ""; ag.textContent = ""; cg.textContent = "";
 AV_FRAMES.forEach(f => {
 const b = mk("button", "dress-btn" + (gfx.avFrame === f.id ? " on" : ""), f.name); b.type = "button";
-b.onclick = () => { gfx.avFrame = f.id; saveGfxLocal(); applyDressUp(); buildDressUI(); };
+b.onclick = () => { gfx.avFrame = f.id; saveGfxLocal(); applyDressUp(); buildDressUI(); syncDressToServer(); };
 fg.appendChild(b);
 });
 AV_ACCS.forEach(a => {
 const b = mk("button", "dress-btn" + (gfx.avAcc === a.id ? " on" : ""), (a.icon ? a.icon + " " : "") + a.name); b.type = "button";
-b.onclick = () => { gfx.avAcc = a.id; saveGfxLocal(); applyDressUp(); buildDressUI(); };
+b.onclick = () => { gfx.avAcc = a.id; saveGfxLocal(); applyDressUp(); buildDressUI(); syncDressToServer(); };
 ag.appendChild(b);
 });
 CV_PRESETS.forEach(c => {
@@ -1137,32 +1572,71 @@ cg.appendChild(b);
 });
 }
 
-/* ---------- 認証・ナビ遷移 ---------- */
+/* ---------- 認証・オンボーディング ---------- */
 function showMsg(text, type){ const m = $("authMsg"); m.textContent = text; m.className = "msg " + (type || ""); }
 function setMode(m){
 mode = m;
-$("tabLogin").classList.toggle("on", m === "login"); $("tabSignup").classList.toggle("on", m === "signup");
+$("tabLogin").classList.toggle("on", m === "login");
+$("tabSignup").classList.toggle("on", m === "signup");
+$("signupIdField").classList.toggle("hidden", m !== "signup");
+$("nameField").classList.toggle("hidden", m !== "signup");
 $("nameField").style.display = m === "signup" ? "block" : "none";
-$("go").textContent = m === "login" ? "ログイン" : "アカウントを作成";
-$("pass").autocomplete = m === "login" ? "current-password" : "new-password";
+$("forgotWrap").classList.toggle("hidden", m !== "login");
+
+if (m === "login"){
+$("emailLabel").textContent = "メールアドレス または ログインID";
+$("email").type = "text";
+$("email").placeholder = "メールアドレス または ID";
+$("pass").autocomplete = "current-password";
+$("go").textContent = "ログイン";
+} else {
+$("emailLabel").textContent = "メールアドレス";
+$("email").type = "email";
+$("email").placeholder = "example@email.com";
+$("pass").autocomplete = "new-password";
+$("go").textContent = "アカウントを作成";
+}
 showMsg("");
 }
 function showAuth(){
-applyTheme(DEF); me = null; $("mfa").classList.add("hidden");
+applyTheme(DEF); me = null; currentUserEmail = ""; $("mfa").classList.add("hidden");
 document.querySelectorAll(".mbadge").forEach(b => b.classList.add("hidden"));
 if (notifTimer){ clearInterval(notifTimer); notifTimer = null; }
+if (hbTimer){ clearInterval(hbTimer); hbTimer = null; }
+if (callChannel){ sb.removeChannel(callChannel); callChannel = null; }
+if (rtMsgChannel){ sb.removeChannel(rtMsgChannel); rtMsgChannel = null; }
 setBadges(0); $("app").classList.add("hidden"); $("auth").classList.remove("hidden");
+$("recoveryBox").classList.add("hidden"); $("normalAuthBox").classList.remove("hidden");
+$("cancelAddAccBtn").classList.toggle("hidden", !addingAccount);
 }
 function showApp(user){
+addingAccount = false;
+$("cancelAddAccBtn").classList.add("hidden");
 $("auth").classList.add("hidden"); $("mfa").classList.add("hidden"); $("app").classList.remove("hidden");
 const meta = user.user_metadata || {};
-$("pName").textContent = meta.display_name || "NOVIユーザー";
-$("pMail").textContent = user.email || "";
+prof.username = meta.display_name || meta.full_name || prof.username || "NOVIユーザー";
+currentUserEmail = user.email || "";
+$("pName").textContent = prof.username;
+if ($("secCurEmail")) $("secCurEmail").textContent = currentUserEmail || "未取得";
 me = user.id; isOnlineNow = true;
+applyLanguage(gfx.lang);
 go("home");
 loadGlobal(); loadMine(); loadFeed();
-loadDesign(); loadProfile().then(() => { loadWidgets(); updatePresenceUI(); });
+loadDesign(); loadProfile().then(async () => {
+if (meta.novi_id && (!prof.novi_id || prof.novi_id.startsWith("user_"))){
+const cleanId = String(meta.novi_id).toLowerCase().replace(/[^a-z0-9_]/g, "").slice(0, 20);
+if (/^[a-z0-9_]{3,20}$/.test(cleanId)){
+await sb.from("profiles").upsert({ user_id: me, username: prof.username, novi_id: cleanId }, { onConflict: "user_id" });
+prof.novi_id = cleanId;
+renderProfile();
+}
+}
+const { data: sData } = await sb.auth.getSession();
+if (sData && sData.session) saveAccountSession(sData.session);
+loadWidgets(); updatePresenceUI(); startHeartbeat(); renderMyQr(); renderAccountSwitcher();
+});
 refreshUnread(); startNotif(); recordLogin();
+initCallSignaling(); initRealtimeMessages();
 }
 function go(view){
 curView = view;
@@ -1176,10 +1650,11 @@ if (view === "friends") ftab("friends");
 if (view === "alerts"){ loadNotifs(); loadPrefs(); }
 if (view === "search") openSearch();
 if (view === "home") loadHomeMoments();
+if (view === "settings") switchSettingsTab("general");
 }
 function errText(e){
 const t = (e && e.message || "").toLowerCase();
-if (t.includes("invalid login")) return "メールアドレスかパスワードが違います。";
+if (t.includes("invalid login")) return "メールアドレス（ID）またはパスワードが違います。";
 if (t.includes("already registered")) return "このメールアドレスは登録済みです。ログインしてください。";
 if (t.includes("password")) return "パスワードは8文字以上にしてください。";
 if (t.includes("email not confirmed")) return "メールの確認がまだです。届いたメールのリンクを開いてください。";
@@ -1187,24 +1662,85 @@ if (t.includes("rate limit")) return "短時間に試行しすぎです。少し
 return "エラー：" + (e && e.message || "不明なエラー");
 }
 async function submit(){
-const email = $("email").value.trim(), pass = $("pass").value, name = $("name").value.trim();
-if (!email || !pass) return showMsg("メールアドレスとパスワードを入力してください。", "err");
+const rawInput = $("email").value.trim(), pass = $("pass").value;
+if (!rawInput || !pass) return showMsg("入力欄をすべて埋めてください。", "err");
 if (mode === "signup" && pass.length < 8) return showMsg("パスワードは8文字以上にしてください。", "err");
 $("go").disabled = true; showMsg("処理中...");
+
 try{
 if (mode === "login"){
-const { error } = await sb.auth.signInWithPassword({ email, password: pass });
+let loginEmail = rawInput;
+if (!rawInput.includes("@")){
+const cleanId = rawInput.toLowerCase().replace(/^@/, "");
+const { data: resolvedEmail, error: idErr } = await sb.rpc("get_email_by_novi_id", { p_novi_id: cleanId });
+if (idErr || !resolvedEmail){
+throw new Error("Invalid login");
+}
+loginEmail = resolvedEmail;
+}
+const { error } = await sb.auth.signInWithPassword({ email: loginEmail, password: pass });
 if (error) throw error;
 } else {
+const regId = $("regLoginId").value.trim().toLowerCase().replace(/^@/, "");
+const name = $("name").value.trim();
+if (!/^[a-z0-9_]{3,20}$/.test(regId)){
+$("go").disabled = false;
+return showMsg("ログインIDは英小文字・数字・_ の3〜20文字にしてください。", "err");
+}
+const { data: existUser } = await sb.rpc("search_user", { p_novi_id: regId });
+if (existUser && existUser.length > 0){
+$("go").disabled = false;
+return showMsg("このログインIDはすでに使われています。", "err");
+}
 const { data, error } = await sb.auth.signUp({
-email, password: pass,
-options: { data: { display_name: name || "NOVIユーザー" }, emailRedirectTo: location.origin }
+email: rawInput,
+password: pass,
+options: {
+data: { display_name: name || regId, novi_id: regId },
+emailRedirectTo: location.origin
+}
 });
 if (error) throw error;
-if (!data.session) showMsg("確認メールを送りました。メール内のリンクを開いてからログインしてください。", "ok");
+if (data.session && data.user){
+await sb.from("profiles").upsert({
+user_id: data.user.id,
+username: name || regId,
+novi_id: regId
+}, { onConflict: "user_id" });
+} else {
+showMsg("確認メールを送りました。メール内のリンクを開いてからログインしてください。", "ok");
+}
 }
 }catch(e){ showMsg(errText(e), "err"); }
 $("go").disabled = false;
+}
+
+async function sendPasswordReset(){
+const raw = $("email").value.trim();
+if (!raw) return showMsg("上の欄にメールアドレス（またはID）を入力してから押してください。", "err");
+let targetEmail = raw;
+if (!raw.includes("@")){
+const { data } = await sb.rpc("get_email_by_novi_id", { p_novi_id: raw.toLowerCase().replace(/^@/, "") });
+if (!data) return showMsg("該当するIDが見つかりませんでした。", "err");
+targetEmail = data;
+}
+const { error } = await sb.auth.resetPasswordForEmail(targetEmail, { redirectTo: location.origin });
+showMsg(error ? "送信できませんでした：" + error.message : "パスワード再設定メールを送信しました。", error ? "err" : "ok");
+}
+
+async function saveRecoveredPassword(){
+const newPw = $("recPw").value;
+if (!newPw || newPw.length < 8) return showMsg("パスワードは8文字以上にしてください。", "err");
+$("recSaveBtn").disabled = true;
+const { error } = await sb.auth.updateUser({ password: newPw });
+$("recSaveBtn").disabled = false;
+if (error) return showMsg("更新できませんでした：" + error.message, "err");
+$("recoveryBox").classList.add("hidden");
+$("normalAuthBox").classList.remove("hidden");
+$("recPw").value = "";
+showMsg("パスワードを更新しました！", "ok");
+const { data } = await sb.auth.getSession();
+if (data && data.session) showApp(data.session.user);
 }
 
 /* ---------- ムード ---------- */
@@ -1215,9 +1751,9 @@ calm:["おだやか","#4DDB8A"], excited:["わくわく","#FF9A3D"], confused:["
 const VIS = { public:"公開", friends:"フレンドのみ", private:"非公開" };
 
 function buildChips(){
-const box = $("chips"); box.textContent = "";
+const box = $("chips"); if (!box) return; box.textContent = "";
 Object.keys(MOODS).forEach(k => {
-const b = mk("button", "chip", MOODS[k][0]); b.type = "button";
+const b = mk("button", "chip" + (selMood === k ? " on" : ""), moodLabel(k)); b.type = "button";
 b.style.setProperty("--c", MOODS[k][1]);
 b.onclick = () => { selMood = k; updatePreview(); box.querySelectorAll(".chip").forEach(c => c.classList.toggle("on", c === b)); };
 box.appendChild(b);
@@ -1234,17 +1770,17 @@ data.sort((a, b) => b.cnt - a.cnt);
 const top = MOODS[data[0].mood];
 if (top) orb.style.setProperty("--glow", top[1]);
 const gs = await sb.rpc("get_global_stats"); const pn = gs.data && gs.data[0] ? Number(gs.data[0].participants) : 0;
-cap.textContent = "直近24時間の公開ムード（" + total + "件" + (pn ? "・参加 " + pn + "人" : "") + "）";
+cap.textContent = tStr("global_mood") + "（" + total + "件" + (pn ? "・参加 " + pn + "人" : "") + "）";
 data.forEach(r => {
 const m = MOODS[r.mood]; if (!m) return;
 const row = mk("div", "bar"); row.style.setProperty("--c", m[1]);
 const i = mk("i"); i.style.width = Math.max(4, Math.round(r.cnt / total * 160)) + "px";
-row.append(mk("b", "", m[0]), i, mk("span", "", Math.round(r.cnt / total * 100) + "%"));
+row.append(mk("b", "", moodLabel(r.mood)), i, mk("span", "", Math.round(r.cnt / total * 100) + "%"));
 bars.appendChild(row);
 });
 }
-function fmt(t){ return new Date(t).toLocaleString("ja-JP", { month:"numeric", day:"numeric", hour:"2-digit", minute:"2-digit" }); }
-function fmtTime(t){ return new Date(t).toLocaleTimeString("ja-JP", { hour:"2-digit", minute:"2-digit" }); }
+function fmt(t){ return new Date(t).toLocaleString(gfx.lang || "ja-JP", { month:"numeric", day:"numeric", hour:"2-digit", minute:"2-digit" }); }
+function fmtTime(t){ return new Date(t).toLocaleTimeString(gfx.lang || "ja-JP", { hour:"2-digit", minute:"2-digit" }); }
 
 async function loadMine(){
 const latest = $("myLatest"), list = $("myList");
@@ -1260,7 +1796,7 @@ const mkItem = (r, withDel) => {
 const m = MOODS[r.mood] || ["?", "#888"];
 const it = mk("div", "item"); it.style.setProperty("--c", m[1]);
 const body = mk("div", "body");
-body.appendChild(mk("div", "", m[0] + (r.content ? "：" + r.content : "")));
+body.appendChild(mk("div", "", moodLabel(r.mood) + (r.content ? "：" + r.content : "")));
 body.appendChild(mk("div", "meta", fmt(r.created_at) + "・" + (VIS[r.visibility] || "")));
 it.append(mk("span", "dot"), body);
 if (withDel){ const d = mk("button", "del", "削除"); d.type = "button"; d.onclick = () => delMood(r.id); it.appendChild(d); }
@@ -1335,15 +1871,15 @@ const m = MOODS[r.mood] || ["?", "#888"];
 const it = mk("div", "item"); it.style.setProperty("--c", m[1]);
 if (idx === 0) it.style.borderTop = "0";
 const body = mk("div", "body");
-body.appendChild(mk("div", "", m[0] + (r.content ? "：" + r.content : "")));
+body.appendChild(mk("div", "", moodLabel(r.mood) + (r.content ? "：" + r.content : "")));
 body.appendChild(mk("div", "meta", fmt(r.created_at) + (r.is_mine ? "・あなたの投稿" : "")));
 it.classList.add("e-" + (r.effect || "orb"));
-const cb = mk("button", "react", "💬 コメント " + r.comment_count); cb.type = "button"; cb.style.marginTop = "8px";
+const cb = mk("button", "react", "💬 " + r.comment_count); cb.type = "button"; cb.style.marginTop = "8px";
 cb.onclick = () => openComments(r.id, body);
 body.appendChild(cb);
 if (!r.is_mine) body.appendChild(repBtn("mood", r.id));
 it.append(mk("span", "dot"), body);
-const b = mk("button", "react" + (r.reacted ? " on" : ""), (r.reacted ? "♥ 共感済み " : "♡ 共感 ") + r.reaction_count);
+const b = mk("button", "react" + (r.reacted ? " on" : ""), (r.reacted ? "♥ " : "♡ ") + r.reaction_count);
 b.type = "button";
 if (r.is_mine){ b.disabled = true; b.textContent = "♡ " + r.reaction_count; }
 else b.onclick = () => toggleReact(r.id, r.reacted, b);
@@ -1372,9 +1908,9 @@ el.appendChild(mk("p", "", text));
 }
 function updatePreview(){
 const color = ptype === "mood" && selMood ? MOODS[selMood][1] : "#8B7CFF";
-const label = ptype === "mood" && selMood ? MOODS[selMood][0] : "";
+const label = ptype === "mood" && selMood ? moodLabel(selMood) : "";
 const t = $("moodText").value.trim();
-renderFx($("prev"), selFx, color, (label ? label + "：" : "") + (t || "ここにプレビューが出ます"));
+renderFx($("prev"), selFx, color, (label ? label + "：" : "") + (t || "プレビュー"));
 }
 function setType(t){
 ptype = t;
@@ -1437,24 +1973,25 @@ function momentItem(r, reload){
 const it = mk("div", "item e-" + (r.effect || "orb")); it.style.setProperty("--c", "#8B7CFF");
 const body = mk("div", "body");
 if (r.poster_name){
-const h = mk("div", "prow-top"); h.style.marginBottom = "6px"; h.appendChild(avatarEl(r.poster_avatar));
+const h = mk("div", "prow-top"); h.style.marginBottom = "6px"; h.appendChild(avatarEl(r.poster_avatar, null, r.is_mine ? { av_frame: prof.av_frame, av_acc: prof.av_acc } : null));
 const w = mk("div", "pinfo"); w.appendChild(mk("div", "uname", r.poster_name + (r.is_mine ? "（あなた）" : ""))); w.appendChild(mk("div", "meta", "@" + r.poster_novi_id)); h.appendChild(w); body.appendChild(h);
 } else body.appendChild(mk("div", "meta", "匿名"));
 const raw = r.content || "";
 const vSplit = raw.split("\n[NOVI_VIDEO]:");
 body.appendChild(mk("div", "", vSplit[0]));
 if (vSplit[1] && vSplit[1].startsWith(SUPABASE_URL)){
-const vid = document.createElement("video"); vid.src = vSplit[1].trim(); vid.controls = true; vid.playsInline = true;
-vid.style.cssText = "max-width:100%;border-radius:12px;margin-top:8px;display:block;background:#000"; body.appendChild(vid);
+const vid = document.createElement("video"); vid.src = vSplit[1].trim(); vid.controls = true; vid.playsInline = true; vid.preload = "metadata";
+vid.addEventListener("ended", () => { vid.currentTime = 0; });
+vid.style.cssText = "width:100%;max-width:340px;border-radius:12px;margin-top:8px;display:block;background:#000"; body.appendChild(vid);
 }
 const ph = momentPhoto(r.photo_path); if (ph) body.appendChild(ph);
 const left = Math.max(1, Math.round((new Date(r.expires_at) - Date.now()) / 60000));
 body.appendChild(mk("div", "meta", "約" + Math.max(1, r.distance_km) + "km圏内・あと" + (left >= 60 ? Math.round(left / 60) + "時間" : left + "分")));
 const bt = mk("div", "bt"); bt.style.marginTop = "8px";
-const rb = mk("button", "react" + (r.reacted ? " on" : ""), (r.reacted ? "♥ 共感済み " : "♡ 共感 ") + r.reaction_count); rb.type = "button"; rb.style.setProperty("--c", "#8B7CFF");
+const rb = mk("button", "react" + (r.reacted ? " on" : ""), (r.reacted ? "♥ " : "♡ ") + r.reaction_count); rb.type = "button"; rb.style.setProperty("--c", "#8B7CFF");
 if (r.is_mine){ rb.disabled = true; rb.textContent = "♡ " + r.reaction_count; }
 else rb.onclick = async () => { rb.disabled = true; await call("toggle_moment_reaction", { p_moment: r.id }); reload(); };
-const cb = mk("button", "react", "💬 コメント " + r.comment_count); cb.type = "button"; cb.onclick = () => openMComments(r.id, body);
+const cb = mk("button", "react", "💬 " + r.comment_count); cb.type = "button"; cb.onclick = () => openMComments(r.id, body);
 bt.append(rb, cb);
 if (r.is_mine){ const d = mk("button", "react", "削除"); d.type = "button"; d.onclick = () => removeMoment(r, reload); bt.appendChild(d); }
 else bt.appendChild(repBtn("moment", r.id));
@@ -1476,7 +2013,7 @@ const { data, error } = await sb.rpc("get_nearby_moments", { p_lat: pos.lat, p_l
 box.textContent = "";
 if (!data.length) box.appendChild(mk("div", "note", "10km以内にモーメントはありません。"));
 data.slice(0, 3).forEach((r, i) => { const it = momentItem(r, loadHomeMoments); if (i === 0) it.style.borderTop = "0"; box.appendChild(it); });
-const m = mk("button", "del", "モーメント画面でもっと見る"); m.type = "button"; m.style.marginTop = "8px"; m.onclick = () => go("moment"); box.appendChild(m);
+const m = mk("button", "del", tStr("see_nearby")); m.type = "button"; m.style.marginTop = "8px"; m.onclick = () => go("moment"); box.appendChild(m);
 }
 async function loadArchive(){
 const box = $("arBox"); box.classList.remove("hidden"); box.textContent = "";
@@ -1513,9 +2050,9 @@ p.append(inp, send);
 /* ---------- ホームのムード投稿 ---------- */
 let hqMood = null;
 function buildHq(){
-const box = $("hqChips"); box.textContent = "";
+const box = $("hqChips"); if (!box) return; box.textContent = "";
 Object.keys(MOODS).forEach(k => {
-const b = mk("button", "chip sm2" + (hqMood === k ? " on" : ""), MOODS[k][0]); b.type = "button"; b.style.setProperty("--c", MOODS[k][1]);
+const b = mk("button", "chip sm2" + (hqMood === k ? " on" : ""), moodLabel(k)); b.type = "button"; b.style.setProperty("--c", MOODS[k][1]);
 b.onclick = () => { hqMood = hqMood === k ? null : k; buildHq(); }; box.appendChild(b);
 });
 }
@@ -1540,9 +2077,9 @@ buildChips(); buildSearchChips(); buildHq();
 }
 function syncMcRows(){ Object.keys(MOODS).forEach(k => { if (mcIn[k]){ mcIn[k][0].value = MOODS[k][1].toLowerCase(); mcIn[k][1].value = MOODS[k][1]; } }); }
 function buildMcRows(){
-const box = $("mcRows"); box.textContent = "";
+const box = $("mcRows"); if (!box) return; box.textContent = "";
 Object.keys(MOODS).forEach(k => {
-const row = mk("div", "trow"); row.appendChild(mk("label", "", MOODS[k][0]));
+const row = mk("div", "trow"); row.appendChild(mk("label", "", moodLabel(k)));
 const c = mk("input"); c.type = "color"; const t = mk("input"); t.type = "text"; t.maxLength = 7;
 c.oninput = () => { MOODS[k][1] = c.value.toUpperCase(); t.value = MOODS[k][1]; };
 t.oninput = () => { let v = t.value.trim(); if (v && v[0] !== "#") v = "#" + v; if (HEX.test(v)){ MOODS[k][1] = v.toUpperCase(); c.value = v.toLowerCase(); } };
@@ -1666,7 +2203,7 @@ thMsg("保存しました。", true); renderSaved(); return true;
 }
 async function loadDesign(){
 const { data } = await sb.from("profile_designs").select("theme,saved_themes,mood_colors").eq("user_id", me).maybeSingle();
-if (data && data.theme && data.theme._gfx){ gfx = Object.assign({}, gfx, data.theme._gfx); saveGfxLocal(); applyGfx(); }
+if (data && data.theme && data.theme._gfx){ gfx = Object.assign({}, gfx, data.theme._gfx); saveGfxLocal(); applyGfx(); applyLanguage(gfx.lang); }
 theme = cleanTheme(data && data.theme);
 savedThemes = (data && Array.isArray(data.saved_themes) ? data.saved_themes : []).filter(x => x && typeof x.name === "string").slice(0, 10);
 applyTheme(theme); syncThemeUI(); checkTheme(); renderSaved();
@@ -1686,36 +2223,70 @@ bt.append(use, del); row.appendChild(bt); box.appendChild(row);
 });
 }
 
-/* ---------- プロフィール ＆ トリミング調整 ---------- */
-let prof = { username: "NOVIユーザー" };
+/* ---------- プロフィール ---------- */
+let prof = { username: "NOVIユーザー", novi_id: "", av_frame: "none", av_acc: "none" };
 function safeImg(u){
 return typeof u === "string" && u.startsWith(SUPABASE_URL + "/storage/v1/object/public/profile-assets/") && !/["'()\\\s]/.test(u) ? u : null;
 }
 async function loadProfile(){
-const { data } = await sb.from("profiles").select("username,bio,avatar_url,cover_url,novi_id,request_scope,read_receipts,discoverable,mood_sharing,online_status").eq("user_id", me).maybeSingle();
-if (data) prof = data;
+const { data } = await sb.from("profiles").select("username,bio,avatar_url,cover_url,novi_id,request_scope,read_receipts,discoverable,mood_sharing,online_status,av_frame,av_acc").eq("user_id", me).maybeSingle();
+if (data){
+prof = Object.assign({}, prof, data);
+if (data.av_frame) gfx.avFrame = data.av_frame;
+if (data.av_acc) gfx.avAcc = data.av_acc;
+saveGfxLocal(); buildDressUI();
+}
 $("eName").value = prof.username || ""; $("eBio").value = prof.bio || "";
 $("eId").value = prof.novi_id || ""; $("eScope").value = prof.request_scope || "everyone";
 $("eOnline").checked = prof.online_status !== false;
 $("eRead").checked = prof.read_receipts === true; $("eDisc").checked = prof.discoverable !== false; $("eShare").checked = prof.mood_sharing !== false;
+if ($("sysQuickOnline")) $("sysQuickOnline").checked = prof.online_status !== false;
+if ($("sysQuickRead")) $("sysQuickRead").checked = prof.read_receipts === true;
 renderProfile();
 }
 function renderProfile(){
 $("pName").textContent = prof.username || "NOVIユーザー";
-$("pId").textContent = prof.novi_id ? "@" + prof.novi_id : "";
+$("pId").textContent = prof.novi_id ? "@" + prof.novi_id : "@未設定";
 const a = safeImg(prof.avatar_url), c = safeImg(prof.cover_url);
 $("pAvatar").style.backgroundImage = a ? 'url("' + a + '")' : "";
 $("pCover").style.backgroundImage = c ? 'url("' + c + '")' : "";
 applyDressUp();
 renderWidgets();
+renderMyQr();
+}
+function renderMyQr(){
+const img = $("myQrImg"), lbl = $("myQrLabel");
+if (!img || !prof.novi_id) return;
+const qrData = encodeURIComponent("NOVI_ID:" + prof.novi_id);
+img.src = "https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=" + qrData;
+if (lbl) lbl.textContent = "@" + prof.novi_id;
 }
 function eMsg(text, ok){ const m = $("eMsg"); m.textContent = text; m.className = "msg " + (ok ? "ok" : "err"); }
 async function saveProfile(){
-const u = $("eName").value.trim(), b = $("eBio").value.trim();
-if (!u || u.length > 30) return eMsg("ユーザー名は1〜30文字で入力してください。", false);
-const { error } = await sb.from("profiles").update({ username: u, bio: b || null }).eq("user_id", me);
-if (error) return eMsg("保存できませんでした：" + error.message, false);
-prof.username = u; prof.bio = b || null; renderProfile(); eMsg("保存しました。", true);
+const u = $("eName").value.trim();
+const rawId = $("eId").value.trim().toLowerCase().replace(/^@/, "");
+const b = $("eBio").value.trim();
+if (!u || u.length > 30) return eMsg("名前は1〜30文字で入力してください。", false);
+const finalId = rawId || prof.novi_id || ("user_" + me.replace(/-/g, "").slice(0, 8));
+if (!/^[a-z0-9_]{3,20}$/.test(finalId)) return eMsg("ログインIDは英小文字・数字・_ の3〜20文字にしてください。", false);
+$("eSave").disabled = true;
+const { error } = await sb.from("profiles").upsert({
+user_id: me,
+username: u,
+novi_id: finalId,
+bio: b || null,
+av_frame: gfx.avFrame,
+av_acc: gfx.avAcc
+}, { onConflict: "user_id" });
+await sb.auth.updateUser({ data: { display_name: u, novi_id: finalId } });
+$("eSave").disabled = false;
+if (error) return eMsg(error.code === "23505" ? "このログインIDはすでに使われています。" : "保存できませんでした：" + error.message, false);
+prof.username = u; prof.novi_id = finalId; prof.bio = b || null;
+$("eId").value = finalId;
+renderProfile();
+const { data: sData } = await sb.auth.getSession();
+if (sData && sData.session) saveAccountSession(sData.session);
+eMsg("保存しました。", true);
 }
 
 let cropState = { kind:"avatar", img:null, zoom:1, ox:0, oy:0 };
@@ -1810,7 +2381,7 @@ const c = mk("div", "wcard w-" + w.size);
 c.appendChild(mk("div", "wt", WT[w.type]));
 let t = "";
 if (w.type === "bio") t = prof.bio || "自己紹介はまだありません。";
-else if (w.type === "mood") t = lastMood ? (MOODS[lastMood.mood] ? MOODS[lastMood.mood][0] : "") + (lastMood.content ? "：" + lastMood.content : "") : "まだムードがありません。";
+else if (w.type === "mood") t = lastMood ? moodLabel(lastMood.mood) + (lastMood.content ? "：" + lastMood.content : "") : "まだムードがありません。";
 else if (w.type === "moment") t = "表示中のモーメント " + (stats ? Number(stats.moments) : 0) + " 件";
 else if (w.type === "stats") t = stats ? "ムード " + Number(stats.moods) + "　共感 " + Number(stats.reactions) + "　コメント " + Number(stats.comments) : "集計できませんでした。";
 else t = w.content || "";
@@ -1854,38 +2425,86 @@ row.appendChild(bt); box.appendChild(row);
 });
 }
 
-/* ---------- 友だち・申請・グループ・検索 ---------- */
-let chatTimer = null, cachedFriends = [], localGroups = JSON.parse(localStorage.getItem("novi_groups") || "[]");
-let chat = { id:null, name:"", avatar:null, canSend:true, reply:null, isGroup:false, groupObj:null, online:false };
+/* ---------- 友だち・申請・グループ（未読カウント対応）・リアルタイム・タイピング・リアクション ---------- */
+let chatTimer = null, rtMsgChannel = null, cachedFriends = [], dressCache = {};
+let grpLastSeen = JSON.parse(localStorage.getItem("novi_grp_seen") || "{}");
+let grpUnreadMap = {};
+let chat = { id:null, peerId:null, name:"", avatar:null, canSend:true, reply:null, isGroup:false, groupObj:null, online:false, peerTyping:false };
+
+function initRealtimeMessages(){
+if (!sb || !me) return;
+if (rtMsgChannel) sb.removeChannel(rtMsgChannel);
+rtMsgChannel = sb.channel("novi-realtime-msgs", { config: { broadcast: { self: false } } })
+.on("postgres_changes", { event: "*", schema: "public", table: "messages" }, () => {
+if (curView === "chat" && !chat.isGroup) loadChat(false);
+refreshMsgBadge();
+})
+.on("postgres_changes", { event: "*", schema: "public", table: "group_messages" }, ({ new: row }) => {
+if (curView === "chat" && chat.isGroup && row && row.group_id === chat.id){
+grpLastSeen[chat.id] = new Date().toISOString();
+localStorage.setItem("novi_grp_seen", JSON.stringify(grpLastSeen));
+loadChat(false);
+}
+if (curView === "friends") loadConvs();
+refreshMsgBadge();
+})
+.on("postgres_changes", { event: "*", schema: "public", table: "message_reactions" }, () => {
+if (curView === "chat") loadChat(false);
+})
+.on("broadcast", { event: "typing" }, ({ payload }) => {
+if (!payload || payload.convId !== chat.id || payload.from === me) return;
+if (curView === "chat"){
+$("chSub").innerHTML = '<span style="color:var(--accent);font-weight:600">💬 入力中...</span>';
+clearTimeout(chat._typTimer);
+chat._typTimer = setTimeout(() => {
+if (chat.isGroup && chat.groupObj) $("chSub").textContent = chat.groupObj.memberCount + "人のメンバー";
+else $("chSub").innerHTML = chat.online ? '<span class="online-dot"></span> オンライン' : '<span class="offline-dot"></span> オフライン';
+}, 2500);
+}
+})
+.subscribe();
+}
+
+let lastTypingSent = 0;
+function notifyTyping(){
+if (!rtMsgChannel || !chat.id || Date.now() - lastTypingSent < 1800) return;
+lastTypingSent = Date.now();
+rtMsgChannel.send({ type: "broadcast", event: "typing", payload: { convId: chat.id, from: me } });
+}
 
 async function call(name, args){
 const { data, error } = await sb.rpc(name, args || {});
 if (error){ alert(error.message); return { ok:false }; }
 return { ok:true, data:data };
 }
-function avatarEl(url, emoji){
+function avatarEl(url, emoji, dressObj){
 const wrap = mk("div", "av-wrap");
 const d = mk("div", "mini");
-const f = AV_FRAMES.find(x => x.id === gfx.avFrame);
+if (dressObj && dressObj.av_frame){
+const f = AV_FRAMES.find(x => x.id === dressObj.av_frame);
 if (f && f.cls) d.classList.add(f.cls);
+}
 const a = safeImg(url);
 if (a) d.style.backgroundImage = 'url("' + a + '")';
 else if (emoji) d.textContent = emoji;
 wrap.appendChild(d);
-const acc = AV_ACCS.find(x => x.id === gfx.avAcc);
-if (!emoji && acc && acc.icon){ const sp = mk("span", "av-acc", acc.icon); wrap.appendChild(sp); }
+if (dressObj && dressObj.av_acc && !emoji){
+const acc = AV_ACCS.find(x => x.id === dressObj.av_acc);
+if (acc && acc.icon){ const sp = mk("span", "av-acc", acc.icon); wrap.appendChild(sp); }
+}
 return wrap;
 }
 function personRow(p, buttons){
 const r = mk("div", "prow");
 const top = mk("div", "prow-top");
-top.appendChild(avatarEl(p.avatar_url, p.emoji));
+const dObj = p.isSelf ? { av_frame: prof.av_frame, av_acc: prof.av_acc } : (dressCache[p.user_id] || null);
+top.appendChild(avatarEl(p.avatar_url, p.emoji, dObj));
 const i = mk("div", "pinfo");
 const un = mk("div", "uname");
 un.appendChild(mk("span", "", p.username));
 if (p.online_status === true) un.appendChild(mk("span", "online-dot"));
 i.appendChild(un);
-i.appendChild(mk("div", "meta", p.isGroup ? (p.members.length + "人のグループ") : ("@" + p.novi_id)));
+i.appendChild(mk("div", "meta", p.isGroup ? (p.memberCount + "人のグループ") : ("@" + p.novi_id)));
 top.appendChild(i); r.appendChild(top);
 const b = mk("div", "bt");
 buttons.forEach(x => { const e = mk("button", "del", x[0]); e.type = "button"; e.onclick = x[1]; if (x[2]) e.disabled = true; b.appendChild(e); });
@@ -1895,15 +2514,22 @@ function ftab(k){
 ["friends", "msgs", "reqs", "find"].forEach(x => $("ft-" + x).classList.toggle("hidden", x !== k));
 document.querySelectorAll("#fTabs button").forEach(b => b.classList.toggle("on", b.dataset.ft === k));
 if (k === "friends") loadFriendList(); if (k === "msgs") loadConvs(); if (k === "reqs") loadReqs();
+if (k === "find") renderMyQr();
 }
 function empty(box, t){ box.textContent = ""; box.appendChild(mk("div", "note", t)); }
+async function fetchDressForUsers(uids){
+if (!uids || !uids.length) return;
+const { data } = await sb.from("profiles").select("user_id,av_frame,av_acc").in("user_id", uids);
+if (data) data.forEach(x => { dressCache[x.user_id] = x; });
+}
 async function loadFriendList(){
 const box = $("friendList"), bl = $("blockList");
 const r = await sb.rpc("get_friends"); box.textContent = "";
 if (r.error) empty(box, "読み込めませんでした：" + r.error.message);
-else if (!r.data.length){ cachedFriends = []; empty(box, "まだ友だちがいません。「探す」からNOVI IDで申請できます。"); }
+else if (!r.data.length){ cachedFriends = []; empty(box, "まだ友だちがいません。「探す・QR」から申請できます。"); }
 else {
 cachedFriends = r.data;
+await fetchDressForUsers(r.data.map(x => x.user_id));
 r.data.forEach(p => box.appendChild(personRow(p, [
 ["プロフィール", () => openUserProfile(p.user_id)],
 ["メッセージ", () => startChat(p)],
@@ -1918,25 +2544,51 @@ else b.data.forEach(p => bl.appendChild(personRow(Object.assign({ avatar_url: nu
 }
 async function startChat(p){
 const c = await call("start_conversation", { p_user: p.user_id });
-if (c.ok) openChat(c.data, p.username, true, p.avatar_url, false, null, p.online_status);
+if (c.ok) openChat(c.data, p.username, true, p.avatar_url, false, null, p.online_status, p.user_id);
 }
 async function unfriend(p){ if (!confirm(p.username + " さんを友だちから外しますか？")) return; await call("remove_friend", { p_user: p.user_id }); loadFriendList(); }
 async function blockU(p){
 if (!confirm(p.username + " さんをブロックしますか？")) return;
 await call("block_user", { p_user: p.user_id }); loadFriendList();
 }
+async function calcGroupUnread(groups){
+grpUnreadMap = {};
+for (const g of groups){
+const since = grpLastSeen[g.group_id] || "1970-01-01T00:00:00Z";
+const { data } = await sb.from("group_messages")
+.select("id")
+.eq("group_id", g.group_id)
+.neq("sender_id", me)
+.gt("created_at", since);
+grpUnreadMap[g.group_id] = Array.isArray(data) ? data.length : 0;
+}
+}
 async function loadConvs(){
-const box = $("convList"); const r = await sb.rpc("get_conversations"); box.textContent = "";
-localGroups.forEach(g => {
-const row = personRow({ username: g.name, emoji: g.icon, isGroup: true, members: g.members }, [
-["トークを開く", () => openChat(g.id, g.name, true, null, true, g, true)]
+const box = $("convList"); box.textContent = "";
+const gr = await sb.rpc("get_my_groups");
+const groups = (!gr.error && Array.isArray(gr.data)) ? gr.data : [];
+if (groups.length) await calcGroupUnread(groups);
+
+groups.forEach(g => {
+const isUrl = safeImg(g.icon);
+const gObj = { id: g.group_id, name: g.name, icon: isUrl ? "🌌" : g.icon, iconUrl: isUrl, memberCount: g.member_count, memberIds: g.member_ids || [] };
+const row = personRow({ username: g.name, avatar_url: isUrl, emoji: isUrl ? null : g.icon, isGroup: true, memberCount: g.member_count }, [
+["トークを開く", () => openChat(g.group_id, g.name, true, isUrl, true, gObj, true, null)]
 ]);
+const info = row.querySelector(".pinfo");
+const gUn = grpUnreadMap[g.group_id] || 0;
+if (gUn > 0) info.firstChild.appendChild(mk("span", "badge", String(gUn)));
+const cleanLast = (g.last_content || "").replace(/\[NOVI_(IMG|VIDEO)\]:\S+/g, "[メディア]");
+if (cleanLast) info.appendChild(mk("div", "meta", cleanLast.slice(0, 38)));
 box.appendChild(row);
 });
-if (r.error){ if (!localGroups.length) empty(box, "読み込めませんでした：" + r.error.message); return; }
-if (!r.data.length && !localGroups.length) return empty(box, "まだ会話がありません。「友だち」からメッセージを始められます。");
+
+const r = await sb.rpc("get_conversations");
+if (r.error){ if (!groups.length) empty(box, "読み込めませんでした：" + r.error.message); return; }
+if (!r.data.length && !groups.length) return empty(box, "まだ会話がありません。「友だち」からメッセージを始められます。");
+await fetchDressForUsers(r.data.map(x => x.user_id));
 r.data.forEach(c => {
-const row = personRow(c, [["開く", () => openChat(c.conversation_id, c.username, c.can_send, c.avatar_url, false, null, c.online_status)]]);
+const row = personRow(c, [["開く", () => openChat(c.conversation_id, c.username, c.can_send, c.avatar_url, false, null, c.online_status, c.user_id)]]);
 const info = row.querySelector(".pinfo");
 if (Number(c.unread) > 0) info.firstChild.appendChild(mk("span", "badge", String(c.unread)));
 const cleanLast = (c.last_content || "").replace(/\[NOVI_(IMG|VIDEO)\]:\S+/g, "[メディア]");
@@ -1972,17 +2624,34 @@ box.appendChild(row);
 
 /* ---------- グループ作成・編集モーダル ---------- */
 const GRP_ICONS = ["🌌","🔥","⚡","🎀","🎮","🎵","☕","🌸"];
-let grpEditMode = null, grpSelIcon = "🌌";
+let grpEditMode = null, grpSelIcon = "🌌", grpSelIconUrl = null;
+
+function renderGrpIconPreview(){
+const pv = $("grpIconPreview"); if (!pv) return;
+pv.style.backgroundImage = ""; pv.textContent = "";
+const a = safeImg(grpSelIconUrl);
+if (a) pv.style.backgroundImage = 'url("' + a + '")';
+else pv.textContent = grpSelIcon || "🌌";
+}
+
 async function openGroupModal(existingGrp){
 grpEditMode = existingGrp || null;
-grpSelIcon = existingGrp ? existingGrp.icon : "🌌";
+grpSelIcon = existingGrp ? (existingGrp.icon || "🌌") : "🌌";
+grpSelIconUrl = existingGrp ? (existingGrp.iconUrl || null) : null;
 $("grpModalTitle").textContent = existingGrp ? "グループ設定（名前・アイコン・追加）" : "新規グループ作成";
 $("grpSaveBtn").textContent = existingGrp ? "変更を保存" : "グループを作成";
 $("grpNameIn").value = existingGrp ? existingGrp.name : "";
+$("grpPhotoMsg").textContent = "または下のアイコンを選択";
+renderGrpIconPreview();
+
 const ig = $("grpIconGrid"); ig.textContent = "";
 GRP_ICONS.forEach(ic => {
-const b = mk("button", "dress-btn" + (grpSelIcon === ic ? " on" : ""), ic); b.type = "button"; b.style.fontSize = "18px";
-b.onclick = () => { grpSelIcon = ic; ig.querySelectorAll(".dress-btn").forEach(x => x.classList.toggle("on", x === b)); };
+const b = mk("button", "dress-btn" + (!grpSelIconUrl && grpSelIcon === ic ? " on" : ""), ic); b.type = "button"; b.style.fontSize = "18px";
+b.onclick = () => {
+grpSelIcon = ic; grpSelIconUrl = null;
+renderGrpIconPreview();
+ig.querySelectorAll(".dress-btn").forEach(x => x.classList.toggle("on", x === b));
+};
 ig.appendChild(b);
 });
 if (!cachedFriends.length){ const r = await sb.rpc("get_friends"); if (r.data) cachedFriends = r.data; }
@@ -1990,34 +2659,61 @@ const ml = $("grpMemberList"); ml.textContent = "";
 if (!cachedFriends.length) ml.appendChild(mk("div", "note", "招待できる友だちがいません。"));
 cachedFriends.forEach(f => {
 const row = mk("label", "trow");
-const checked = existingGrp && existingGrp.members.some(m => m.user_id === f.user_id);
+const checked = existingGrp && Array.isArray(existingGrp.memberIds) && existingGrp.memberIds.includes(f.user_id);
 row.innerHTML = `<span>${f.username} (@${f.novi_id})</span><input type="checkbox" value="${f.user_id}" ${checked ? "checked" : ""}>`;
 ml.appendChild(row);
 });
 $("grpModal").classList.remove("hidden");
 }
-function saveGroupModal(){
-const name = $("grpNameIn").value.trim();
-if (!name) return alert("グループ名を入力してください。");
-const checkedIds = Array.from($("grpMemberList").querySelectorAll("input:checked")).map(i => i.value);
-const members = cachedFriends.filter(f => checkedIds.includes(f.user_id));
-if (grpEditMode){
-grpEditMode.name = name; grpEditMode.icon = grpSelIcon; grpEditMode.members = members;
-localGroups = localGroups.map(g => g.id === grpEditMode.id ? grpEditMode : g);
-localStorage.setItem("novi_groups", JSON.stringify(localGroups));
-$("grpModal").classList.add("hidden");
-openChat(grpEditMode.id, grpEditMode.name, true, null, true, grpEditMode, true);
-} else {
-if (!members.length) return alert("メンバーを1人以上選んでください。");
-const newGrp = { id:"grp_" + Date.now(), name, icon:grpSelIcon, members, msgs:[] };
-localGroups.unshift(newGrp);
-localStorage.setItem("novi_groups", JSON.stringify(localGroups));
-$("grpModal").classList.add("hidden");
-openChat(newGrp.id, newGrp.name, true, null, true, newGrp, true);
+
+async function uploadGroupIconPhoto(file){
+if (!file || !["image/jpeg", "image/png", "image/webp"].includes(file.type)){
+alert("JPEG・PNG・WebPの画像を選んでください。"); return;
+}
+const msg = $("grpPhotoMsg");
+msg.textContent = "写真をアップロード中...";
+try{
+const blob = await shrink(file, 512);
+const path = me + "/group-" + Date.now() + ".webp";
+const up = await sb.storage.from("profile-assets").upload(path, blob, { contentType: "image/webp", upsert: false });
+if (up.error) throw up.error;
+grpSelIconUrl = sb.storage.from("profile-assets").getPublicUrl(path).data.publicUrl;
+renderGrpIconPreview();
+$("grpIconGrid").querySelectorAll(".dress-btn").forEach(x => x.classList.remove("on"));
+msg.textContent = "写真を選択しました！";
+}catch(e){
+msg.textContent = "アップロード失敗：" + e.message;
 }
 }
 
-/* ---------- 普通チャット（スワイプ/長押し返信・写真/動画送信・送信取り消し） ---------- */
+async function saveGroupModal(){
+const name = $("grpNameIn").value.trim();
+if (!name) return alert("グループ名を入力してください。");
+const checkedIds = Array.from($("grpMemberList").querySelectorAll("input:checked")).map(i => i.value);
+const iconVal = grpSelIconUrl || grpSelIcon;
+$("grpSaveBtn").disabled = true;
+
+if (grpEditMode){
+const r = await call("update_novi_group", { p_group: grpEditMode.id, p_name: name, p_icon: iconVal, p_members: checkedIds });
+$("grpSaveBtn").disabled = false;
+if (!r.ok) return;
+grpEditMode.name = name; grpEditMode.icon = grpSelIcon; grpEditMode.iconUrl = grpSelIconUrl;
+grpEditMode.memberIds = Array.from(new Set([...(grpEditMode.memberIds || []), ...checkedIds]));
+grpEditMode.memberCount = grpEditMode.memberIds.length;
+$("grpModal").classList.add("hidden");
+openChat(grpEditMode.id, grpEditMode.name, true, grpEditMode.iconUrl, true, grpEditMode, true, null);
+} else {
+if (!checkedIds.length){ $("grpSaveBtn").disabled = false; return alert("メンバーを1人以上選んでください。"); }
+const r = await call("create_novi_group", { p_name: name, p_icon: iconVal, p_members: checkedIds });
+$("grpSaveBtn").disabled = false;
+if (!r.ok) return;
+const newGrp = { id: r.data, name, icon: grpSelIcon, iconUrl: grpSelIconUrl, memberCount: checkedIds.length + 1, memberIds: [me, ...checkedIds] };
+$("grpModal").classList.add("hidden");
+openChat(newGrp.id, newGrp.name, true, newGrp.iconUrl, true, newGrp, true, null);
+}
+}
+
+/* ---------- 普通チャット（動画拡大＋再生終了時に先頭へ戻す） ---------- */
 let activeMsgTarget = null;
 function setReply(m){
 chat.reply = m ? m.id : null;
@@ -2025,13 +2721,20 @@ const e = $("chReply");
 e.classList.toggle("hidden", !m);
 if (m) $("chReplyTxt").textContent = "↩️ 返信：" + m.content.replace(/\[NOVI_(IMG|VIDEO)\]:\S+/g, "[メディア]").slice(0, 28);
 }
-function openChat(id, name, canSend, avatarUrl, isGroup, groupObj, isOnline){
-chat = { id, name, avatar: avatarUrl, canSend, reply: null, isGroup: !!isGroup, groupObj: groupObj || null, online: !!isOnline };
+function openChat(id, name, canSend, avatarUrl, isGroup, groupObj, isOnline, peerUserId){
+chat = { id, peerId: peerUserId || null, name, avatar: avatarUrl, canSend, reply: null, isGroup: !!isGroup, groupObj: groupObj || null, online: !!isOnline };
+if (isGroup && id){
+grpLastSeen[id] = new Date().toISOString();
+localStorage.setItem("novi_grp_seen", JSON.stringify(grpLastSeen));
+grpUnreadMap[id] = 0;
+}
 $("chName").textContent = name;
 const av = $("chAvatar"); av.style.backgroundImage = ""; av.textContent = "";
 if (isGroup && groupObj){
-av.textContent = groupObj.icon;
-$("chSub").textContent = (groupObj.members.length + 1) + "人のメンバー";
+const ga = safeImg(groupObj.iconUrl);
+if (ga) av.style.backgroundImage = 'url("' + ga + '")';
+else av.textContent = groupObj.icon;
+$("chSub").textContent = groupObj.memberCount + "人のメンバー";
 $("chGrpSet").classList.remove("hidden");
 } else {
 const a = safeImg(avatarUrl); if (a) av.style.backgroundImage = 'url("' + a + '")';
@@ -2041,8 +2744,8 @@ $("chGrpSet").classList.add("hidden");
 $("chIn").classList.toggle("hidden", !canSend);
 $("chNote").classList.toggle("hidden", canSend);
 setReply(null); $("chBox").textContent = "";
-go("chat"); loadChat(true);
-if (!isGroup) chatTimer = setInterval(() => loadChat(false), 4500);
+go("chat"); loadChat(true); refreshMsgBadge();
+chatTimer = setInterval(() => loadChat(false), 5000);
 }
 
 function renderMessageContent(bub, text){
@@ -2056,7 +2759,14 @@ im.onclick = () => window.open(imgMatch[1], "_blank");
 bub.appendChild(im);
 }
 if (vidMatch){
-const vd = document.createElement("video"); vd.src = vidMatch[1]; vd.controls = true; vd.playsInline = true;
+const vd = document.createElement("video");
+vd.src = vidMatch[1];
+vd.controls = true;
+vd.playsInline = true;
+vd.preload = "metadata";
+vd.addEventListener("ended", () => {
+vd.currentTime = 0;
+});
 bub.appendChild(vd);
 }
 }
@@ -2096,14 +2806,23 @@ $("msgActModal").classList.remove("hidden");
 
 async function loadChat(scroll){
 if (!chat.id) return;
-let list = [];
-if (chat.isGroup && chat.groupObj){
-list = chat.groupObj.msgs || [];
-} else {
-const r = await sb.rpc("get_messages", { p_conv: chat.id, p_limit: 50 });
+const r = chat.isGroup
+? await sb.rpc("get_group_messages", { p_group: chat.id, p_limit: 50 })
+: await sb.rpc("get_messages", { p_conv: chat.id, p_limit: 50 });
 if (r.error) return;
-list = r.data.slice().reverse();
+const list = r.data.slice().reverse();
+const msgIds = list.map(x => x.id);
+let reactMap = {};
+if (msgIds.length){
+const rr = await sb.from("message_reactions").select("message_id,emoji").in("message_id", msgIds);
+if (rr.data){
+rr.data.forEach(x => {
+if (!reactMap[x.message_id]) reactMap[x.message_id] = {};
+reactMap[x.message_id][x.emoji] = (reactMap[x.message_id][x.emoji] || 0) + 1;
+});
 }
+}
+
 const box = $("chBox"), near = scroll || box.scrollHeight - box.scrollTop - box.clientHeight < 90;
 box.textContent = "";
 if (!list.length){ box.appendChild(mk("div", "note", "まだメッセージがありません。")); return; }
@@ -2113,7 +2832,7 @@ const row = mk("div", "msg-row " + (m.mine ? "me" : "them"));
 row.appendChild(mk("span", "swipe-hint", "↩️"));
 if (!m.mine){
 const av = mk("div", "msg-av");
-const a = safeImg(chat.avatar); if (a) av.style.backgroundImage = 'url("' + a + '")';
+const a = safeImg(m.sender_avatar || chat.avatar); if (a) av.style.backgroundImage = 'url("' + a + '")';
 else av.textContent = m.sender_name ? m.sender_name[0] : "👤";
 row.appendChild(av);
 }
@@ -2124,8 +2843,18 @@ const bub = mk("div", "bub");
 if (m.reply_to) bub.appendChild(mk("div", "q", (m.reply_content || "（取り消されたメッセージ）").replace(/\[NOVI_(IMG|VIDEO)\]:\S+/g, "[メディア]")));
 renderMessageContent(bub, m.content);
 const meta = mk("div", "msg-meta");
-meta.innerHTML = (m.mine && m.is_read ? "既読<br>" : "") + fmtTime(m.created_at);
-wrap.append(bub, meta); col.appendChild(wrap); row.appendChild(col);
+meta.innerHTML = (!chat.isGroup && m.mine && m.is_read ? "既読<br>" : "") + fmtTime(m.created_at);
+wrap.append(bub, meta); col.appendChild(wrap);
+
+if (reactMap[m.id]){
+const rbar = mk("div", "msg-react-bar");
+Object.entries(reactMap[m.id]).forEach(([em, cnt]) => {
+rbar.appendChild(mk("span", "msg-react-pill", em + (cnt > 1 ? " " + cnt : "")));
+});
+col.appendChild(rbar);
+}
+
+row.appendChild(col);
 attachSwipeAndLongPress(row, m);
 box.appendChild(row);
 });
@@ -2135,22 +2864,13 @@ if (near) box.scrollTop = box.scrollHeight;
 async function chatSend(overrideContent){
 const t = overrideContent != null ? overrideContent : $("chText").value.trim();
 if (!t) return;
-if (chat.isGroup && chat.groupObj){
-const newMsg = {
-id: "gm_" + Date.now(), mine: true, content: t, created_at: new Date().toISOString(),
-is_read: true, reply_to: chat.reply, reply_content: chat.reply ? (chat.groupObj.msgs.find(x => x.id === chat.reply)?.content || "") : null
-};
-chat.groupObj.msgs.push(newMsg);
-localStorage.setItem("novi_groups", JSON.stringify(localGroups));
-if (overrideContent == null) $("chText").value = "";
-setReply(null); loadChat(true);
-return;
-}
 $("chSend").disabled = true;
-const r = await call("send_message", { p_conv: chat.id, p_content: t, p_mood: null, p_reply: chat.reply });
+const r = chat.isGroup
+? await call("send_group_message", { p_group: chat.id, p_content: t, p_reply: chat.reply })
+: await call("send_message", { p_conv: chat.id, p_content: t, p_mood: null, p_reply: chat.reply });
 $("chSend").disabled = false; if (!r.ok) return;
 if (overrideContent == null) $("chText").value = "";
-setReply(null); loadChat(true);
+setReply(null); loadChat(true); refreshMsgBadge();
 }
 
 async function uploadChatMedia(file, isVideo){
@@ -2172,26 +2892,99 @@ alert("送信できませんでした：" + e.message);
 }
 }
 
-/* ---------- 個人・グループ通話機能 ---------- */
-let callInterval = null, callSeconds = 0, callStream = null, isMuted = false, isCamOn = false;
-async function startCall(isVideo){
-isMuted = false; isCamOn = isVideo; callSeconds = 0;
-$("callTypeBadge").textContent = (chat.isGroup ? "グループ" : "個人") + (isVideo ? "ビデオ通話中" : "音声通話中");
-$("callPeerName").textContent = chat.name;
-const av = $("callPeerAv"); av.style.backgroundImage = ""; av.textContent = "";
-if (chat.isGroup && chat.groupObj) av.textContent = chat.groupObj.icon;
-else { const a = safeImg(chat.avatar); if (a) av.style.backgroundImage = 'url("' + a + '")'; else av.textContent = "👤"; }
-$("callMuteBtn").classList.remove("on");
-$("callCamBtn").classList.toggle("on", isVideo);
-$("callOverlay").classList.remove("hidden");
+/* ---------- リアル音声・ビデオ通話 ---------- */
+let callChannel = null, pc = null, callInterval = null, callSeconds = 0, callStream = null;
+let isMuted = false, isCamOn = false, activeCallTarget = null, pendingOffer = null, ringInterval = null;
+const ICE_SERVERS = { iceServers: [{ urls: "stun:stun.l.google.com:19302" }] };
 
+function playRingtone(){
+stopRingtone();
 try{
-if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia){
-callStream = await navigator.mediaDevices.getUserMedia({ audio: true, video: isVideo });
-if (isVideo){ const v = $("callLocalVid"); v.srcObject = callStream; v.classList.remove("hidden"); }
-}
+const ctx = new (window.AudioContext || window.webkitAudioContext)();
+const beep = () => {
+const osc = ctx.createOscillator(), gain = ctx.createGain();
+osc.type = "sine"; osc.frequency.setValueAtTime(523.25, ctx.currentTime);
+osc.frequency.setValueAtTime(659.25, ctx.currentTime + 0.15);
+gain.gain.setValueAtTime(0.12, ctx.currentTime);
+gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.5);
+osc.connect(gain); gain.connect(ctx.destination);
+osc.start(); osc.stop(ctx.currentTime + 0.5);
+};
+beep();
+ringInterval = setInterval(beep, 1800);
+if (navigator.vibrate) navigator.vibrate([300, 200, 300]);
 }catch(_){}
+}
+function stopRingtone(){
+if (ringInterval){ clearInterval(ringInterval); ringInterval = null; }
+}
 
+function initCallSignaling(){
+if (!sb || !me) return;
+if (callChannel) sb.removeChannel(callChannel);
+callChannel = sb.channel("novi-calls", { config: { broadcast: { self: false } } });
+callChannel.on("broadcast", { event: "signal" }, async ({ payload }) => {
+if (!payload || payload.to !== me) return;
+if (payload.type === "offer"){
+activeCallTarget = payload.from;
+pendingOffer = payload;
+$("incCallerName").textContent = payload.callerName || "友だち";
+$("incCallType").textContent = payload.isVideo ? "📹 ビデオ通話の着信があります" : "📞 音声通話の着信があります";
+$("incCallIcon").textContent = payload.isVideo ? "📹" : "📞";
+$("incomingCallModal").classList.remove("hidden");
+playRingtone();
+} else if (payload.type === "answer" && pc){
+stopRingtone();
+await pc.setRemoteDescription(new RTCSessionDescription(payload.sdp));
+startCallTimer();
+} else if (payload.type === "ice" && pc && payload.candidate){
+try{ await pc.addIceCandidate(new RTCIceCandidate(payload.candidate)); }catch(_){}
+} else if (payload.type === "hangup"){
+stopRingtone();
+$("incomingCallModal").classList.add("hidden");
+cleanupCallUI("相手が通話を終了しました");
+}
+}).subscribe();
+}
+
+function sendSignal(data){
+if (callChannel && activeCallTarget){
+callChannel.send({ type: "broadcast", event: "signal", payload: Object.assign({ from: me, to: activeCallTarget }, data) });
+}
+}
+
+async function setupMediaAndPeer(isVideo){
+$("callErrNote").textContent = "";
+if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){
+$("callErrNote").textContent = "※ HTTPS または localhost 環境でのみマイク・カメラが有効になります。";
+return false;
+}
+try{
+callStream = await navigator.mediaDevices.getUserMedia({ audio: true, video: isVideo });
+if (isVideo){
+const lv = $("callLocalVid"); lv.srcObject = callStream; lv.classList.remove("hidden");
+}
+pc = new RTCPeerConnection(ICE_SERVERS);
+callStream.getTracks().forEach(track => pc.addTrack(track, callStream));
+pc.onicecandidate = e => { if (e.candidate) sendSignal({ type: "ice", candidate: e.candidate }); };
+pc.ontrack = e => {
+const stream = e.streams[0];
+if (isVideo){
+const rv = $("callRemoteVid"); rv.srcObject = stream; rv.classList.remove("hidden");
+} else {
+$("callRemoteAudio").srcObject = stream;
+}
+};
+return true;
+}catch(err){
+$("callErrNote").textContent = "マイク/カメラ許可が必要です：" + err.message;
+return false;
+}
+}
+
+function startCallTimer(){
+if (callInterval) clearInterval(callInterval);
+callSeconds = 0;
 $("callTimer").textContent = "通話中 00:00";
 callInterval = setInterval(() => {
 callSeconds++;
@@ -2200,30 +2993,100 @@ const ss = String(callSeconds % 60).padStart(2, "0");
 $("callTimer").textContent = `通話中 ${mm}:${ss}`;
 }, 1000);
 }
-async function endCall(){
-if (callInterval){ clearInterval(callInterval); callInterval = null; }
-if (callStream){ callStream.getTracks().forEach(t => t.stop()); callStream = null; }
-$("callLocalVid").classList.add("hidden");
-$("callOverlay").classList.add("hidden");
-const mm = String(Math.floor(callSeconds / 60)).padStart(2, "0");
-const ss = String(callSeconds % 60).padStart(2, "0");
-await chatSend(`📞 通話終了（${mm}:${ss}）`);
+
+async function startCall(isVideo){
+isMuted = false; isCamOn = isVideo; callSeconds = 0;
+const otherMember = chat.isGroup && chat.groupObj && Array.isArray(chat.groupObj.memberIds)
+? chat.groupObj.memberIds.find(uid => uid !== me) : null;
+activeCallTarget = chat.peerId || otherMember;
+if (!activeCallTarget){
+alert("通話先のユーザーが見つかりません。友だちを追加してから発信してください。");
+return;
+}
+$("callTypeBadge").textContent = (chat.isGroup ? "グループ" : "個人") + (isVideo ? "ビデオ通話" : "音声通話");
+$("callPeerName").textContent = chat.name;
+const av = $("callPeerAv"); av.style.backgroundImage = ""; av.textContent = "";
+if (chat.isGroup && chat.groupObj){
+const ga = safeImg(chat.groupObj.iconUrl);
+if (ga) av.style.backgroundImage = 'url("' + ga + '")';
+else av.textContent = chat.groupObj.icon;
+} else { const a = safeImg(chat.avatar); if (a) av.style.backgroundImage = 'url("' + a + '")'; else av.textContent = "👤"; }
+$("callMuteBtn").classList.remove("on");
+$("callCamBtn").classList.toggle("on", isVideo);
+$("callTimer").textContent = "呼び出し中...";
+$("callOverlay").classList.remove("hidden");
+
+const ok = await setupMediaAndPeer(isVideo);
+if (ok && pc){
+const offer = await pc.createOffer();
+await pc.setLocalDescription(offer);
+sendSignal({ type: "offer", sdp: offer, isVideo, callerName: prof.username || "NOVIユーザー" });
+}
 }
 
-/* ---------- NOVI ID・設定 ---------- */
+async function acceptIncomingCall(){
+stopRingtone();
+$("incomingCallModal").classList.add("hidden");
+if (!pendingOffer) return;
+const isVideo = !!pendingOffer.isVideo;
+isMuted = false; isCamOn = isVideo;
+$("callTypeBadge").textContent = isVideo ? "ビデオ通話中" : "音声通話中";
+$("callPeerName").textContent = pendingOffer.callerName || "通話相手";
+$("callPeerAv").textContent = "👤";
+$("callMuteBtn").classList.remove("on");
+$("callCamBtn").classList.toggle("on", isVideo);
+$("callOverlay").classList.remove("hidden");
+
+const ok = await setupMediaAndPeer(isVideo);
+if (ok && pc){
+await pc.setRemoteDescription(new RTCSessionDescription(pendingOffer.sdp));
+const ans = await pc.createAnswer();
+await pc.setLocalDescription(ans);
+sendSignal({ type: "answer", sdp: ans });
+startCallTimer();
+}
+pendingOffer = null;
+}
+
+function cleanupCallUI(msg){
+stopRingtone();
+if (callInterval){ clearInterval(callInterval); callInterval = null; }
+if (callStream){ callStream.getTracks().forEach(t => t.stop()); callStream = null; }
+if (pc){ pc.close(); pc = null; }
+$("callLocalVid").classList.add("hidden");
+$("callRemoteVid").classList.add("hidden");
+$("callOverlay").classList.add("hidden");
+if (msg) alert(msg);
+}
+
+async function endCall(){
+sendSignal({ type: "hangup" });
+const hadCall = callSeconds > 0;
+const mm = String(Math.floor(callSeconds / 60)).padStart(2, "0");
+const ss = String(callSeconds % 60).padStart(2, "0");
+cleanupCallUI();
+if (chat.id){
+await chatSend(hadCall ? `📞 通話終了（${mm}:${ss}）` : "📞 不在着信 / キャンセル");
+}
+}
+
+/* ---------- プライバシー・ステータス設定 ---------- */
 async function saveSettings(){
-const m = $("eIdMsg"), id = $("eId").value.trim().toLowerCase();
-if (!/^[a-z0-9_]{3,20}$/.test(id)){ m.textContent = "NOVI IDは英小文字・数字・_ の3〜20文字にしてください。"; m.className = "msg err"; return; }
+const m = $("eIdMsg");
+const rawId = ($("eId").value || prof.novi_id || "").trim().toLowerCase().replace(/^@/, "");
+const finalId = rawId || ("user_" + me.replace(/-/g, "").slice(0, 8));
+if (!/^[a-z0-9_]{3,20}$/.test(finalId)){ m.textContent = "ログインIDは英小文字・数字・_ の3〜20文字にしてください。"; m.className = "msg err"; return; }
 const f = {
-novi_id: id, request_scope: $("eScope").value, online_status: $("eOnline").checked,
+user_id: me, username: prof.username || "NOVIユーザー",
+novi_id: finalId, request_scope: $("eScope").value, online_status: $("eOnline").checked,
 read_receipts: $("eRead").checked, discoverable: $("eDisc").checked, mood_sharing: $("eShare").checked
 };
-const { error } = await sb.from("profiles").update(f).eq("user_id", me);
-if (error){ m.textContent = error.code === "23505" ? "このIDはすでに使われています。" : "保存できませんでした：" + error.message; m.className = "msg err"; return; }
+const { error } = await sb.from("profiles").upsert(f, { onConflict: "user_id" });
+if (error){ m.textContent = error.code === "23505" ? "このログインIDはすでに使われています。" : "保存できませんでした：" + error.message; m.className = "msg err"; return; }
 Object.assign(prof, f); renderProfile(); updatePresenceUI(); m.textContent = "保存しました。"; m.className = "msg ok";
 }
 
-/* ---------- 通知（スキーマキャッシュエラー耐性強化） ---------- */
+/* ---------- 通知 ---------- */
 let notifTimer = null, notifFilter = "all", notifs = [];
 const NK = { friend_request:["👥", "friends"], friend_accepted:["🤝", "friends"], message:["✉️", "messages"], reaction:["♥", "activity"], comment:["💬", "activity"], moment_reaction:["♥", "activity"], moment_comment:["💬", "activity"], system:["⚙️", "system"] };
 const PREF = { nPrefFriends:"pref_friends", nPrefMessages:"pref_messages", nPrefActivity:"pref_activity", nPrefSystem:"pref_system" };
@@ -2252,7 +3115,7 @@ const r = await sb.rpc("get_notifications", { p_limit: 50 }), box = $("nList");
 if (r.error){
 box.textContent = "";
 const c = mk("div", "card");
-c.appendChild(mk("div", "note", r.error.message.includes("schema cache") ? "通知一覧はデータベース関数（get_notifications）の反映待ちです。他の機能はすべて正常に利用できます。" : "読み込めませんでした：" + r.error.message));
+c.appendChild(mk("div", "note", "読み込めませんでした：" + r.error.message));
 box.appendChild(c); return;
 }
 notifs = r.data || []; renderNotifs(); refreshUnread();
@@ -2277,7 +3140,7 @@ if (n.kind === "friend_request"){ go("friends"); ftab("reqs"); }
 else if (n.kind === "friend_accepted"){ go("friends"); }
 else if (n.kind === "message"){
 const r = await sb.rpc("get_conversations"), c = (r.data || []).find(x => x.conversation_id === n.ref);
-if (c) openChat(c.conversation_id, c.username, c.can_send, c.avatar_url, false, null, c.online_status); else { go("friends"); ftab("msgs"); }
+if (c) openChat(c.conversation_id, c.username, c.can_send, c.avatar_url, false, null, c.online_status, c.user_id); else { go("friends"); ftab("msgs"); }
 }
 else if (n.kind === "reaction" || n.kind === "comment"){ go("mood"); }
 else if (n.kind === "moment_reaction" || n.kind === "moment_comment"){ go("moment"); }
@@ -2299,12 +3162,12 @@ function moodItem(r, idx, reload){
 const m = MOODS[r.mood] || ["?", "#888"];
 const it = mk("div", "item e-" + (r.effect || "orb")); it.style.setProperty("--c", m[1]); if (idx === 0) it.style.borderTop = "0";
 const body = mk("div", "body");
-body.appendChild(mk("div", "", m[0] + (r.content ? "：" + r.content : "")));
+body.appendChild(mk("div", "", moodLabel(r.mood) + (r.content ? "：" + r.content : "")));
 body.appendChild(mk("div", "meta", fmt(r.created_at) + (r.is_mine ? "・あなたの投稿" : "")));
-const cb = mk("button", "react", "💬 コメント " + r.comment_count); cb.type = "button"; cb.style.marginTop = "8px";
+const cb = mk("button", "react", "💬 " + r.comment_count); cb.type = "button"; cb.style.marginTop = "8px";
 cb.onclick = () => openComments(r.id, body); body.appendChild(cb); if (!r.is_mine) body.appendChild(repBtn("mood", r.id));
 it.append(mk("span", "dot"), body);
-const b = mk("button", "react" + (r.reacted ? " on" : ""), (r.reacted ? "♥ 共感済み " : "♡ 共感 ") + r.reaction_count); b.type = "button";
+const b = mk("button", "react" + (r.reacted ? " on" : ""), (r.reacted ? "♥ " : "♡ ") + r.reaction_count); b.type = "button";
 if (r.is_mine){ b.disabled = true; b.textContent = "♡ " + r.reaction_count; }
 else b.onclick = async () => {
 b.disabled = true;
@@ -2315,7 +3178,9 @@ it.appendChild(b); return it;
 }
 function userCard(p){
 const c = mk("div", "card"); c.style.marginBottom = "10px";
-const top = mk("div", "prow-top"); top.appendChild(avatarEl(p.avatar_url));
+const top = mk("div", "prow-top");
+const dObj = p.status === "self" ? { av_frame: prof.av_frame, av_acc: prof.av_acc } : (dressCache[p.user_id] || null);
+top.appendChild(avatarEl(p.avatar_url, null, dObj));
 const i = mk("div", "pinfo"); i.appendChild(mk("div", "uname", p.username)); i.appendChild(mk("div", "meta", "@" + p.novi_id)); top.appendChild(i); c.appendChild(top);
 if (p.bio){ const b = mk("div", "note", p.bio); b.style.marginTop = "8px"; c.appendChild(b); }
 const st = p.status || "none", label = { self:"あなたです", friend:"友だち", sent:"申請済み", received:"承認する", none:"友だち申請" }[st];
@@ -2346,7 +3211,7 @@ t.data.slice().sort((a, b) => b.cnt - a.cnt).forEach(r => {
 const m = MOODS[r.mood]; if (!m) return;
 const row = mk("div", "bar"); row.style.setProperty("--c", m[1]);
 const i = mk("i"); i.style.width = Math.max(4, Math.round(r.cnt / total * 160)) + "px";
-row.append(mk("b", "", m[0]), i, mk("span", "", Math.round(r.cnt / total * 100) + "%")); tb.appendChild(row);
+row.append(mk("b", "", moodLabel(r.mood)), i, mk("span", "", Math.round(r.cnt / total * 100) + "%")); tb.appendChild(row);
 });
 }
 const p = await sb.rpc("get_popular_posts"); pp.textContent = "";
@@ -2355,7 +3220,10 @@ else p.data.forEach((r, i) => pp.appendChild(moodItem(r, i, loadDiscover)));
 for (const [box, kind] of [[rc, "recommended"], [nw, "new"]]){
 const u = await sb.rpc("get_user_cards", { p_kind: kind }); box.textContent = "";
 if (u.error || !u.data.length){ const c = mk("div", "card"); c.appendChild(mk("div", "note", "表示できるユーザーはまだいません。")); box.appendChild(c); }
-else u.data.forEach(x => box.appendChild(userCard(x)));
+else {
+await fetchDressForUsers(u.data.map(x => x.user_id));
+u.data.forEach(x => box.appendChild(userCard(x)));
+}
 }
 }
 function openSearch(){
@@ -2372,7 +3240,10 @@ if (sType === "users"){
 const r = await sb.rpc("search_users", { p_q: q });
 if (r.error) note2(res, "検索できませんでした：" + r.error.message);
 else if (!r.data.length) note2(res, "見つかりませんでした。");
-else r.data.forEach(x => res.appendChild(userCard(x)));
+else {
+await fetchDressForUsers(r.data.map(x => x.user_id));
+r.data.forEach(x => res.appendChild(userCard(x)));
+}
 } else if (sType === "moods"){
 const r = await sb.rpc("search_moods", { p_q: q || null, p_mood: sMood });
 if (r.error) note2(res, "検索できませんでした：" + r.error.message);
@@ -2397,9 +3268,9 @@ res.appendChild(c);
 $("srHome").classList.add("hidden"); $("srBack").classList.remove("hidden");
 }
 function buildSearchChips(){
-const box = $("srMoods"); box.textContent = "";
+const box = $("srMoods"); if (!box) return; box.textContent = "";
 Object.keys(MOODS).forEach(k => {
-const b = mk("button", "chip sm2" + (sMood === k ? " on" : ""), MOODS[k][0]); b.type = "button"; b.style.setProperty("--c", MOODS[k][1]);
+const b = mk("button", "chip sm2" + (sMood === k ? " on" : ""), moodLabel(k)); b.type = "button"; b.style.setProperty("--c", MOODS[k][1]);
 b.onclick = () => { sMood = sMood === k ? null : k; buildSearchChips(); }; box.appendChild(b);
 });
 }
@@ -2431,12 +3302,12 @@ const { data, error } = await sb.auth.mfa.listFactors();
 if (error){ st.textContent = "状態を取得できませんでした：" + error.message; return; }
 const f = (data.totp || []).find(x => x.status === "verified");
 if (f){
-st.textContent = "2段階認証：ON";
-const b = mk("button", "logout", "2段階認証をOFFにする"); b.type = "button";
-b.onclick = async () => { if (!confirm("2段階認証をOFFにしますか？")) return; const r = await sb.auth.mfa.unenroll({ factorId: f.id }); mfaMsg(r.error ? r.error.message : "OFFにしました。", !r.error); loadMfaState(); };
+st.textContent = "2段階認証：オン";
+const b = mk("button", "logout", "2段階認証をオフにする"); b.type = "button";
+b.onclick = async () => { if (!confirm("2段階認証をオフにしますか？")) return; const r = await sb.auth.mfa.unenroll({ factorId: f.id }); mfaMsg(r.error ? r.error.message : "オフにしました。", !r.error); loadMfaState(); };
 box.appendChild(b);
 } else {
-st.textContent = "2段階認証：OFF";
+st.textContent = "2段階認証：オフ";
 const b = mk("button", "primary", "認証アプリで有効にする"); b.type = "button"; b.onclick = startMfa; box.appendChild(b);
 }
 }
@@ -2523,7 +3394,7 @@ const o = {}; PV.forEach(x => { o[x[0]] = $("pv_" + x[0]).value; });
 const { error } = await sb.rpc("save_privacy", { p: o }), m = $("pvMsg");
 m.textContent = error ? "保存できませんでした：" + error.message : "保存しました。"; m.className = "msg " + (error ? "err" : "ok");
 }
-function loadSecurity(){ loadPrivacy(); loadMfaState(); loadDevices(); }
+function loadSecurity(){ renderAccountSwitcher(); loadPrivacy(); loadMfaState(); loadDevices(); }
 
 /* ---------- 通報 ---------- */
 const RR = { harassment:"嫌がらせ", bullying:"いじめ", spam:"スパム", hate:"ヘイト・差別", inappropriate:"不適切な内容", impersonation:"なりすまし", privacy:"プライバシーの侵害", other:"その他" };
@@ -2537,23 +3408,37 @@ $("rptSend").disabled = false;
 if (r.ok){ $("rptBox").classList.add("hidden"); rptTarget = null; alert("通報しました。"); }
 }
 
-/* ---------- メッセージのバッジ ---------- */
+/* ---------- メッセージのバッジ（個人＋グループ合計） ---------- */
 async function refreshMsgBadge(){
-const r = await sb.rpc("get_conversations"); if (r.error) return;
-const n = (r.data || []).reduce((a, c) => a + Number(c.unread), 0);
+const r = await sb.rpc("get_conversations");
+const dmUnread = (!r.error && Array.isArray(r.data)) ? r.data.reduce((a, c) => a + Number(c.unread), 0) : 0;
+const grpUnread = Object.values(grpUnreadMap).reduce((a, b) => a + Number(b || 0), 0);
+const n = dmUnread + grpUnread;
 document.querySelectorAll(".mbadge").forEach(b => { b.textContent = n > 99 ? "99+" : String(n); b.classList.toggle("hidden", !(n > 0)); });
 }
 
 /* ---------- 他ユーザープロフィール ---------- */
-function moodLine(m){ const label = MOODS[m.mood] ? MOODS[m.mood][0] : ""; return m.content ? label + "：" + m.content : label; }
+function moodLine(m){ const label = moodLabel(m.mood) || ""; return m.content ? label + "：" + m.content : label; }
 async function openUserProfile(uid){
 if (curView !== "uprof") uprofReturn = curView;
 go("uprof"); const box = $("upBody"); box.textContent = ""; box.appendChild(mk("div", "note", "読み込み中..."));
-const r = await sb.rpc("get_user_profile", { p_user: uid }); box.textContent = "";
+const [r, dr] = await Promise.all([
+sb.rpc("get_user_profile", { p_user: uid }),
+sb.from("profiles").select("av_frame,av_acc").eq("user_id", uid).maybeSingle()
+]);
+box.textContent = "";
 if (r.error || !r.data){ box.appendChild(mk("div", "note", "このプロフィールは表示できません。")); return; }
-const p = r.data;
+const p = r.data, dInfo = dr.data || {};
 const cv = mk("div", "cover"), c1 = safeImg(p.cover_url); if (c1) cv.style.backgroundImage = 'url("' + c1 + '")'; box.appendChild(cv);
-const hd = mk("div", "phead"), av = mk("div", "avatar"), a1 = safeImg(p.avatar_url); if (a1) av.style.backgroundImage = 'url("' + a1 + '")'; hd.appendChild(av);
+const hd = mk("div", "phead");
+const avWrap = mk("div", "av-wrap");
+const av = mk("div", "avatar"), a1 = safeImg(p.avatar_url); if (a1) av.style.backgroundImage = 'url("' + a1 + '")';
+const fObj = AV_FRAMES.find(x => x.id === dInfo.av_frame); if (fObj && fObj.cls) av.classList.add(fObj.cls);
+avWrap.appendChild(av);
+const aObj = AV_ACCS.find(x => x.id === dInfo.av_acc);
+if (aObj && aObj.icon) avWrap.appendChild(mk("span", "av-acc", aObj.icon));
+hd.appendChild(avWrap);
+
 const nm = mk("div"); nm.appendChild(mk("div", "pname", p.username));
 nm.appendChild(mk("div", "note", "@" + p.novi_id + (p.friend_count != null ? "・友だち " + Number(p.friend_count) + "人" : ""))); hd.appendChild(nm); box.appendChild(hd);
 if (p.locked) box.appendChild(mk("div", "note", "公開範囲の設定により名前以外は表示されません。"));
@@ -2568,33 +3453,187 @@ add("ブロック", async () => { if (!confirm(p.username + " さんをブロッ
 add("通報", () => openReport("user", uid));
 box.appendChild(bt);
 }
+const list = (title, rows, fmtRow) => {
+if (!Array.isArray(rows) || !rows.length) return;
+const sec = mk("div", "sec"); sec.appendChild(mk("h2", "", title)); const c = mk("div", "card");
+rows.forEach(x => { const row = mk("div", "wrow"); row.appendChild(mk("div", "", fmtRow(x))); c.appendChild(row); }); sec.appendChild(c); box.appendChild(sec);
+};
+list("最近のムード", p.moods, x => moodLine(x));
+list("表示中のモーメント", p.moments, x => x.content);
+if (Array.isArray(p.widgets) && p.widgets.length){
+const g = mk("div", "wg");
+p.widgets.forEach(w => {
+let t = null;
+if (w.type === "bio") t = p.bio; else if (w.type === "text" || w.type === "decoration") t = w.content;
+else if (w.type === "mood" && Array.isArray(p.moods) && p.moods.length > 0) t = moodLine(p.moods[0]);
+if (!t) return;
+const c = mk("div", "wcard w-" + w.size); c.appendChild(mk("div", "wt", WT[w.type])); const body = mk("div", "", t);
+if (w.type === "decoration"){ body.style.letterSpacing = ".3em"; body.style.textAlign = "center"; } c.appendChild(body); g.appendChild(c);
+});
+if (g.children.length) box.appendChild(g);
+}
 }
 
-/* ---------- 29カテゴリー設定マップ ---------- */
+/* ---------- 独立設定画面（全29カテゴリー） ---------- */
 const CATS_29 = [
-"01 ACCOUNT SETTINGS","02 SECURITY CENTER","03 PRIVACY CONTROL","04 PERSONALIZATION",
-"05 DISPLAY CONTROL","06 NOTIFICATION CONTROL","07 SOCIAL CONTROL","08 MESSAGE CONTROL",
-"09 MOOD CONTROL","10 MOMENT CONTROL","11 SEARCH CONTROL","12 LANGUAGE & TRANSLATION",
-"13 DATA MANAGEMENT","14 DIGITAL WELLBEING","15 ACCESSIBILITY","16 HELP & SUPPORT",
-"17 ABOUT NOVI","18 CONTENT CONTROL","19 INTERACTION CONTROL","20 CREATOR CONTROL",
-"21 DEVICE CONTROL","22 EMAIL CONTROL","23 AUTOMATION CONTROL","24 FAMILY & AGE SAFETY",
-"25 DEVELOPER & DIAGNOSTICS","26 SETTING PRESETS","27 PRIVACY CHECKUP","28 QUICK CONTROL","29 SETTINGS AUDIT"
+{ id:"01", title:"01 アカウント設定・切り替え・削除", sub:"Google/Discord連携・アカウント切替・完全削除", action:"st_sec" },
+{ id:"02", title:"02 セキュリティセンター", sub:"2段階認証・パスワード変更・ログイン履歴・端末管理", action:"st_sec" },
+{ id:"03", title:"03 プライバシー管理", sub:"プロフィール・ムード・オンライン状態の公開範囲", action:"st_sec" },
+{ id:"04", title:"04 パーソナライズ", sub:"テーマカラー・感情の色スタジオ", action:"st_theme" },
+{ id:"05", title:"05 表示・グラフィック設定", sub:"ダークモード・FPS・リキッドグラス・背景テーマ", action:"st_gfx" },
+{ id:"06", title:"06 通知コントロール", sub:"友だち・メッセージ・反応・お知らせ通知設定", action:"alerts" },
+{ id:"07", title:"07 ソーシャル設定", sub:"友だち申請の受付範囲・ブロック管理", action:"profile_edit" },
+{ id:"08", title:"08 メッセージ設定", sub:"既読表示・グループチャット・通話設定", toggle:"read_receipts", label:"メッセージ既読表示" },
+{ id:"09", title:"09 ムード設定", sub:"ムード履歴・公開範囲・共有設定", toggle:"mood_sharing", label:"ムードの外部共有" },
+{ id:"10", title:"10 モーメント設定", sub:"表示期限・位置情報精度・アーカイブ", action:"moment" },
+{ id:"11", title:"11 検索・おすすめ設定", sub:"検索結果への表示・検索履歴削除", toggle:"discoverable", label:"検索・おすすめに表示" },
+{ id:"12", title:"12 言語と翻訳", sub:"アプリ表示言語（9言語即時切替）", action:"st_gfx" },
+{ id:"13", title:"13 データ管理", sub:"設定データのJSON形式書き出し", action:"export" },
+{ id:"14", title:"14 デジタルウェルビーイング", sub:"連続利用時間の確認・おやすみモード", toggle:"dnd", label:"おやすみモード（通知抑制）" },
+{ id:"15", title:"15 アクセシビリティ", sub:"文字サイズ拡大・アニメーション軽減", toggle:"large_text", label:"文字サイズ拡大（18px）" },
+{ id:"16", title:"16 ヘルプ・サポート", sub:"ヘルプガイド・運営への通報について", info:"困ったときは各投稿・メッセージの「通報」から運営へ連絡できます。" },
+{ id:"17", title:"17 NOVI について", sub:"バージョン情報・運営ポリシー", info:"NOVI v2.0 — 広告なし・基本無料で使える次世代SNS。" },
+{ id:"18", title:"18 コンテンツ管理", sub:"不快コンテンツの非表示・ブロック", action:"friends" },
+{ id:"19", title:"19 リアクション・交流設定", sub:"コメント・共感リアクション設定", toggle:"mood_sharing", label:"ムードへのリアクション許可" },
+{ id:"20", title:"20 クリエイター表現設定", sub:"ウィジェット配置・プロフィール表現", action:"profile_edit" },
+{ id:"21", title:"21 端末・デバイス管理", sub:"ログイン中端末の確認・一括ログアウト", action:"st_sec" },
+{ id:"22", title:"22 メールアドレス管理", sub:"登録メールアドレスの確認・変更", action:"st_sec" },
+{ id:"23", title:"23 自動化・省電力設定", sub:"バッテリー20%以下キャラ自動通知・省電力", action:"st_gfx" },
+{ id:"24", title:"24 安全・保護フィルタ", sub:"安全フィルタ・保護コントロール", info:"安全保護フィルタは標準で有効になっています。" },
+{ id:"25", title:"25 システム診断・接続状態", sub:"接続ステータス・FPSリアルタイム診断", info:"リアルタイム通信・通話・ストレージ接続はすべて正常です。" },
+{ id:"26", title:"26 設定プリセット", sub:"標準 / プライバシー重視 / 演出重視 / 軽量・省電力", info:"画面上部のプリセットボタンから一括切替できます。" },
+{ id:"27", title:"27 プライバシー診断", sub:"公開設定のクイックチェック", info:"現在の友だち申請受付範囲は編集画面からいつでも変更できます。" },
+{ id:"28", title:"28 クイックコントロール", sub:"よく使うスイッチの即時操作", info:"画面上部のクイック設定から即変更できます。" },
+{ id:"29", title:"29 設定の整合性チェック", sub:"設定変更の同期確認", info:"すべての設定項目は正常に同期されています。" }
 ];
+
+function switchSettingsTab(sub){
+document.querySelectorAll("#sSubTabs button").forEach(x => x.classList.toggle("on", x.dataset.st === sub));
+["general", "gfx", "theme", "sec"].forEach(k => $("st-" + k).classList.toggle("hidden", k !== sub));
+if (sub === "sec") loadSecurity();
+if (sub === "general") renderSysCategories($("sysSearch") ? $("sysSearch").value : "");
+}
+
+function openProfileEditTab(){
+go("profile");
+document.querySelectorAll("#pTabs button").forEach(x => x.classList.toggle("on", x.dataset.pt === "edit"));
+["show", "edit"].forEach(k => $("pt-" + k).classList.toggle("hidden", k !== "edit"));
+}
+
 function renderSysCategories(filter){
 const box = $("sysCatList"); if (!box) return; box.textContent = "";
 const q = (filter || "").toLowerCase();
-CATS_29.filter(c => !q || c.toLowerCase().includes(q)).forEach(c => {
-const r = mk("div", "wrow"); r.style.padding = "8px 0";
-r.appendChild(mk("div", "note", c)); box.appendChild(r);
+CATS_29.filter(c => !q || c.title.toLowerCase().includes(q) || c.sub.includes(q)).forEach(c => {
+const item = mk("div", "set-cat");
+const hdr = mk("div", "set-cat-hdr");
+const left = mk("div");
+left.appendChild(mk("div", "set-cat-title", c.title));
+left.appendChild(mk("div", "set-cat-sub", c.sub));
+const arrow = mk("span", "note", "▼");
+hdr.append(left, arrow);
+
+const body = mk("div", "set-cat-body hidden");
+if (c.action){
+const btn = mk("button", "del", "この設定を開く →"); btn.type = "button";
+btn.onclick = () => {
+if (c.action === "profile_edit") openProfileEditTab();
+else if (c.action === "st_sec") switchSettingsTab("sec");
+else if (c.action === "st_theme") switchSettingsTab("theme");
+else if (c.action === "st_gfx") switchSettingsTab("gfx");
+else if (c.action === "export") $("btnExportData").click();
+else go(c.action);
+};
+body.appendChild(btn);
+} else if (c.toggle){
+const row = mk("label", "trow"); row.style.padding = "0";
+const chk = document.createElement("input"); chk.type = "checkbox";
+if (c.toggle === "read_receipts") chk.checked = prof.read_receipts === true;
+else if (c.toggle === "mood_sharing") chk.checked = prof.mood_sharing !== false;
+else if (c.toggle === "discoverable") chk.checked = prof.discoverable !== false;
+else if (c.toggle === "dnd") chk.checked = $("sysDnd").checked;
+else if (c.toggle === "large_text") chk.checked = $("sysLargeText").checked;
+chk.onchange = () => {
+if (c.toggle === "read_receipts"){ $("eRead").checked = chk.checked; saveSettings(); }
+else if (c.toggle === "mood_sharing"){ $("eShare").checked = chk.checked; saveSettings(); }
+else if (c.toggle === "discoverable"){ $("eDisc").checked = chk.checked; saveSettings(); }
+else if (c.toggle === "dnd"){ $("sysDnd").checked = chk.checked; refreshUnread(); }
+else if (c.toggle === "large_text"){ $("sysLargeText").checked = chk.checked; document.documentElement.style.fontSize = chk.checked ? "18px" : "16px"; }
+};
+row.append(mk("span", "", c.label), chk);
+body.appendChild(row);
+} else {
+body.appendChild(mk("div", "note", c.info || ""));
+}
+
+hdr.onclick = () => {
+const isOpen = !body.classList.contains("hidden");
+body.classList.toggle("hidden", isOpen);
+arrow.textContent = isOpen ? "▼" : "▲";
+};
+item.append(hdr, body);
+box.appendChild(item);
 });
 }
 
 function init(){
-buildAreaSelects(); buildHq(); buildMcRows(); buildDressUI(); renderNavCustomizer(); renderSysCategories();
-applyGfx(); startRenderLoop(); initBatteryMonitor();
+buildAreaSelects(); buildHq(); buildMcRows(); buildDressUI(); renderSysCategories();
+applyGfx(); applyLanguage(gfx.lang); startRenderLoop(); initBatteryMonitor();
 
 let mins = 0;
 setInterval(() => { mins++; if ($("wellbeingTime")) $("wellbeingTime").textContent = mins + "分"; }, 60000);
+
+/* パスワード目のマーク */
+const bindEye = (btnId, inpId, iconId) => {
+$(btnId).onclick = () => {
+const inp = $(inpId), icon = $(iconId);
+const isHidden = inp.type === "password";
+inp.type = isHidden ? "text" : "password";
+icon.innerHTML = isHidden
+? '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/>'
+: '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>';
+};
+};
+bindEye("togglePassEye", "pass", "eyeIcon");
+bindEye("toggleRecEye", "recPw", "recEyeIcon");
+bindEye("toggleDelEye", "delAccPassIn", "delEyeIcon");
+
+$("forgotPwBtn").onclick = sendPasswordReset;
+$("recSaveBtn").onclick = saveRecoveredPassword;
+
+/* Google / Discord ログイン・連携 */
+$("btnOAuthGoogle").onclick = () => signInWithProvider("google");
+$("btnOAuthDiscord").onclick = () => signInWithProvider("discord");
+$("btnSetOAuthGoogle").onclick = () => signInWithProvider("google");
+$("btnSetOAuthDiscord").onclick = () => signInWithProvider("discord");
+
+/* アカウント追加・切り替え・ログアウト・削除 */
+$("btnAddAccount").onclick = () => {
+addingAccount = true;
+$("email").value = ""; $("pass").value = ""; $("regLoginId").value = ""; $("name").value = "";
+setMode("login");
+$("app").classList.add("hidden");
+$("auth").classList.remove("hidden");
+$("recoveryBox").classList.add("hidden"); $("normalAuthBox").classList.remove("hidden");
+$("cancelAddAccBtn").classList.remove("hidden");
+};
+$("cancelAddAccBtn").onclick = () => {
+addingAccount = false;
+$("cancelAddAccBtn").classList.add("hidden");
+$("auth").classList.add("hidden");
+$("app").classList.remove("hidden");
+};
+$("secLogoutBtn").onclick = async () => { isOnlineNow = false; updatePresenceUI(); await sb.auth.signOut(); };
+$("btnDeleteAccount").onclick = () => {
+$("delAccPassIn").value = "";
+$("delAccConfirmIn").value = "";
+$("delAccMsg").textContent = "";
+$("delAccModal").classList.remove("hidden");
+};
+$("delAccCancelBtn").onclick = () => $("delAccModal").classList.add("hidden");
+$("delAccExecBtn").onclick = executeDeleteAccount;
+
+/* 設定画面サブタブ */
+document.querySelectorAll("#sSubTabs button").forEach(b => b.onclick = () => switchSettingsTab(b.dataset.st));
 
 /* グラフィック・リキッドグラス・背景モーダル */
 $("btnDarkToggle").onclick = () => { gfx.dark = !gfx.dark; saveGfxLocal(); applyGfx(); };
@@ -2666,8 +3705,32 @@ $("cropY").oninput = e => { cropState.oy = Number(e.target.value); drawCropCanva
 $("cropApply").onclick = commitCropUpload;
 $("cropCancel").onclick = () => $("cropModal").classList.add("hidden");
 
-/* グループ作成・設定・チャットメディア・長押しメニュー・通話 */
+/* QRコードスキャン */
+$("btnScanQr").onclick = () => $("qrFileIn").click();
+$("qrFileIn").onchange = async e => {
+const f = e.target.files && e.target.files[0]; e.target.value = "";
+if (!f) return;
+if ("BarcodeDetector" in window){
+try{
+const bmp = await createImageBitmap(f);
+const det = new BarcodeDetector({ formats: ["qr_code"] });
+const codes = await det.detect(bmp);
+if (codes.length && codes[0].rawValue.startsWith("NOVI_ID:")){
+const scannedId = codes[0].rawValue.replace("NOVI_ID:", "").trim();
+$("findId").value = scannedId;
+findUser();
+return;
+}
+}catch(_){}
+}
+const manualId = prompt("QRコードのID（NOVI_ID）を入力してください：");
+if (manualId){ $("findId").value = manualId.trim(); findUser(); }
+};
+
+/* グループ作成・設定・写真アイコン・チャットメディア・長押しリアクション・タイピング・通話 */
 $("grpNewBtn").onclick = () => openGroupModal(null);
+$("grpPhotoBtn").onclick = () => $("grpPhotoIn").click();
+$("grpPhotoIn").onchange = e => { uploadGroupIconPhoto(e.target.files[0]); e.target.value = ""; };
 $("chGrpSet").onclick = () => { if (chat.isGroup && chat.groupObj) openGroupModal(chat.groupObj); };
 $("grpSaveBtn").onclick = saveGroupModal;
 $("grpCloseBtn").onclick = () => $("grpModal").classList.add("hidden");
@@ -2676,12 +3739,20 @@ $("chImgBtn").onclick = () => $("chImgFile").click();
 $("chVidBtn").onclick = () => $("chVidFile").click();
 $("chImgFile").onchange = e => { uploadChatMedia(e.target.files[0], false); e.target.value = ""; };
 $("chVidFile").onchange = e => { uploadChatMedia(e.target.files[0], true); e.target.value = ""; };
+$("chText").addEventListener("input", notifyTyping);
+
+document.querySelectorAll("#msgEmojiRow button").forEach(b => b.onclick = async () => {
+if (!activeMsgTarget) return;
+const em = b.dataset.em;
+$("msgActModal").classList.add("hidden");
+await call("toggle_msg_reaction", { p_msg: activeMsgTarget.id, p_emoji: em });
+loadChat(false);
+});
 $("actReplyBtn").onclick = () => { if (activeMsgTarget) setReply(activeMsgTarget); $("msgActModal").classList.add("hidden"); };
 $("actUnsendBtn").onclick = async () => {
 if (!activeMsgTarget) return;
-if (chat.isGroup && chat.groupObj){
-chat.groupObj.msgs = chat.groupObj.msgs.filter(x => x.id !== activeMsgTarget.id);
-localStorage.setItem("novi_groups", JSON.stringify(localGroups));
+if (chat.isGroup){
+await call("delete_group_message", { p_id: activeMsgTarget.id });
 } else {
 await call("delete_message", { p_id: activeMsgTarget.id });
 }
@@ -2692,6 +3763,8 @@ $("actCancelBtn").onclick = () => $("msgActModal").classList.add("hidden");
 
 $("chVoiceCall").onclick = () => startCall(false);
 $("chVideoCall").onclick = () => startCall(true);
+$("incAcceptBtn").onclick = acceptIncomingCall;
+$("incRejectBtn").onclick = () => { stopRingtone(); $("incomingCallModal").classList.add("hidden"); sendSignal({ type: "hangup" }); pendingOffer = null; };
 $("callMuteBtn").onclick = () => {
 isMuted = !isMuted; $("callMuteBtn").classList.toggle("on", isMuted);
 if (callStream) callStream.getAudioTracks().forEach(t => t.enabled = !isMuted);
@@ -2702,17 +3775,20 @@ if (callStream) callStream.getVideoTracks().forEach(t => t.enabled = isCamOn);
 };
 $("callEndBtn").onclick = endCall;
 
-/* ステータス＆設定タブ */
+/* ステータス＆独立設定画面 */
 $("pStatusBtn").onclick = () => { $("stCustomIn").value = ""; $("statusModal").classList.remove("hidden"); };
 document.querySelectorAll("#stChips button").forEach(b => b.onclick = () => { $("stCustomIn").value = b.dataset.st; });
 $("stSaveBtn").onclick = () => { const v = $("stCustomIn").value.trim(); if (v){ gfx.status = v; saveGfxLocal(); applyGfx(); } $("statusModal").classList.add("hidden"); };
 $("stCloseBtn").onclick = () => $("statusModal").classList.add("hidden");
 
+$("setBackBtn").onclick = () => go("profile");
 $("sysDnd").onchange = () => refreshUnread();
 $("sysLargeText").onchange = e => { document.documentElement.style.fontSize = e.target.checked ? "18px" : "16px"; };
+$("sysQuickOnline").onchange = e => { $("eOnline").checked = e.target.checked; saveSettings(); };
+$("sysQuickRead").onchange = e => { $("eRead").checked = e.target.checked; saveSettings(); };
 $("sysSearch").oninput = e => renderSysCategories(e.target.value);
 $("btnExportData").onclick = () => {
-const blob = new Blob([JSON.stringify({ profile: prof, theme, gfx, navItems }, null, 2)], { type:"application/json" });
+const blob = new Blob([JSON.stringify({ profile: prof, theme, gfx }, null, 2)], { type:"application/json" });
 const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = "novi_export.json"; a.click();
 };
 document.querySelectorAll("[data-preset]").forEach(b => b.onclick = () => {
@@ -2721,13 +3797,12 @@ if (p === "standard"){ Object.assign(gfx, GFX_DEF); }
 else if (p === "privacy"){ $("eDisc").checked = false; $("eRead").checked = false; $("eOnline").checked = false; saveSettings(); }
 else if (p === "creative"){ gfx.glass = true; gfx.wp = "aurora"; gfx.fps = 120; gfx.anim = "dynamic"; }
 else if (p === "perf"){ gfx.fps = 30; gfx.anim = "off"; gfx.glass = false; gfx.wp = "standard"; }
-saveGfxLocal(); applyGfx(); alert("プリセットを適用しました。");
+saveGfxLocal(); applyGfx(); applyLanguage(gfx.lang); alert("プリセットを適用しました。");
 });
 
 /* 既存イベント結線 */
 $("hqPost").onclick = hqSubmit; $("homeMomGo").onclick = () => go("moment"); $("arGo").onclick = loadArchive;
 $("mcSave").onclick = () => saveMoodColors(false); $("mcReset").onclick = () => saveMoodColors(true);
-{ const e = $("hdMsg"); e.appendChild(mk("span", "mbadge hidden", "0")); e.onclick = () => { go("friends"); ftab("msgs"); }; }
 Object.keys(RR).forEach(k => { const o = mk("option", "", RR[k]); o.value = k; $("rptReason").appendChild(o); });
 $("rptSend").onclick = sendReport; $("rptCancel").onclick = () => $("rptBox").classList.add("hidden");
 $("mfaGo").onclick = verifyMfa; $("mfaOut").onclick = async () => { await sb.auth.signOut(); };
@@ -2753,9 +3828,9 @@ $("chBack").onclick = () => { go("friends"); ftab("msgs"); };
 buildThemeUI();
 Object.keys(WT).forEach(k => { const b = mk("button", "chip", WT[k]); b.type = "button"; b.style.setProperty("--c", "#8B7CFF"); b.onclick = () => wAdd(k); $("wgAdd").appendChild(b); });
 document.querySelectorAll("#pTabs button").forEach(b => b.onclick = () => {
+if (b.dataset.pt === "sys"){ go("settings"); return; }
 document.querySelectorAll("#pTabs button").forEach(x => x.classList.toggle("on", x === b));
-["show", "edit", "gfx", "theme", "sec", "sys"].forEach(k => $("pt-" + k).classList.toggle("hidden", k !== b.dataset.pt));
-if (b.dataset.pt === "sec") loadSecurity();
+["show", "edit"].forEach(k => $("pt-" + k).classList.toggle("hidden", k !== b.dataset.pt));
 });
 $("eSave").onclick = saveProfile;
 $("thApply").onclick = saveDesign;
@@ -2778,7 +3853,6 @@ $("tabSignup").onclick = () => setMode("signup");
 $("go").onclick = submit;
 $("pass").addEventListener("keydown", e => { if (e.key === "Enter") submit(); });
 document.querySelectorAll("[data-go]").forEach(b => b.addEventListener("click", () => go(b.dataset.go)));
-$("logout").onclick = async () => { isOnlineNow = false; updatePresenceUI(); await sb.auth.signOut(); };
 showAuth();
 
 if (SUPABASE_URL.startsWith("ここに") || SUPABASE_KEY.startsWith("ここに")){
@@ -2786,7 +3860,17 @@ showMsg("index.html の SUPABASE_URL と SUPABASE_KEY を書き換えてくだ�
 $("go").disabled = true; return;
 }
 sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-sb.auth.onAuthStateChange((_ev, session) => { setTimeout(() => handleSession(session), 0); });
+sb.auth.onAuthStateChange((ev, session) => {
+if (ev === "PASSWORD_RECOVERY"){
+$("app").classList.add("hidden");
+$("auth").classList.remove("hidden");
+$("normalAuthBox").classList.add("hidden");
+$("recoveryBox").classList.remove("hidden");
+showMsg("新しいパスワードを入力してください。", "ok");
+return;
+}
+setTimeout(() => handleSession(session), 0);
+});
 }
 init();
 </script>
