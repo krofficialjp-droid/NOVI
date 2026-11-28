@@ -21,7 +21,7 @@
 --anim-speed:1;
 }
 *{box-sizing:border-box;margin:0;-webkit-tap-highlight-color:transparent}
-html,body{height:100%;height:100dvh}
+html,body{height:100%;height:100dvh;font-size:16px}
 body{background:var(--bg);color:var(--text);font-family:var(--app-font);
 padding-top:env(safe-area-inset-top,0px);overflow-x:hidden;position:relative;transition:background .35s,color .35s}
 button,input,textarea,select{font:inherit;color:inherit}
@@ -41,7 +41,8 @@ body.glass-on .modal .card{
 background:color-mix(in srgb,var(--card) var(--glass-alpha),var(--glass-tint));
 backdrop-filter:blur(var(--glass-blur)) saturate(var(--glass-sat));
 -webkit-backdrop-filter:blur(var(--glass-blur)) saturate(var(--glass-sat));
-box-shadow:0 8px 32px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.08);
+border-color:color-mix(in srgb,#ffffff 14%,var(--border));
+box-shadow:0 10px 34px rgba(0,0,0,.38),inset 0 1px 0 rgba(255,255,255,.12);
 }
 body.glass-on nav{
 background:color-mix(in srgb,var(--card) var(--glass-alpha),var(--glass-tint));
@@ -54,9 +55,9 @@ backdrop-filter:blur(var(--glass-blur)) saturate(var(--glass-sat));
 .logo{font-size:44px;font-weight:300;letter-spacing:.35em;text-align:center;
 background:linear-gradient(90deg,#fff,var(--accent));-webkit-background-clip:text;background-clip:text;color:transparent}
 .slogan{text-align:center;color:var(--sub);font-size:12px;letter-spacing:.2em;margin:6px 0 24px}
-.tabs{display:flex;border:1px solid var(--border);border-radius:14px;padding:4px;margin-bottom:16px;background:color-mix(in srgb,var(--card) 60%,transparent);gap:2px;overflow-x:auto}
-.tabs button{flex:1;background:none;border:0;padding:9px 4px;border-radius:10px;color:var(--sub);font-size:11px;white-space:nowrap;cursor:pointer;transition:.2s}
-.tabs button.on{background:var(--card);color:var(--text);font-weight:600;box-shadow:0 2px 10px rgba(0,0,0,.25)}
+.tabs{display:flex;border:1px solid var(--border);border-radius:15px;padding:4px;margin-bottom:14px;background:color-mix(in srgb,var(--card) 72%,transparent);gap:4px;overflow-x:auto}
+.tabs button{flex:1;background:none;border:0;padding:9px 6px;border-radius:11px;color:var(--sub);font-size:12px;white-space:nowrap;cursor:pointer;transition:.2s}
+.tabs button.on{background:color-mix(in srgb,var(--accent) 20%,var(--card));color:var(--text);font-weight:600;box-shadow:0 2px 10px rgba(0,0,0,.25)}
 .field{margin-bottom:12px}
 .field label{display:block;font-size:12px;color:var(--sub);margin-bottom:6px}
 .field input{width:100%;padding:14px;background:var(--card);border:1px solid var(--border);border-radius:12px;outline:none}
@@ -69,7 +70,7 @@ background:linear-gradient(90deg,#fff,var(--accent));-webkit-background-clip:tex
 .oauth-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
 .oauth-btn{padding:11px 10px;border-radius:12px;border:1px solid var(--border);background:var(--card);font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:.2s}
 .oauth-btn:active{transform:scale(.98)}
-.primary{width:100%;padding:14px;border:0;border-radius:14px;background:var(--btn);color:#fff;font-weight:600;margin-top:6px;cursor:pointer;box-shadow:0 4px 18px color-mix(in srgb,var(--btn) 45%,transparent);transition:.2s}
+.primary{width:100%;padding:14px;border:0;border-radius:15px;background:linear-gradient(135deg,var(--btn),color-mix(in srgb,var(--btn) 72%,#111));color:#fff;font-weight:600;margin-top:8px;cursor:pointer;box-shadow:0 6px 20px color-mix(in srgb,var(--btn) 42%,transparent);transition:.2s}
 .primary:active{transform:scale(.98)}
 .primary:disabled{opacity:.5}
 .msg{min-height:20px;font-size:13px;margin-top:12px;text-align:center}
@@ -77,45 +78,45 @@ background:linear-gradient(90deg,#fff,var(--accent));-webkit-background-clip:tex
 
 /* ---------- APP ---------- */
 #app{display:flex;flex-direction:column;height:100dvh;max-width:560px;margin:0 auto;position:relative}
-.top{display:flex;align-items:center;justify-content:space-between;padding:14px 18px 8px;flex:none}
-.top .logo{font-size:22px;text-align:left}
+.top{display:flex;align-items:center;justify-content:space-between;padding:14px 18px 10px;flex:none}
+.top .logo{font-size:22px;text-align:left;font-weight:400;letter-spacing:.28em}
 .icons{display:flex;gap:8px}
-.ico{width:40px;height:40px;border-radius:13px;border:1px solid var(--border);background:var(--card);
+.ico{width:40px;height:40px;border-radius:14px;border:1px solid var(--border);background:var(--card);
 display:grid;place-items:center;font-size:17px;position:relative;cursor:pointer;transition:.2s}
 .ico:active{transform:scale(.93)}
 .ico svg{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
-main{flex:1;overflow-y:auto;padding:4px 18px 136px;-webkit-overflow-scrolling:touch}
-.sec{margin-bottom:22px}
-.sec h2{font-size:13px;color:var(--sub);font-weight:500;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between}
-.card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:16px}
-.note{font-size:12px;color:var(--sub);line-height:1.6}
+main{flex:1;overflow-y:auto;padding:6px 18px 144px;-webkit-overflow-scrolling:touch}
+.sec{margin-bottom:24px}
+.sec h2{font-size:13px;color:var(--sub);font-weight:600;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:16px}
+.note{font-size:12px;color:var(--sub);line-height:1.65}
 
 /* ムード ORB */
-.orbwrap{display:grid;place-items:center;padding:18px 0 8px}
-.orb{width:200px;height:200px;border-radius:50%;
+.orbwrap{display:grid;place-items:center;padding:16px 0 8px}
+.orb{width:186px;height:186px;border-radius:50%;
 background:radial-gradient(circle at 35% 30%,#fff3 0,transparent 35%),
 radial-gradient(circle at 50% 50%,var(--glow),#2a2450 70%,#0d0b1c);
-box-shadow:0 0 60px 8px color-mix(in srgb,var(--glow) 55%,transparent),inset 0 0 40px #0008;
+box-shadow:0 0 64px 8px color-mix(in srgb,var(--glow) 55%,transparent),inset 0 0 40px #0008;
 animation:breathe calc(6s / var(--anim-speed)) ease-in-out infinite;transition:box-shadow .6s}
-@keyframes breathe{50%{transform:scale(1.05);box-shadow:0 0 90px 14px color-mix(in srgb,var(--glow) 60%,transparent),inset 0 0 40px #0008}}
+@keyframes breathe{50%{transform:scale(1.05);box-shadow:0 0 92px 14px color-mix(in srgb,var(--glow) 60%,transparent),inset 0 0 40px #0008}}
 body.anim-off .orb,body.anim-off .pv .bg,body.anim-off .pv i,body.anim-off .ncard{animation:none!important}
 @media(prefers-reduced-motion:reduce){.orb,.pv .bg,.pv i,.ncard{animation:none!important}}
-.orbcap{text-align:center;font-size:12px;color:var(--sub);margin-top:14px}
+.orbcap{text-align:center;font-size:12px;color:var(--sub);margin-top:12px}
 
-/* ---------- FLOATING FUTURISTIC NAV ---------- */
+/* ---------- FLOATING FUTURISTIC NAV (5 ITEMS) ---------- */
 nav{position:fixed;left:14px;right:14px;bottom:calc(12px + env(safe-area-inset-bottom,0px));
-background:color-mix(in srgb,var(--card) 92%,transparent);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
-border:1px solid color-mix(in srgb,var(--accent) 28%,var(--border));
-border-radius:26px;display:flex;justify-content:space-around;align-items:center;
-padding:6px 4px;max-width:532px;margin:0 auto;z-index:20;
+background:color-mix(in srgb,var(--card) 92%,transparent);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+border:1px solid color-mix(in srgb,var(--accent) 32%,var(--border));
+border-radius:28px;display:flex;justify-content:space-around;align-items:center;
+padding:7px 8px;max-width:532px;margin:0 auto;z-index:20;
 box-shadow:0 12px 36px rgba(0,0,0,.55),0 0 24px color-mix(in srgb,var(--glow) 18%,transparent)}
-nav button{background:none;border:0;color:var(--sub);font-size:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;padding:6px 4px;min-width:44px;border-radius:18px;position:relative;cursor:pointer;transition:all .22s}
-nav button svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;transition:transform .22s,filter .22s}
-nav button.on{color:var(--text);background:color-mix(in srgb,var(--accent) 20%,transparent)}
+nav button{flex:1;background:none;border:0;color:var(--sub);font-size:10px;font-weight:500;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:7px 4px;border-radius:20px;position:relative;cursor:pointer;transition:all .22s}
+nav button svg{width:21px;height:21px;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;transition:transform .22s,filter .22s}
+nav button.on{color:var(--text);font-weight:600;background:color-mix(in srgb,var(--accent) 22%,transparent)}
 nav button.on svg{stroke:var(--accent);transform:translateY(-1px);filter:drop-shadow(0 0 8px var(--glow))}
-nav button.on::after{content:"";position:absolute;bottom:2px;width:16px;height:3px;border-radius:99px;background:var(--accent);box-shadow:0 0 8px var(--accent)}
+nav button.on::after{content:"";position:absolute;bottom:3px;width:18px;height:3px;border-radius:99px;background:var(--accent);box-shadow:0 0 8px var(--accent)}
 
-.create{position:fixed;right:18px;bottom:calc(86px + env(safe-area-inset-bottom,0px));width:54px;height:54px;border-radius:50%;
+.create{position:fixed;right:18px;bottom:calc(90px + env(safe-area-inset-bottom,0px));width:54px;height:54px;border-radius:50%;
 border:1px solid rgba(255,255,255,.22);background:linear-gradient(135deg,var(--btn),color-mix(in srgb,var(--btn) 65%,#000));color:#fff;font-size:26px;
 display:grid;place-items:center;box-shadow:0 8px 28px color-mix(in srgb,var(--glow) 65%,transparent);z-index:19;cursor:pointer;transition:.2s}
 .create:active{transform:scale(.92)}
@@ -124,16 +125,16 @@ display:grid;place-items:center;box-shadow:0 8px 28px color-mix(in srgb,var(--gl
 .chips{display:flex;flex-wrap:wrap;gap:8px}
 .chip{padding:9px 14px;border-radius:99px;border:1px solid var(--c,var(--border));background:var(--card);font-size:13px;cursor:pointer;transition:.15s}
 .chip.on{background:var(--c,var(--accent));font-weight:700;color:#111}
-.chip.sm2{padding:5px 10px;font-size:12px}
+.chip.sm2{padding:6px 11px;font-size:12px}
 textarea,select{color:var(--text);font:inherit;width:100%;margin-top:12px;padding:12px;background:var(--bg);border:1px solid var(--border);border-radius:12px;outline:none}
 textarea{min-height:84px;resize:vertical}
 .cnt{text-align:right;font-size:11px;color:var(--sub);margin-top:4px}
-.item{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-top:1px solid var(--border);position:relative}
+.item{display:flex;gap:12px;align-items:flex-start;padding:13px 0;border-top:1px solid var(--border);position:relative}
 .dot{width:14px;height:14px;border-radius:50%;margin-top:4px;flex:none;background:var(--c);box-shadow:0 0 10px var(--c)}
 .item .body{flex:1;min-width:0;word-break:break-word}
-.item .meta{font-size:11px;color:var(--sub);margin-top:2px}
-.del{background:none;border:1px solid var(--border);border-radius:9px;padding:6px 10px;font-size:12px;color:var(--sub);cursor:pointer;white-space:nowrap}
-.del:active{background:rgba(255,255,255,.06)}
+.item .meta{font-size:11px;color:var(--sub);margin-top:3px}
+.del{background:none;border:1px solid var(--border);border-radius:99px;padding:6px 12px;font-size:12px;color:var(--sub);cursor:pointer;white-space:nowrap;transition:.15s}
+.del:active{background:rgba(255,255,255,.08)}
 .bar{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--sub);margin-top:6px}
 .bar i{display:block;height:6px;border-radius:3px;background:var(--c)}
 .bar b{width:64px;font-weight:400}
@@ -180,7 +181,7 @@ select.sm{width:auto;margin:0}
 .mini .av-acc{top:-9px;font-size:13px}
 
 /* ---------- NORMAL MESSENGER CHAT UI ---------- */
-.chat-hdr{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}
+.chat-hdr{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px;padding:10px 12px;background:var(--card);border:1px solid var(--border);border-radius:18px}
 .chat-peer{display:flex;align-items:center;gap:10px;min-width:0;flex:1}
 .chat-peer-info{min-width:0}
 .chat-peer-name{font-size:15px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -195,8 +196,8 @@ select.sm{width:auto;margin:0}
 .msg-sender{font-size:10px;color:var(--sub);margin:0 4px 3px}
 .msg-bub-wrap{display:flex;align-items:flex-end;gap:6px}
 .msg-row.me .msg-bub-wrap{flex-direction:row-reverse}
-.bub{padding:10px 14px;border-radius:18px;background:var(--bg);border:1px solid var(--border);word-break:break-word;font-size:14px;line-height:1.45;position:relative}
-.msg-row.me .bub{background:var(--accent);color:#fff;border-color:transparent;border-bottom-right-radius:5px}
+.bub{padding:11px 15px;border-radius:18px;background:var(--bg);border:1px solid var(--border);word-break:break-word;font-size:14px;line-height:1.5;position:relative}
+.msg-row.me .bub{background:linear-gradient(135deg,var(--accent),color-mix(in srgb,var(--accent) 75%,#000));color:#fff;border-color:transparent;border-bottom-right-radius:5px}
 .msg-row.them .bub{border-bottom-left-radius:5px}
 .bub .q{font-size:11px;opacity:.85;border-left:2px solid rgba(255,255,255,.5);padding-left:7px;margin-bottom:5px}
 .bub img{max-width:210px;max-height:240px;border-radius:12px;display:block;margin-top:4px;background:#000}
@@ -228,8 +229,7 @@ select.sm{width:auto;margin:0}
 .ntxt{flex:1;min-width:0;word-break:break-word;font-size:14px}
 .ntxt .meta{font-size:11px;color:var(--sub);margin-top:2px}
 .ndot{width:9px;height:9px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--accent);flex:none}
-.ubadge,.mbadge{position:absolute;top:-4px;right:-4px;background:var(--danger);color:#fff;border-radius:99px;font-size:10px;min-width:16px;padding:1px 4px;text-align:center;line-height:1.3}
-nav .ubadge,nav .mbadge{top:2px;right:4px}
+.ubadge,.mbadge{position:absolute;top:-4px;right:6px;background:var(--danger);color:#fff;border-radius:99px;font-size:10px;min-width:16px;padding:1px 4px;text-align:center;line-height:1.3}
 #nTabs button{font-size:11px;padding:8px 2px}
 
 /* ---------- MODALS & PROFILE ---------- */
@@ -245,9 +245,9 @@ nav .ubadge,nav .mbadge{top:2px;right:4px}
 .wcard{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:14px;word-break:break-word;font-size:14px;line-height:1.7}
 .w-s{grid-column:span 1}.w-m{grid-column:span 2}.w-l{grid-column:span 2;padding:24px 16px;font-size:17px}
 .wcard .wt{font-size:11px;color:var(--sub);margin-bottom:4px}
-.wrow{padding:12px 0;border-top:1px solid var(--border)}
+.wrow{padding:13px 0;border-top:1px solid var(--border)}
 .wrow:first-child{border-top:0}
-.wrow .bt{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.wrow .bt{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:6px;margin-top:10px}
 
 /* ---------- STUDIO GRIDS & TOGGLES ---------- */
 .trow{display:flex;gap:10px;align-items:center;justify-content:space-between;padding:10px 0;border-top:1px solid var(--border)}
@@ -287,9 +287,9 @@ nav .ubadge,nav .mbadge{top:2px;right:4px}
 .dress-btn.on{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 22%,var(--bg));font-weight:600}
 .react{background:none;border:1px solid var(--border);border-radius:99px;padding:7px 12px;font-size:12px;color:var(--sub);white-space:nowrap;cursor:pointer}
 .react.on{border-color:var(--c);color:var(--text);background:color-mix(in srgb,var(--c) 22%,transparent)}
-.refresh{background:none;border:1px solid var(--border);border-radius:8px;padding:5px 10px;font-size:12px;color:var(--sub);cursor:pointer}
+.refresh{background:none;border:1px solid var(--border);border-radius:99px;padding:5px 11px;font-size:11px;color:var(--sub);cursor:pointer}
 .stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px}
-.stat-box{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:10px;text-align:center}
+.stat-box{background:var(--bg);border:1px solid var(--border);border-radius:14px;padding:10px;text-align:center}
 .stat-num{font-size:18px;font-weight:700;color:var(--accent)}
 .stat-lbl{font-size:10px;color:var(--sub);margin-top:2px}
 
@@ -305,6 +305,18 @@ nav .ubadge,nav .mbadge{top:2px;right:4px}
 .acc-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 0;border-top:1px solid var(--border)}
 .acc-row:first-child{border-top:0;padding-top:0}
 .acc-cur{font-size:11px;padding:2px 8px;border-radius:99px;background:color-mix(in srgb,var(--accent) 25%,transparent);color:var(--accent);font-weight:600}
+
+/* ---------- TOOLS (逆算アラーム / タイムカプセル / 動物翻訳) ---------- */
+.countdown-hero{text-align:center;padding:18px 12px;border-radius:16px;background:linear-gradient(135deg,color-mix(in srgb,var(--accent) 22%,var(--bg)),var(--bg));border:1px solid color-mix(in srgb,var(--accent) 45%,var(--border));margin-top:12px}
+.countdown-big{font-size:30px;font-weight:700;color:var(--accent);letter-spacing:.04em}
+.animal-bubble{margin-top:12px;padding:14px;border-radius:16px;background:color-mix(in srgb,var(--accent) 14%,var(--bg));border:1px solid color-mix(in srgb,var(--accent) 40%,var(--border));font-size:15px;line-height:1.6}
+.cap-badge-lock{font-size:11px;padding:3px 9px;border-radius:99px;background:rgba(255,216,77,.16);color:#FFD84D;border:1px solid rgba(255,216,77,.35)}
+.cap-badge-open{font-size:11px;padding:3px 9px;border-radius:99px;background:rgba(77,219,138,.16);color:#4DDB8A;border:1px solid rgba(77,219,138,.35)}
+.cap-unread-pill{font-size:10px;padding:2px 7px;border-radius:99px;background:var(--danger);color:#fff;font-weight:700;margin-left:6px}
+.ban-pill{font-size:10px;padding:2px 7px;border-radius:99px;background:rgba(255,107,122,.2);color:var(--danger);border:1px solid var(--danger);font-weight:600}
+.log-pill{font-size:11px;padding:8px 10px;border-radius:10px;background:var(--bg);border:1px solid var(--border);margin-top:6px}
+@keyframes popOpen{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:scale(1)}}
+.cap-opened-box{margin-top:8px;padding:12px;border-radius:12px;background:var(--bg);border:1px solid var(--accent);font-size:13px;white-space:pre-wrap;animation:popOpen .28s ease}
 </style>
 </head>
 <body>
@@ -390,42 +402,63 @@ nav .ubadge,nav .mbadge{top:2px;right:4px}
 </header>
 
 <main>
-<!-- ホーム -->
+<!-- ホーム（世界のムード＋ムード投稿＋みんなのムード＆履歴＋近くのモーメント＆アーカイブ完全統合） -->
 <div class="view" id="v-home">
 <div class="sec">
 <h2 data-i18n="global_mood">世界のムード</h2>
 <div class="orbwrap"><div class="orb"></div></div>
 <div class="orbcap" id="orbCap">読み込み中...</div><div id="orbBars"></div>
 </div>
+
 <div class="sec">
-<h2 data-i18n="your_mood">今のムードを投稿</h2><div class="card">
+<h2>
+<span data-i18n="your_mood">今のムードを投稿</span>
+<button class="refresh" type="button" data-go="create">＋ モーメント・詳細作成</button>
+</h2>
+<div class="card">
 <div class="chips" id="hqChips"></div>
-<input id="hqText" class="in" maxlength="300" data-i18n-ph="mood_ph" placeholder="ひとこと（任意）">
-<select id="hqVis" class="in" aria-label="公開範囲">
+<input id="hqText" class="in" maxlength="300" data-i18n-ph="mood_ph" placeholder="ひとこと（任意・下書き自動保存）">
+<div style="display:flex;gap:8px;align-items:center;margin-top:10px">
+<select id="hqVis" class="in" style="margin:0;flex:1" aria-label="公開範囲">
 <option value="public" data-i18n="vis_public">公開</option>
 <option value="friends" data-i18n="vis_friends">フレンドのみ</option>
 <option value="private" data-i18n="vis_private">非公開</option>
 </select>
+</div>
 <button id="hqPost" class="primary" type="button" data-i18n="post_btn">投稿する</button><div id="hqMsg" class="msg"></div>
-</div></div>
-<div class="sec"><h2 data-i18n="my_mood">あなたのムード</h2>
+</div>
+</div>
+
+<div class="sec">
+<h2 data-i18n="my_mood">あなたのムード</h2>
 <div class="card" id="myLatest"><div class="note" data-i18n="loading">読み込み中...</div></div>
 </div>
+
+<!-- ムード統合エリア（みんなのムード / 自分のムード履歴＋表示件数切替） -->
+<div class="sec">
+<h2>
+<span>ムードタイムライン</span>
+<div style="display:flex;gap:6px;align-items:center">
+<select id="homeFeedLimit" class="sm" aria-label="表示件数">
+<option value="5" selected>5件</option>
+<option value="15">15件</option>
+<option value="30">30件</option>
+</select>
+<button id="homeFeedReload" class="refresh" type="button" data-i18n="reload">更新</button>
+</div>
+</h2>
+<div class="tabs" id="homeMoodTabs">
+<button type="button" data-hmt="public" class="on" data-i18n="public_moods">みんなのムード（匿名）</button>
+<button type="button" data-hmt="mine" data-i18n="mood_history">ムード履歴</button>
+</div>
+<div id="hmt-public"><div class="card" id="homeFeed"><div class="note">読み込み中...</div></div></div>
+<div id="hmt-mine" class="hidden"><div class="card" id="myList"><div class="note">読み込み中...</div></div></div>
+</div>
+
+<!-- モーメント統合エリア（近くのモーメント検索＆表示＋アーカイブ） -->
 <div class="sec">
 <h2 data-i18n="nearby_moments">近くのモーメント</h2>
-<div class="card" id="homeMoments"><div class="note" data-i18n="moment_hint">モーメント画面で位置情報を許可するか、場所を選ぶと、近くの投稿が見られます。</div><button class="del" id="homeMomGo" type="button" style="margin-top:8px" data-i18n="see_nearby">近くを見る</button></div>
-</div>
-</div>
-
-<!-- ムード -->
-<div class="view hidden" id="v-mood">
-<div class="sec"><button class="primary" type="button" data-go="create" data-i18n="create_btn">＋ ムードやモーメントを作る</button></div>
-<div class="sec"><h2 data-i18n="public_moods">みんなのムード（匿名）<button id="feedReload" class="refresh" type="button" data-i18n="reload">更新</button></h2><div class="card" id="feed"><div class="note">読み込み中...</div></div></div>
-<div class="sec"><h2 data-i18n="mood_history">ムード履歴</h2><div class="card" id="myList"><div class="note">読み込み中...</div></div></div>
-</div>
-
-<!-- モーメント -->
-<div class="view hidden" id="v-moment"><div class="sec"><h2 data-i18n="nearby_moments">近くのモーメント</h2><div class="card">
+<div class="card">
 <div style="display:flex;gap:8px;align-items:center">
 <select id="momKm" class="sm" aria-label="表示範囲"><option value="1">1km</option><option value="3">3km</option><option value="5">5km</option><option value="10" selected>10km</option><option value="25">25km</option><option value="50">50km</option></select>
 <button id="momGo" class="primary" type="button" style="margin:0" data-i18n="search_btn">探す</button>
@@ -433,8 +466,102 @@ nav .ubadge,nav .mbadge{top:2px;right:4px}
 <select id="momArea" class="in" aria-label="場所"></select>
 <div id="momStatus" class="msg"></div>
 <div id="momList"><div class="note" data-i18n="moment_hint">「現在地」を選ぶと、位置情報の許可が必要です。許可しない場合は、都道府県を選べます。</div></div>
+</div>
+</div>
+
+<div class="sec">
+<h2 data-i18n="archive_title">アーカイブ（期限切れモーメント）<button id="arGo" class="refresh" type="button">表示</button></h2>
+<div class="card hidden" id="arBox"></div>
+</div>
+</div>
+
+<!-- 便利ツール（逆算アラーム / タイムカプセル / 動物と話せる機能） -->
+<div class="view hidden" id="v-tools">
+<div class="tabs" id="toolTabs">
+<button type="button" data-tt="alarm" class="on">🚃 逆算アラーム</button>
+<button type="button" data-tt="capsule" id="tabCapsuleBtn">⏳ タイムカプセル<span id="capUnreadBadge" class="cap-unread-pill hidden">0</span></button>
+<button type="button" data-tt="animal">🐾 動物と話す</button>
+</div>
+
+<!-- ① 逆算アラーム（プリセット付き） -->
+<div id="tt-alarm">
+<div class="sec"><h2>🚃 逆算アラーム（出発カウントダウン）</h2><div class="card">
+<div class="note">電車の出発時刻や予定の時刻から、移動時間と準備時間を逆算して「あと何分で向かわないといけないか」をリアルタイムで教えます。</div>
+<div class="chips" style="margin-top:10px">
+<button type="button" class="chip sm2" data-alpreset="commute">🚃 通学・移動（15分+10分）</button>
+<button type="button" class="chip sm2" data-alpreset="outing">🎒 お出かけ（25分+15分）</button>
+<button type="button" class="chip sm2" data-alpreset="rush">⚡ 急ぎ（5分+3分）</button>
+</div>
+<div class="note" style="margin-top:10px">予定・電車の出発時刻</div>
+<input id="alTargetTime" type="time" class="in" style="margin-top:4px">
+<div class="note" style="margin-top:10px">駅・目的地までの移動時間（分）</div>
+<input id="alTravelMin" type="number" min="0" max="300" value="15" class="in" style="margin-top:4px">
+<div class="note" style="margin-top:10px">家を出る前の準備・余裕時間（分）</div>
+<input id="alPrepMin" type="number" min="0" max="180" value="10" class="in" style="margin-top:4px">
+<input id="alLabel" class="in" maxlength="30" placeholder="予定メモ（例：東海道線 08:12発）">
+<button id="alSetBtn" class="primary" type="button">逆算アラームをセットする</button>
+<button id="alStopBtn" class="logout hidden" type="button" style="color:var(--danger);border-color:var(--danger)">アラームを解除する</button>
+
+<div id="alResultBox" class="countdown-hero hidden">
+<div class="note" id="alSummaryTxt"></div>
+<div class="countdown-big" id="alCountdownTxt">--分 --秒</div>
+<div class="note" id="alSubStatus" style="margin-top:4px"></div>
+</div>
 </div></div>
-<div class="sec"><h2 data-i18n="archive_title">アーカイブ（期限切れモーメント）<button id="arGo" class="refresh" type="button">表示</button></h2><div class="card hidden" id="arBox"></div></div></div>
+</div>
+
+<!-- ② タイムカプセル機能（アプリ内到着・開封・未読バッジ） -->
+<div id="tt-capsule" class="hidden">
+<div class="sec"><h2>⏳ タイムカプセル（アプリ内で未来の自分に届く）</h2><div class="card">
+<div class="note">今の気持ちや目標を書いて封印すると、指定した年数後にNOVIアプリ内へ届きます。開封日になると中身を読めるようになります。</div>
+<select id="capYears" class="in" aria-label="何年後に届くか">
+<option value="1">1年後の自分へ</option>
+<option value="3">3年後の自分へ</option>
+<option value="5">5年後の自分へ</option>
+<option value="10">10年後の自分へ</option>
+<option value="0">今すぐ届く（動作確認テスト用）</option>
+</select>
+<input id="capTitle" class="in" maxlength="40" placeholder="タイトル（例：未来の自分へ）">
+<textarea id="capBody" maxlength="1000" placeholder="未来の自分へのメッセージを書く..."></textarea>
+<button id="capSaveBtn" class="primary" type="button">🔒 タイムカプセルを封印する</button>
+<div id="capMsg" class="msg"></div>
+</div></div>
+
+<div class="sec"><h2>アプリ内のタイムカプセル一覧</h2><div class="card" id="capList"></div></div>
+</div>
+
+<!-- ③ 動物と話せる機能（カスタム音源＋リアル声質合成） -->
+<div id="tt-animal" class="hidden">
+<div class="sec"><h2>🐾 動物と話せる機能（鳴き声翻訳＆再生）</h2><div class="card">
+<div class="note">動物に伝えたい言葉を入力すると、選んだ動物の鳴き声に翻訳して音で伝えます。自分の音声ファイル（MP3/WAVなど）をセットするとさらにリアルになります。</div>
+
+<div class="dress-grid" id="anSpeciesGrid" style="margin-top:10px">
+<button type="button" class="dress-btn on" data-an="dog">🐶 犬</button>
+<button type="button" class="dress-btn" data-an="cat">🐱 猫</button>
+<button type="button" class="dress-btn" data-an="bird">🐤 鳥</button>
+<button type="button" class="dress-btn" data-an="frog">🐸 カエル</button>
+</div>
+
+<div style="display:flex;gap:8px;align-items:center;justify-content:space-between;margin-top:10px">
+<span class="note" id="anCustomAudioStatus">音声：リアル声質合成（未設定）</span>
+<div style="display:flex;gap:6px">
+<button id="anPickAudioBtn" class="del" type="button">🎵 音源を選ぶ</button>
+<button id="anClearAudioBtn" class="del hidden" type="button">解除</button>
+</div>
+<input id="anAudioFileIn" type="file" accept="audio/*" class="hidden">
+</div>
+
+<textarea id="anInput" maxlength="200" placeholder="話したいことを入力（例：おやつ食べる？大好きだよ！）"></textarea>
+<button id="anSpeakBtn" class="primary" type="button">🔊 動物の鳴き声で伝える</button>
+
+<div id="anResultBox" class="animal-bubble hidden">
+<div class="note" id="anHeaderTxt" style="margin-bottom:4px"></div>
+<div id="anVoiceText" style="font-weight:700;font-size:17px"></div>
+<button id="anReplayBtn" class="del" type="button" style="margin-top:10px">🔁 もういちど鳴き声を再生</button>
+</div>
+</div></div>
+</div>
+</div>
 
 <!-- 通知 -->
 <div class="view hidden" id="v-alerts">
@@ -449,31 +576,11 @@ nav .ubadge,nav .mbadge{top:2px;right:4px}
 </div></div>
 </div>
 
-<!-- 検索 -->
-<div class="view hidden" id="v-search">
-<div class="sec"><h2 data-i18n="search_btn">探す</h2><div class="card">
-<input id="srQ" class="in" maxlength="30" placeholder="キーワードを入力して、検索ボタンを押す">
-<div class="tabs" id="sTabs" style="margin-top:12px"><button type="button" data-st="users" class="on">ユーザー</button><button type="button" data-st="moods">ムード</button><button type="button" data-st="moments">モーメント</button></div>
-<div class="chips hidden" id="srMoods" style="margin-top:10px"></div>
-<button id="srGo" class="primary" type="button" data-i18n="search_btn">検索</button>
-<button id="srBack" class="logout hidden" type="button">← 探す・おすすめに戻る</button>
-</div></div>
-<div id="srProfile" class="hidden"></div>
-<div id="srRes"></div>
-<div id="srHome">
-<div class="sec"><h2>最近検索したユーザー<button id="srClear" class="refresh" type="button">すべて削除</button></h2><div class="card" id="srHist"></div></div>
-<div class="sec"><h2>人気のムード（直近24時間）</h2><div class="card" id="dvTrend"></div></div>
-<div class="sec"><h2>人気の投稿（7日間）</h2><div class="card" id="dvPop"></div></div>
-<div class="sec"><h2>おすすめのユーザー</h2><div id="dvRec"></div></div>
-<div class="sec"><h2>新しいユーザー</h2><div id="dvNew"></div></div>
-</div>
-</div>
-
 <!-- 作成 -->
 <div class="view hidden" id="v-create"><div class="sec"><h2>作成</h2><div class="card">
 <div class="tabs"><button id="tMood" class="on" type="button">ムード</button><button id="tMoment" type="button">モーメント</button></div>
 <div id="moodOnly"><div class="chips" id="chips"></div></div>
-<textarea id="moodText" maxlength="300" placeholder="ひとこと（300文字まで）"></textarea>
+<textarea id="moodText" maxlength="300" placeholder="ひとこと（300文字まで・下書き自動保存）"></textarea>
 <div class="cnt"><span id="cnt">0</span>/300</div>
 <div class="chips" id="fx" style="margin-top:8px"></div>
 <div class="pv" id="prev"></div>
@@ -495,24 +602,60 @@ nav .ubadge,nav .mbadge{top:2px;right:4px}
 <div id="moodMsg" class="msg"></div>
 </div></div></div>
 
-<!-- 友だち・メッセージ一覧・QRコード -->
+<!-- 友だち・メッセージ一覧・検索＆QRコード -->
 <div class="view hidden" id="v-friends">
-<div class="tabs" id="fTabs"><button type="button" data-ft="friends" class="on" data-i18n="tab_friends">友だち</button><button type="button" data-ft="msgs" data-i18n="tab_msgs">メッセージ</button><button type="button" data-ft="reqs" data-i18n="tab_reqs">申請</button><button type="button" data-ft="find" data-i18n="search_btn">探す・QR</button></div>
-<div id="ft-friends"><div class="sec"><h2 data-i18n="tab_friends">友だち一覧</h2><div class="card" id="friendList"></div></div><div class="sec"><h2>ブロック中</h2><div class="card" id="blockList"></div></div></div>
+<div class="tabs" id="fTabs">
+<button type="button" data-ft="friends" class="on" data-i18n="tab_friends">友だち</button>
+<button type="button" data-ft="msgs" data-i18n="tab_msgs">メッセージ</button>
+<button type="button" data-ft="reqs" data-i18n="tab_reqs">申請</button>
+<button type="button" data-ft="find" data-i18n="search_btn">検索</button>
+</div>
+
+<!-- 友だちタブ（友だち一覧＋検索・追加＋単一QRコード表示・更新・かざして申請） -->
+<div id="ft-friends">
+<div class="sec"><h2 data-i18n="tab_friends">友だち一覧</h2><div class="card" id="friendList"></div></div>
+
+<div class="sec" id="friendQuickSearchSec">
+<h2>友だち検索・追加</h2>
+<div class="card">
+<input id="quickFindId" class="in" style="margin-top:0" maxlength="21" placeholder="ログインIDを入力（例：novi_taro）">
+<button id="quickFindGo" class="primary" type="button">検索して友だち追加</button>
+<div id="quickFindRes" style="margin-top:12px"></div>
+</div>
+</div>
+
+<div class="sec" id="friendQuickQrSec">
+<h2>
+<span>自分のQRコード ＆ フレンド申請</span>
+<button id="btnRefreshQr" class="refresh" type="button">🔄 QR更新</button>
+</h2>
+<div class="card" style="text-align:center">
+<div class="note" style="margin-bottom:10px">自分のQRを見せるか、相手のQRをかざす・画像から選ぶとフレンド申請を送れます</div>
+<img id="quickMyQrImg" alt="自分のQRコード" style="width:164px;height:164px;border-radius:16px;background:#fff;padding:8px;margin:0 auto;display:block;box-shadow:0 6px 20px rgba(0,0,0,.35)">
+<div id="quickMyQrLabel" class="note" style="margin-top:8px;font-weight:600;color:var(--text)"></div>
+
+<div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap">
+<button id="btnLiveQrCam" class="primary" type="button" style="margin:0;flex:1">📷 カメラでかざす</button>
+<button id="btnPickQrImg" class="del" type="button">🖼️ QR画像から読取</button>
+<button id="btnStopQrCam" class="del hidden" type="button">停止</button>
+</div>
+<input id="qrImgFileIn" type="file" accept="image/*" class="hidden">
+
+<video id="qrCamVideo" class="hidden" playsinline muted style="width:100%;max-height:240px;border-radius:14px;margin-top:10px;background:#000;object-fit:cover"></video>
+<div id="qrScanStatus" class="msg"></div>
+</div>
+</div>
+
+<div class="sec"><h2>ブロック中</h2><div class="card" id="blockList"></div></div>
+</div>
+
 <div id="ft-msgs" class="hidden"><div class="sec"><h2 data-i18n="tab_msgs">トーク一覧<button id="grpNewBtn" class="refresh" type="button">＋ グループ作成</button></h2><div class="card" id="convList"></div></div></div>
 <div id="ft-reqs" class="hidden"><div class="sec"><h2>受け取った申請</h2><div class="card" id="reqIn"></div></div><div class="sec"><h2>送った申請</h2><div class="card" id="reqOut"></div></div></div>
 <div id="ft-find" class="hidden">
-<div class="sec"><h2>ログインIDで探す</h2><div class="card">
-<input id="findId" class="in" style="margin-top:0" maxlength="21" placeholder="ログインID（例：novi_taro）">
-<button id="findGo" class="primary" type="button" data-i18n="search_btn">検索</button>
-<div id="findRes" style="margin-top:12px"></div>
-</div></div>
-<div class="sec"><h2>マイQRコード ＆ QR友だち追加</h2><div class="card" style="text-align:center">
-<div class="note" style="margin-bottom:10px">相手にこのQRコードを読み取ってもらうとすぐ申請できます</div>
-<img id="myQrImg" alt="マイQRコード" style="width:170px;height:170px;border-radius:14px;background:#fff;padding:8px;margin:0 auto;display:block">
-<div id="myQrLabel" class="note" style="margin-top:6px;font-weight:600;color:var(--text)"></div>
-<button id="btnScanQr" class="logout" type="button">📷 QRコードを読み取る（カメラ / 画像）</button>
-<input id="qrFileIn" type="file" accept="image/*" capture="environment" class="hidden">
+<div class="sec"><h2>ユーザー・ムード検索</h2><div class="card">
+<input id="ftFindQuery" class="in" style="margin-top:0" maxlength="30" placeholder="キーワードやログインIDを入力">
+<button id="ftFindGo" class="primary" type="button" data-i18n="search_btn">検索</button>
+<div id="ftFindRes" style="margin-top:12px"></div>
 </div></div>
 </div>
 </div>
@@ -520,7 +663,7 @@ nav .ubadge,nav .mbadge{top:2px;right:4px}
 <!-- チャット画面 -->
 <div class="view hidden" id="v-chat"><div class="sec">
 <div class="chat-hdr">
-<button id="chBack" class="ico" type="button" aria-label="戻る">←</button>
+<button id="chBack" class="ico" type="button" aria-label="戻る" style="width:36px;height:36px">←</button>
 <div class="chat-peer">
 <div id="chAvatar" class="mini"></div>
 <div class="chat-peer-info">
@@ -534,7 +677,7 @@ nav .ubadge,nav .mbadge{top:2px;right:4px}
 <button id="chGrpSet" class="ico hidden" type="button" aria-label="グループ設定">⚙️</button>
 </div>
 </div>
-<div class="card" style="padding:12px">
+<div class="card" style="padding:14px">
 <div class="chatbox" id="chBox"></div>
 <div id="chNote" class="note hidden" style="margin-top:10px">この相手には今は送信できません。過去の会話は読めます。</div>
 <div id="chIn">
@@ -545,7 +688,7 @@ nav .ubadge,nav .mbadge{top:2px;right:4px}
 <button id="chVidBtn" class="ico" type="button" title="動画送信" style="width:40px;height:40px;flex:none">🎬</button>
 <input id="chImgFile" type="file" accept="image/jpeg,image/png,image/webp" class="hidden">
 <input id="chVidFile" type="file" accept="video/mp4,video/webm,video/quicktime" class="hidden">
-<textarea id="chText" maxlength="1000" placeholder="メッセージを入力（スワイプ/長押しで返信）"></textarea>
+<textarea id="chText" maxlength="1000" placeholder="メッセージを入力（下書き保存・スワイプ/長押し返信）"></textarea>
 <button id="chSend" class="primary" type="button" style="width:auto;margin:0;padding:10px 14px;border-radius:18px;flex:none">送信</button>
 </div>
 </div>
@@ -555,15 +698,85 @@ nav .ubadge,nav .mbadge{top:2px;right:4px}
 <!-- 他ユーザープロフィール -->
 <div class="view hidden" id="v-uprof"><div class="sec"><h2><button id="upBack" class="refresh" type="button">← 戻る</button><span>プロフィール</span></h2></div><div id="upBody"></div></div>
 
-<!-- 統合設定画面 -->
-<div class="view hidden" id="v-settings">
-<div class="sec"><h2><span data-i18n="pt_sys">設定</span><button id="setBackBtn" class="refresh" type="button">← プロフィールに戻る</button></h2></div>
+<!-- マイプロフィール（表示・編集・設定の3タブ：設定を押しても別画面に移動せずこの中で開く） -->
+<div class="view hidden" id="v-profile">
+<div class="tabs" id="pTabs">
+<button type="button" data-pt="show" class="on" data-i18n="pt_show">表示</button>
+<button type="button" data-pt="edit" data-i18n="pt_edit">編集</button>
+<button type="button" data-pt="sys" data-i18n="pt_sys">設定</button>
+</div>
 
+<!-- プロフィールタブ①：表示 -->
+<div id="pt-show">
+<div class="cover" id="pCover"></div>
+<div class="phead">
+<div class="av-wrap" id="pAvWrap"><div class="avatar" id="pAvatar"></div><span class="av-acc" id="pAvAcc"></span></div>
+<div>
+<div class="pname"><span id="pName"></span><span id="pOnlineBadge" class="online-dot" title="オンライン"></span></div>
+<div id="pId" class="note"></div>
+<div id="pStatusBtn" class="status-pill">🟢 オンライン</div>
+</div>
+</div>
+<div class="card" style="margin-bottom:12px">
+<div class="note" style="font-weight:600;color:var(--text)">📊 あなたの活動分析</div>
+<div class="stat-grid">
+<div class="stat-box"><div class="stat-num" id="insMoods">0</div><div class="stat-lbl">ムード投稿</div></div>
+<div class="stat-box"><div class="stat-num" id="insReacts">0</div><div class="stat-lbl">もらった共感</div></div>
+<div class="stat-box"><div class="stat-num" id="insMoments">0</div><div class="stat-lbl">モーメント</div></div>
+</div>
+</div>
+<div class="wg" id="wgView"></div>
+</div>
+
+<!-- プロフィールタブ②：編集 -->
+<div id="pt-edit" class="hidden">
+<div class="sec"><h2>プロフィールを編集</h2><div class="card">
+<div class="note">名前（表示名・30文字まで）</div>
+<input id="eName" class="in" style="margin-top:4px" maxlength="30" placeholder="名前を入力">
+<div class="note" style="margin-top:10px">ログインID / ユーザーネーム（英小文字・数字・_ の3〜20文字）</div>
+<input id="eId" class="in" style="margin-top:4px" maxlength="20" placeholder="ログインID（例：novi_taro）">
+<div class="note" style="margin-top:10px">自己紹介（200文字まで）</div>
+<textarea id="eBio" style="margin-top:4px" maxlength="200" placeholder="自己紹介（200文字まで）"></textarea>
+<button id="eSave" class="primary" type="button" data-i18n="save_btn">保存</button>
+<div class="note" style="margin-top:14px">アイコン画像（ズーム・位置調整トリミング対応）</div>
+<button id="btnCropAvatar" class="logout" type="button" style="margin-top:6px">🖼️ アイコン画像を選択・調整</button>
+<input id="fAvatar" type="file" accept="image/jpeg,image/png,image/webp" class="hidden">
+<div class="note" style="margin-top:14px">カバー画像（ズーム・位置調整トリミング対応）</div>
+<button id="btnCropCover" class="logout" type="button" style="margin-top:6px">🌄 カバー画像を選択・調整</button>
+<input id="fCover" type="file" accept="image/jpeg,image/png,image/webp" class="hidden">
+<div id="eMsg" class="msg"></div>
+</div></div>
+
+<div class="sec"><h2>アイコン着せ替え ＆ カバー背景（相手にも反映）</h2><div class="card">
+<div class="note">アイコンフレーム（他のユーザーからも見えます）</div>
+<div class="dress-grid" id="avFrameGrid"></div>
+<div class="note" style="margin-top:12px">アイコンアクセサリ（他のユーザーからも見えます）</div>
+<div class="dress-grid" id="avAccGrid"></div>
+<div class="note" style="margin-top:12px">カバー背景プリセット</div>
+<div class="dress-grid" id="cvPresetGrid"></div>
+</div></div>
+
+<div class="sec"><h2>プライバシー基本設定</h2><div class="card">
+<select id="eScope" class="in" style="margin-top:0"><option value="everyone">友だち申請：誰でも</option><option value="friends_of_friends">友だちの友だちだけ</option><option value="nobody">友だち申請：誰も受け付けない</option></select>
+<label class="trow" style="margin-top:10px"><span>オンライン状態を表示する（OFF時は常にオフライン）</span><input type="checkbox" id="eOnline" checked></label>
+<label class="trow"><span>既読を表示する（相手にも見えます）</span><input type="checkbox" id="eRead"></label>
+<label class="trow"><span>検索・おすすめに表示する</span><input type="checkbox" id="eDisc" checked></label>
+<label class="trow"><span>ムードを他の人に共有する</span><input type="checkbox" id="eShare" checked></label>
+<button id="eIdSave" class="primary" type="button" data-i18n="save_btn">保存</button>
+<div id="eIdMsg" class="msg"></div>
+</div></div>
+<div class="sec"><h2>ウィジェットを追加（最大20個）</h2><div class="card"><div class="chips" id="wgAdd"></div></div></div>
+<div class="sec"><h2>ウィジェットの並べ替え・編集</h2><div class="card" id="wgEdit"></div></div>
+</div>
+
+<!-- プロフィールタブ③：設定（画面遷移なし・インライン表示） -->
+<div id="pt-sys" class="hidden">
 <div class="tabs" id="sSubTabs">
 <button type="button" data-st="general" class="on">一般・29項目</button>
 <button type="button" data-st="gfx" data-i18n="pt_gfx">グラフィック</button>
 <button type="button" data-st="theme" data-i18n="pt_theme">テーマ</button>
 <button type="button" data-st="sec" data-i18n="pt_sec">安全</button>
+<button type="button" data-st="admin" id="tabAdminMonitor" class="hidden" style="color:#FFD84D">👑 運営監視</button>
 </div>
 
 <!-- 設定サブ①：一般・クイック・29項目 -->
@@ -760,75 +973,60 @@ nav .ubadge,nav .mbadge{top:2px;right:4px}
 </div>
 </div></div>
 </div>
-</div>
 
-<!-- マイプロフィール（表示・編集・設定の3タブ） -->
-<div class="view hidden" id="v-profile">
-<div class="tabs" id="pTabs">
-<button type="button" data-pt="show" class="on" data-i18n="pt_show">表示</button>
-<button type="button" data-pt="edit" data-i18n="pt_edit">編集</button>
-<button type="button" data-pt="sys" data-i18n="pt_sys">設定</button>
-</div>
-
-<div id="pt-show">
-<div class="cover" id="pCover"></div>
-<div class="phead">
-<div class="av-wrap" id="pAvWrap"><div class="avatar" id="pAvatar"></div><span class="av-acc" id="pAvAcc"></span></div>
-<div>
-<div class="pname"><span id="pName"></span><span id="pOnlineBadge" class="online-dot" title="オンライン"></span></div>
-<div id="pId" class="note"></div>
-<div id="pStatusBtn" class="status-pill">🟢 オンライン</div>
-</div>
-</div>
-<div class="card" style="margin-bottom:12px">
-<div class="note" style="font-weight:600;color:var(--text)">📊 あなたの活動分析</div>
+<!-- 設定サブ⑤：👑 運営監視パネル（検索・登録日/ログイン履歴・ユーザー停止/解除・全体お知らせ・通報＆投稿監視・運営ログ） -->
+<div id="st-admin" class="hidden">
+<div class="sec">
+<h2><span>👑 運営監視ダッシュボード</span><button id="btnAdminReload" class="refresh" type="button">最新に更新</button></h2>
+<div class="card">
+<div class="note" style="margin-bottom:8px">運営アカウント専用モニター（他ユーザーからは非表示・アクセス不可）</div>
 <div class="stat-grid">
-<div class="stat-box"><div class="stat-num" id="insMoods">0</div><div class="stat-lbl">ムード投稿</div></div>
-<div class="stat-box"><div class="stat-num" id="insReacts">0</div><div class="stat-lbl">もらった共感</div></div>
-<div class="stat-box"><div class="stat-num" id="insMoments">0</div><div class="stat-lbl">モーメント</div></div>
-</div>
-</div>
-<div class="wg" id="wgView"></div>
+<div class="stat-box"><div class="stat-num" id="admTotalUsers">-</div><div class="stat-lbl">総ユーザー数</div></div>
+<div class="stat-box"><div class="stat-num" id="admOnlineUsers" style="color:#4DDB8A">-</div><div class="stat-lbl">オンライン</div></div>
+<div class="stat-box"><div class="stat-num" id="admBannedUsers" style="color:var(--danger)">-</div><div class="stat-lbl">停止中/通報</div></div>
 </div>
 
-<div id="pt-edit" class="hidden">
-<div class="sec"><h2>プロフィールを編集</h2><div class="card">
-<div class="note">名前（表示名・30文字まで）</div>
-<input id="eName" class="in" style="margin-top:4px" maxlength="30" placeholder="名前を入力">
-<div class="note" style="margin-top:10px">ログインID / ユーザーネーム（英小文字・数字・_ の3〜20文字）</div>
-<input id="eId" class="in" style="margin-top:4px" maxlength="20" placeholder="ログインID（例：novi_taro）">
-<div class="note" style="margin-top:10px">自己紹介（200文字まで）</div>
-<textarea id="eBio" style="margin-top:4px" maxlength="200" placeholder="自己紹介（200文字まで）"></textarea>
-<button id="eSave" class="primary" type="button" data-i18n="save_btn">保存</button>
-<div class="note" style="margin-top:14px">アイコン画像（ズーム・位置調整トリミング対応）</div>
-<button id="btnCropAvatar" class="logout" type="button" style="margin-top:6px">🖼️ アイコン画像を選択・調整</button>
-<input id="fAvatar" type="file" accept="image/jpeg,image/png,image/webp" class="hidden">
-<div class="note" style="margin-top:14px">カバー画像（ズーム・位置調整トリミング対応）</div>
-<button id="btnCropCover" class="logout" type="button" style="margin-top:6px">🌄 カバー画像を選択・調整</button>
-<input id="fCover" type="file" accept="image/jpeg,image/png,image/webp" class="hidden">
-<div id="eMsg" class="msg"></div>
-</div></div>
+<div style="display:flex;gap:8px;margin-top:12px">
+<input id="admSearchIn" class="in" style="margin-top:0" placeholder="ユーザー名・ID・メール・投稿内容で検索">
+<button id="btnAdmSearch" class="del" type="button" style="border-color:var(--accent);color:var(--accent)">🔍 検索</button>
+</div>
+<div id="admMsg" class="msg"></div>
+</div>
+</div>
 
-<div class="sec"><h2>アイコン着せ替え ＆ カバー背景（相手にも反映）</h2><div class="card">
-<div class="note">アイコンフレーム（他のユーザーからも見えます）</div>
-<div class="dress-grid" id="avFrameGrid"></div>
-<div class="note" style="margin-top:12px">アイコンアクセサリ（他のユーザーからも見えます）</div>
-<div class="dress-grid" id="avAccGrid"></div>
-<div class="note" style="margin-top:12px">カバー背景プリセット</div>
-<div class="dress-grid" id="cvPresetGrid"></div>
-</div></div>
+<div class="sec">
+<h2>📢 全ユーザーへ運営お知らせ配信</h2>
+<div class="card">
+<input id="admBroadcastIn" class="in" style="margin-top:0" maxlength="200" placeholder="全ユーザーの通知タブに届くお知らせを入力">
+<button id="btnAdmBroadcast" class="primary" type="button">全ユーザーに一斉送信する</button>
+</div>
+</div>
 
-<div class="sec"><h2>プライバシー基本設定</h2><div class="card">
-<select id="eScope" class="in" style="margin-top:0"><option value="everyone">友だち申請：誰でも</option><option value="friends_of_friends">友だちの友だちだけ</option><option value="nobody">友だち申請：誰も受け付けない</option></select>
-<label class="trow" style="margin-top:10px"><span>オンライン状態を表示する（OFF時は常にオフライン）</span><input type="checkbox" id="eOnline" checked></label>
-<label class="trow"><span>既読を表示する（相手にも見えます）</span><input type="checkbox" id="eRead"></label>
-<label class="trow"><span>検索・おすすめに表示する</span><input type="checkbox" id="eDisc" checked></label>
-<label class="trow"><span>ムードを他の人に共有する</span><input type="checkbox" id="eShare" checked></label>
-<button id="eIdSave" class="primary" type="button" data-i18n="save_btn">保存</button>
-<div id="eIdMsg" class="msg"></div>
-</div></div>
-<div class="sec"><h2>ウィジェットを追加（最大20個）</h2><div class="card"><div class="chips" id="wgAdd"></div></div></div>
-<div class="sec"><h2>ウィジェットの並べ替え・編集</h2><div class="card" id="wgEdit"></div></div>
+<div class="sec">
+<h2>👤 ユーザー管理・登録日・ログイン履歴・停止 / 解除</h2>
+<div class="card" id="admUserList"><div class="note">読み込み中...</div></div>
+</div>
+
+<div class="sec">
+<h2>🚨 通報一覧（最新30件）</h2>
+<div class="card" id="admReportList"><div class="note">読み込み中...</div></div>
+</div>
+
+<div class="sec">
+<h2>👁️ 全ユーザーの最新ムード監視（最新20件）</h2>
+<div class="card" id="admMoodList"><div class="note">読み込み中...</div></div>
+</div>
+
+<div class="sec">
+<h2>📍 全ユーザーの最新モーメント監視（最新20件）</h2>
+<div class="card" id="admMomentList"><div class="note">読み込み中...</div></div>
+</div>
+
+<div class="sec">
+<h2>📜 運営アクションログ（最新25件）</h2>
+<div class="card" id="admLogList"><div class="note">読み込み中...</div></div>
+</div>
+</div>
 </div>
 </div>
 </main>
@@ -979,10 +1177,231 @@ nav .ubadge,nav .mbadge{top:2px;right:4px}
 <script>
 const SUPABASE_URL = "https://wnfcdvcxmcknngszqgby.supabase.co";
 const SUPABASE_KEY = "sb_publishable_lwUdAZRr69ZFUQxPVPVGgA_l9Z9eSLL";
+const ADMIN_EMAIL = "kr.official.jp@gmail.com";
 
 const $ = (id) => document.getElementById(id);
 let sb = null, mode = "login", me = null, currentUserEmail = "", selMood = null, addingAccount = false;
 const mk = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
+
+function isAdminUser(){
+return String(currentUserEmail || "").trim().toLowerCase() === ADMIN_EMAIL.toLowerCase();
+}
+
+/* ---------- 連投・スパム防止（レート制限） ---------- */
+let lastMoodPostAt = 0, lastChatSendAt = 0;
+function canPostMoodNow(){
+const now = Date.now();
+if (now - lastMoodPostAt < 2500) return false;
+lastMoodPostAt = now;
+return true;
+}
+function canSendChatNow(){
+const now = Date.now();
+if (now - lastChatSendAt < 800) return false;
+lastChatSendAt = now;
+return true;
+}
+
+/* ---------- 👑 運営監視パネル（検索・登録日/ログイン履歴・ユーザー停止/解除・全体お知らせ・通報＆投稿監視・運営ログ） ---------- */
+async function loadAdminDashboard(){
+if (!isAdminUser() || !sb) return;
+const msg = $("admMsg");
+const q = ($("admSearchIn") ? $("admSearchIn").value : "").trim();
+if (msg){ msg.textContent = "監視データを取得中..."; msg.className = "msg"; }
+
+const { data, error } = await sb.rpc("admin_get_dashboard", { p_search: q || null });
+if (error || !data){
+if (msg){
+msg.textContent = "取得エラー：" + (error ? error.message : "");
+msg.className = "msg err";
+}
+return;
+}
+if (msg) msg.textContent = q ? `「${q}」の検索結果を表示中` : "";
+
+const reports = Array.isArray(data.reports) ? data.reports : [];
+$("admTotalUsers").textContent = Number(data.total_users || 0);
+$("admOnlineUsers").textContent = Number(data.online_users || 0);
+$("admBannedUsers").textContent = `${Number(data.banned_users || 0)} / ${reports.length}`;
+
+// ユーザー管理・登録日・ログイン履歴・停止/解除一覧
+const uBox = $("admUserList"); uBox.textContent = "";
+const users = Array.isArray(data.users) ? data.users : [];
+if (!users.length){
+uBox.appendChild(mk("div", "note", "該当するユーザーはいません。"));
+} else {
+users.forEach(u => {
+const row = mk("div", "wrow");
+const top = mk("div", "");
+top.style.display = "flex"; top.style.alignItems = "center"; top.style.gap = "6px"; top.style.flexWrap = "wrap";
+top.appendChild(mk("strong", "", u.username || "NOVIユーザー"));
+if (u.is_banned){
+top.appendChild(mk("span", "ban-pill", "停止中"));
+} else if (u.online_status){
+top.appendChild(mk("span", "online-dot"));
+}
+row.appendChild(top);
+row.appendChild(mk("div", "note", `@${u.novi_id || "-"}｜${u.email || "メールなし"}`));
+if (u.created_at){
+row.appendChild(mk("div", "note", `登録日：${fmt(u.created_at)}${u.last_active ? "｜最終活動：" + fmt(u.last_active) : ""}`));
+}
+if (u.is_banned && u.ban_reason){
+const rTxt = mk("div", "note", `停止理由：${u.ban_reason}`);
+rTxt.style.color = "var(--danger)";
+row.appendChild(rTxt);
+}
+
+const logs = Array.isArray(u.login_logs) ? u.login_logs : [];
+if (logs.length){
+const logBox = mk("div", "log-pill");
+logBox.appendChild(mk("div", "note", "最近のログイン履歴："));
+logs.forEach(l => {
+logBox.appendChild(mk("div", "note", `• ${l.label || "端末"}（${fmt(l.created_at)}）`));
+});
+row.appendChild(logBox);
+}
+
+const isSelfAdmin = String(u.email || "").toLowerCase() === ADMIN_EMAIL.toLowerCase();
+if (!isSelfAdmin){
+const bt = mk("div", "bt");
+if (u.is_banned){
+const unbanBtn = mk("button", "del", "✅ 停止を解除"); unbanBtn.type = "button";
+unbanBtn.style.borderColor = "#4DDB8A"; unbanBtn.style.color = "#4DDB8A";
+unbanBtn.onclick = async () => {
+if (!confirm(`${u.username} さんのアカウント停止を解除しますか？`)) return;
+await sb.rpc("admin_moderate", { p_action: "unban_user", p_id: u.user_id, p_text: null });
+loadAdminDashboard();
+};
+bt.appendChild(unbanBtn);
+} else {
+const banBtn = mk("button", "del", "⛔ アカウント停止"); banBtn.type = "button";
+banBtn.style.borderColor = "var(--danger)"; banBtn.style.color = "var(--danger)";
+banBtn.onclick = async () => {
+const reason = prompt(`${u.username} (@${u.novi_id}) を停止する理由を入力してください：`, "利用規約違反のため");
+if (reason === null) return;
+await sb.rpc("admin_moderate", { p_action: "ban_user", p_id: u.user_id, p_text: reason });
+loadAdminDashboard();
+};
+bt.appendChild(banBtn);
+}
+row.appendChild(bt);
+}
+uBox.appendChild(row);
+});
+}
+
+// 通報一覧
+const rBox = $("admReportList"); rBox.textContent = "";
+if (!reports.length){
+rBox.appendChild(mk("div", "note", "現在、未処理の通報はありません。"));
+} else {
+reports.forEach(r => {
+const row = mk("div", "wrow");
+row.appendChild(mk("div", "", `【${r.target_type}】理由：${RR[r.reason] || r.reason}`));
+if (r.detail) row.appendChild(mk("div", "note", `詳細：${r.detail}`));
+row.appendChild(mk("div", "note", `通報者：${r.reporter_name || "不明"} (@${r.reporter_novi_id || "-"})｜${fmt(r.created_at)}`));
+const bt = mk("div", "bt");
+const delRpt = mk("button", "del", "✓ 通報を対応済みにする"); delRpt.type = "button";
+delRpt.onclick = async () => {
+await sb.rpc("admin_moderate", { p_action: "delete_report", p_id: r.id, p_text: null });
+loadAdminDashboard();
+};
+bt.appendChild(delRpt);
+
+if (r.target_type === "mood" || r.target_type === "moment"){
+const delTarget = mk("button", "del", "🗑️ 対象投稿を削除"); delTarget.type = "button";
+delTarget.style.color = "var(--danger)"; delTarget.style.borderColor = "var(--danger)";
+delTarget.onclick = async () => {
+if (!confirm("通報された投稿を強制削除しますか？")) return;
+await sb.rpc("admin_moderate", { p_action: r.target_type === "mood" ? "delete_mood" : "delete_moment", p_id: r.target_id, p_text: null });
+await sb.rpc("admin_moderate", { p_action: "delete_report", p_id: r.id, p_text: null });
+loadAdminDashboard();
+};
+bt.appendChild(delTarget);
+}
+row.appendChild(bt);
+rBox.appendChild(row);
+});
+}
+
+// 最新ムード一覧
+const mBox = $("admMoodList"); mBox.textContent = "";
+const moods = Array.isArray(data.moods) ? data.moods : [];
+if (!moods.length){
+mBox.appendChild(mk("div", "note", "一致するムード投稿はありません。"));
+} else {
+moods.forEach(m => {
+const row = mk("div", "wrow");
+row.appendChild(mk("div", "", `${moodLabel(m.mood)}：${m.content || "（ひとことなし）"}`));
+row.appendChild(mk("div", "note", `投稿者：${m.username || "不明"} (@${m.novi_id || "-"})｜公開範囲：${VIS[m.visibility] || m.visibility}｜${fmt(m.created_at)}`));
+const bt = mk("div", "bt");
+const delBtn = mk("button", "del", "🗑️ 強制削除"); delBtn.type = "button";
+delBtn.style.color = "var(--danger)"; delBtn.style.borderColor = "var(--danger)";
+delBtn.onclick = async () => {
+if (!confirm("このムードを運営権限で削除しますか？")) return;
+await sb.rpc("admin_moderate", { p_action: "delete_mood", p_id: m.id, p_text: null });
+loadAdminDashboard();
+};
+bt.appendChild(delBtn);
+row.appendChild(bt);
+mBox.appendChild(row);
+});
+}
+
+// 最新モーメント一覧
+const moBox = $("admMomentList"); moBox.textContent = "";
+const moments = Array.isArray(data.moments) ? data.moments : [];
+if (!moments.length){
+moBox.appendChild(mk("div", "note", "一致するモーメント投稿はありません。"));
+} else {
+moments.forEach(mo => {
+const row = mk("div", "wrow");
+row.appendChild(mk("div", "", (mo.content || "").replace(/\[NOVI_VIDEO\]:\S+/g, "[動画]")));
+row.appendChild(mk("div", "note", `投稿者：${mo.username || "不明"} (@${mo.novi_id || "-"})｜${fmt(mo.created_at)}`));
+const bt = mk("div", "bt");
+const delBtn = mk("button", "del", "🗑️ 強制削除"); delBtn.type = "button";
+delBtn.style.color = "var(--danger)"; delBtn.style.borderColor = "var(--danger)";
+delBtn.onclick = async () => {
+if (!confirm("このモーメントを運営権限で削除しますか？")) return;
+await sb.rpc("admin_moderate", { p_action: "delete_moment", p_id: mo.id, p_text: null });
+loadAdminDashboard();
+};
+bt.appendChild(delBtn);
+row.appendChild(bt);
+moBox.appendChild(row);
+});
+}
+
+// 運営アクションログ一覧
+const lBox = $("admLogList"); if (lBox){
+lBox.textContent = "";
+const logs = Array.isArray(data.logs) ? data.logs : [];
+if (!logs.length){
+lBox.appendChild(mk("div", "note", "運営アクションの記録はまだありません。"));
+} else {
+logs.forEach(lg => {
+const row = mk("div", "wrow");
+row.appendChild(mk("div", "", `【${lg.action_type}】${lg.detail || ""}`));
+row.appendChild(mk("div", "note", `対象：${lg.target_id || "-"}｜${fmt(lg.created_at)}`));
+lBox.appendChild(row);
+});
+}
+}
+}
+
+async function sendAdminBroadcast(){
+if (!isAdminUser() || !sb) return;
+const txt = ($("admBroadcastIn").value || "").trim();
+if (!txt) return alert("配信するお知らせ文を入力してください。");
+if (!confirm(`全ユーザーに次の運営お知らせを送信しますか？\n\n「${txt}」`)) return;
+$("btnAdmBroadcast").disabled = true;
+const { error } = await sb.rpc("admin_moderate", { p_action: "broadcast_notice", p_id: null, p_text: txt });
+$("btnAdmBroadcast").disabled = false;
+if (error) return alert("送信エラー：" + error.message);
+$("admBroadcastIn").value = "";
+alert("全ユーザーへ運営お知らせを配信しました！");
+loadAdminDashboard();
+}
 
 /* ---------- OAuth（Google / Discord）ログイン＆既存アカウント連携 ---------- */
 let linkedIdentitiesCache = [];
@@ -1143,7 +1562,7 @@ if ($("pwaManifest")) $("pwaManifest").href = URL.createObjectURL(blob);
 }catch(_){}
 })();
 
-/* ---------- マルチアカウント管理（保存・切り替え・パスワード再認証付き削除） ---------- */
+/* ---------- マルチアカウント管理 ---------- */
 function getSavedAccounts(){
 try{ return JSON.parse(localStorage.getItem("novi_accounts") || "[]"); }catch(_){ return []; }
 }
@@ -1275,67 +1694,67 @@ alert("アカウントを完全に削除しました。");
 /* ---------- 多言語UI辞書 ---------- */
 const I18N = {
 ja:{
-home:"ホーム",mood:"ムード",moment:"モーメント",alerts:"通知",profile:"プロフィール",friends:"友だち",search:"検索",
+home:"ホーム",mood:"ムード",moment:"モーメント",tools:"便利",alerts:"通知",profile:"プロフィール",friends:"友だち",search:"検索",
 global_mood:"世界のムード",your_mood:"今のムードを投稿",my_mood:"あなたのムード",nearby_moments:"近くのモーメント",
 post_btn:"投稿する",save_btn:"保存",logout_btn:"ログアウト",loading:"読み込み中...",reload:"更新",search_btn:"探す",
 create_btn:"＋ ムードやモーメントを作る",public_moods:"みんなのムード（匿名）",mood_history:"ムード履歴",
 archive_title:"アーカイブ（期限切れモーメント）",see_nearby:"近くを見る",
-moment_hint:"モーメント画面で位置情報を許可するか、場所を選ぶと、近くの投稿が見られます。",
-mood_ph:"ひとこと（任意）",vis_public:"公開",vis_friends:"フレンドのみ",vis_private:"非公開",
+moment_hint:"「現在地」を選ぶと、位置情報の許可が必要です。許可しない場合は、都道府県を選べます。",
+mood_ph:"ひとこと（任意・下書き自動保存）",vis_public:"公開",vis_friends:"フレンドのみ",vis_private:"非公開",
 tab_all:"すべて",tab_friends:"友だち",tab_msgs:"メッセージ",tab_react:"反応",tab_sys:"お知らせ",tab_reqs:"申請",
 pt_show:"表示",pt_edit:"編集",pt_gfx:"グラフィック",pt_theme:"テーマ",pt_sec:"安全",pt_sys:"設定",
 m_happy:"うれしい",m_sad:"かなしい",m_angry:"いかり",m_calm:"おだやか",m_excited:"わくわく",m_confused:"もやもや",m_empty:"からっぽ"
 },
 ko:{
-home:"홈",mood:"무드",moment:"모멘트",alerts:"알림",profile:"프로필",friends:"친구",search:"검색",
+home:"홈",mood:"무드",moment:"모멘트",tools:"도구",alerts:"알림",profile:"프로필",friends:"친구",search:"검색",
 global_mood:"세계의 무드",your_mood:"지금 무드 올리기",my_mood:"나의 무드",nearby_moments:"주변 모멘트",
 post_btn:"게시하기",save_btn:"저장",logout_btn:"로그아웃",loading:"불러오는 중...",reload:"새로고침",search_btn:"검색",
 create_btn:"＋ 무드나 모멘트 만들기",public_moods:"모두의 무드 (익명)",mood_history:"무드 기록",
 archive_title:"아카이브 (만료된 모멘트)",see_nearby:"주변 보기",
-moment_hint:"모멘트 화면에서 위치 정보를 허용하거나 지역을 선택하면 주변 게시물을 볼 수 있습니다.",
+moment_hint:"위치 정보를 허용하거나 지역을 선택하면 주변 게시물을 볼 수 있습니다.",
 mood_ph:"한마디 (선택사항)",vis_public:"공개",vis_friends:"친구만",vis_private:"비공개",
 tab_all:"전체",tab_friends:"친구",tab_msgs:"메시지",tab_react:"반응",tab_sys:"공지",tab_reqs:"요청",
 pt_show:"보기",pt_edit:"편집",pt_gfx:"그래픽",pt_theme:"테마",pt_sec:"보안",pt_sys:"설정",
 m_happy:"기쁨",m_sad:"슬픔",m_angry:"화남",m_calm:"평온",m_excited:"설렘",m_confused:"복잡미묘",m_empty:"공허함"
 },
 en:{
-home:"Home",mood:"Mood",moment:"Moment",alerts:"Alerts",profile:"Profile",friends:"Friends",search:"Search",
+home:"Home",mood:"Mood",moment:"Moment",tools:"Tools",alerts:"Alerts",profile:"Profile",friends:"Friends",search:"Search",
 global_mood:"Global Mood",your_mood:"Post Your Mood",my_mood:"Your Mood",nearby_moments:"Nearby Moments",
 post_btn:"Post",save_btn:"Save",logout_btn:"Log Out",loading:"Loading...",reload:"Refresh",search_btn:"Search",
 create_btn:"+ Create Mood or Moment",public_moods:"Public Moods (Anonymous)",mood_history:"Mood History",
 archive_title:"Archive (Expired Moments)",see_nearby:"See Nearby",
-moment_hint:"Allow location or choose an area in Moments to see nearby posts.",
+moment_hint:"Allow location or choose an area to see nearby posts.",
 mood_ph:"Add a note (optional)",vis_public:"Public",vis_friends:"Friends Only",vis_private:"Private",
 tab_all:"All",tab_friends:"Friends",tab_msgs:"Messages",tab_react:"Activity",tab_sys:"System",tab_reqs:"Requests",
 pt_show:"View",pt_edit:"Edit",pt_gfx:"Graphics",pt_theme:"Theme",pt_sec:"Security",pt_sys:"Settings",
 m_happy:"Happy",m_sad:"Sad",m_angry:"Angry",m_calm:"Calm",m_excited:"Excited",m_confused:"Confused",m_empty:"Empty"
 },
 "zh-CN":{
-home:"首页",mood:"心情",moment:"瞬间",alerts:"通知",profile:"个人资料",friends:"好友",search:"搜索",
+home:"首页",mood:"心情",moment:"瞬间",tools:"工具",alerts:"通知",profile:"个人资料",friends:"好友",search:"搜索",
 global_mood:"世界心情",your_mood:"发布心情",my_mood:"你的心情",nearby_moments:"附近瞬间",
 post_btn:"发布",save_btn:"保存",logout_btn:"退出登录",loading:"加载中...",reload:"刷新",search_btn:"搜索",
 create_btn:"＋ 创建心情或瞬间",public_moods:"大家的心情（匿名）",mood_history:"心情历史",
 archive_title:"归档（已过期瞬间）",see_nearby:"查看附近",
-moment_hint:"在瞬间页面允许定位或选择地区即可查看附近动态。",
+moment_hint:"允许定位或选择地区即可查看附近动态。",
 mood_ph:"说点什么（可选）",vis_public:"公开",vis_friends:"仅好友",vis_private:"私密",
 tab_all:"全部",tab_friends:"好友",tab_msgs:"消息",tab_react:"互动",tab_sys:"系统",tab_reqs:"申请",
 pt_show:"展示",pt_edit:"编辑",pt_gfx:"画质",pt_theme:"主题",pt_sec:"安全",pt_sys:"设置",
 m_happy:"开心",m_sad:"难过",m_angry:"生气",m_calm:"平静",m_excited:"兴奋",m_confused:"迷茫",m_empty:"放空"
 },
 "zh-TW":{
-home:"首頁",mood:"心情",moment:"瞬間",alerts:"通知",profile:"個人檔案",friends:"好友",search:"搜尋",
+home:"首頁",mood:"心情",moment:"瞬間",tools:"工具",alerts:"通知",profile:"個人檔案",friends:"好友",search:"搜尋",
 global_mood:"世界心情",your_mood:"發布心情",my_mood:"你的心情",nearby_moments:"附近瞬間",
 post_btn:"發布",save_btn:"儲存",logout_btn:"登出",loading:"載入中...",reload:"重新整理",search_btn:"搜尋",
 create_btn:"＋ 建立心情或瞬間",public_moods:"大家的心情（匿名）",mood_history:"心情紀錄",
 archive_title:"典藏（已過期瞬間）",see_nearby:"查看附近",
-moment_hint:"在瞬間頁面允許定位或選擇地區即可查看附近貼文。",
+moment_hint:"允許定位或選擇地區即可查看附近貼文。",
 mood_ph:"說點什麼（選填）",vis_public:"公開",vis_friends:"僅好友",vis_private:"私人",
 tab_all:"全部",tab_friends:"好友",tab_msgs:"訊息",tab_react:"互動",tab_sys:"公告",tab_reqs:"申請",
 pt_show:"顯示",pt_edit:"編輯",pt_gfx:"畫質",pt_theme:"主題",pt_sec:"安全",pt_sys:"設定",
 m_happy:"開心",m_sad:"難過",m_angry:"生氣",m_calm:"平靜",m_excited:"興奮",m_confused:"迷惘",m_empty:"放空"
 },
 es:{
-home:"Inicio",mood:"Ánimo",moment:"Momento",alerts:"Alertas",profile:"Perfil",friends:"Amigos",search:"Buscar",
+home:"Inicio",mood:"Ánimo",moment:"Momento",tools:"Utilidades",alerts:"Alertas",profile:"Perfil",friends:"Amigos",search:"Buscar",
 global_mood:"Ánimo Global",your_mood:"Publicar Ánimo",my_mood:"Tu Ánimo",nearby_moments:"Momentos Cercanos",
 post_btn:"Publicar",save_btn:"Guardar",logout_btn:"Cerrar sesión",loading:"Cargando...",reload:"Actualizar",search_btn:"Buscar",
 create_btn:"+ Crear Ánimo o Momento",public_moods:"Ánimos Públicos",mood_history:"Historial",
@@ -1346,7 +1765,7 @@ pt_show:"Ver",pt_edit:"Editar",pt_gfx:"Gráficos",pt_theme:"Tema",pt_sec:"Seguri
 m_happy:"Feliz",m_sad:"Triste",m_angry:"Enojado",m_calm:"Calmado",m_excited:"Emocionado",m_confused:"Confundido",m_empty:"Vacío"
 },
 fr:{
-home:"Accueil",mood:"Humeur",moment:"Moment",alerts:"Alertes",profile:"Profil",friends:"Amis",search:"Recherche",
+home:"Accueil",mood:"Humeur",moment:"Moment",tools:"Outils",alerts:"Alertes",profile:"Profil",friends:"Amis",search:"Recherche",
 global_mood:"Humeur Mondiale",your_mood:"Publier Humeur",my_mood:"Votre Humeur",nearby_moments:"Moments Proches",
 post_btn:"Publier",save_btn:"Enregistrer",logout_btn:"Déconnexion",loading:"Chargement...",reload:"Actualiser",search_btn:"Rechercher",
 create_btn:"+ Créer",public_moods:"Humeurs Publiques",mood_history:"Historique",
@@ -1357,7 +1776,7 @@ pt_show:"Profil",pt_edit:"Modifier",pt_gfx:"Graphismes",pt_theme:"Thème",pt_sec
 m_happy:"Heureux",m_sad:"Triste",m_angry:"En colère",m_calm:"Calme",m_excited:"Excité",m_confused:"Confus",m_empty:"Vide"
 },
 de:{
-home:"Start",mood:"Stimmung",moment:"Moment",alerts:"Mitteilungen",profile:"Profil",friends:"Freunde",search:"Suche",
+home:"Start",mood:"Stimmung",moment:"Moment",tools:"Tools",alerts:"Mitteilungen",profile:"Profil",friends:"Freunde",search:"Suche",
 global_mood:"Weltstimmung",your_mood:"Stimmung teilen",my_mood:"Deine Stimmung",nearby_moments:"Momente in der Nähe",
 post_btn:"Posten",save_btn:"Speichern",logout_btn:"Abmelden",loading:"Laden...",reload:"Aktualisieren",search_btn:"Suchen",
 create_btn:"+ Erstellen",public_moods:"Öffentliche Stimmungen",mood_history:"Verlauf",
@@ -1368,7 +1787,7 @@ pt_show:"Ansicht",pt_edit:"Bearbeiten",pt_gfx:"Grafik",pt_theme:"Theme",pt_sec:"
 m_happy:"Glücklich",m_sad:"Traurig",m_angry:"Wütend",m_calm:"Ruhig",m_excited:"Aufgeregt",m_confused:"Verwirrt",m_empty:"Leer"
 },
 pt:{
-home:"Início",mood:"Humor",moment:"Momento",alerts:"Alertas",profile:"Perfil",friends:"Amigos",search:"Buscar",
+home:"Início",mood:"Humor",moment:"Momento",tools:"Ferramentas",alerts:"Alertas",profile:"Perfil",friends:"Amigos",search:"Buscar",
 global_mood:"Humor Global",your_mood:"Postar Humor",my_mood:"Seu Humor",nearby_moments:"Momentos Próximos",
 post_btn:"Postar",save_btn:"Salvar",logout_btn:"Sair",loading:"Carregando...",reload:"Atualizar",search_btn:"Buscar",
 create_btn:"+ Criar",public_moods:"Humores Públicos",mood_history:"Histórico",
@@ -1399,18 +1818,15 @@ if (d[k]) el.placeholder = d[k];
 });
 if (typeof buildHq === "function") buildHq();
 if (typeof buildChips === "function") buildChips();
-if (typeof buildSearchChips === "function") buildSearchChips();
 if (typeof buildMcRows === "function"){ buildMcRows(); syncMcRows(); }
 renderBottomNav();
 }
 
-/* ---------- 下部ナビゲーション ---------- */
+/* ---------- 下部ナビゲーション（5つに統合） ---------- */
 const NAV_ITEMS = [
 { id:"home", key:"home", svg:'<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>' },
-{ id:"mood", key:"mood", svg:'<circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/>' },
-{ id:"moment", key:"moment", svg:'<circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/>' },
+{ id:"tools", key:"tools", svg:'<path d="M12 2l2.4 7.2L22 12l-7.6 2.8L12 22l-2.4-7.2L2 12l7.6-2.8z"/>' },
 { id:"friends", key:"friends", svg:'<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>' },
-{ id:"search", key:"search", svg:'<circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>' },
 { id:"alerts", key:"alerts", svg:'<path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/>' },
 { id:"profile", key:"profile", svg:'<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>' }
 ];
@@ -1420,8 +1836,9 @@ const nav = $("bottomNav"); if (!nav) return; nav.textContent = "";
 const d = I18N[gfx.lang] || I18N.ja;
 NAV_ITEMS.forEach(item => {
 const btn = document.createElement("button"); btn.type = "button"; btn.dataset.go = item.id;
-if (curView === item.id || (curView === "settings" && item.id === "profile")) btn.classList.add("on");
-btn.innerHTML = `<svg viewBox="0 0 24 24">${item.svg}</svg><span>${d[item.key] || item.id}</span>`;
+if (curView === item.id) btn.classList.add("on");
+const label = item.id === "friends" ? "友だち/検索" : (d[item.key] || item.id);
+btn.innerHTML = `<svg viewBox="0 0 24 24">${item.svg}</svg><span>${label}</span>`;
 if (item.id === "alerts") btn.appendChild(mk("span", "ubadge hidden", "0"));
 if (item.id === "friends") btn.appendChild(mk("span", "mbadge hidden", "0"));
 btn.onclick = () => go(item.id);
@@ -1731,6 +2148,8 @@ showMsg("");
 }
 function showAuth(){
 applyTheme(DEF); me = null; currentUserEmail = ""; linkedIdentitiesCache = []; $("mfa").classList.add("hidden");
+stopLiveQrScan();
+if ($("tabAdminMonitor")) $("tabAdminMonitor").classList.add("hidden");
 document.querySelectorAll(".mbadge").forEach(b => b.classList.add("hidden"));
 if (notifTimer){ clearInterval(notifTimer); notifTimer = null; }
 if (hbTimer){ clearInterval(hbTimer); hbTimer = null; }
@@ -1749,29 +2168,45 @@ prof.username = meta.display_name || meta.full_name || prof.username || "NOVIユ
 currentUserEmail = user.email || "";
 $("pName").textContent = prof.username;
 if ($("secCurEmail")) $("secCurEmail").textContent = currentUserEmail || "未取得";
+if ($("tabAdminMonitor")) $("tabAdminMonitor").classList.toggle("hidden", !isAdminUser());
 me = user.id; isOnlineNow = true;
 applyLanguage(gfx.lang);
 go("home");
-loadGlobal(); loadMine(); loadFeed();
 loadDesign(); loadProfile().then(async () => {
-if (meta.novi_id && (!prof.novi_id || prof.novi_id.startsWith("user_"))){
-const cleanId = String(meta.novi_id).toLowerCase().replace(/[^a-z0-9_]/g, "").slice(0, 20);
-if (/^[a-z0-9_]{3,20}$/.test(cleanId)){
-await sb.from("profiles").upsert({ user_id: me, username: prof.username, novi_id: cleanId }, { onConflict: "user_id" });
-prof.novi_id = cleanId;
+if (prof.is_banned === true && !isAdminUser()){
+const rsn = prof.ban_reason || "利用規約違反のため";
+await sb.auth.signOut({ scope: "local" });
+showAuth();
+showMsg("⛔ 運営によりアカウントが停止されています（理由：" + rsn + "）", "err");
+return;
+}
+if (!prof.novi_id){
+const fallbackId = (meta.novi_id || (user.email ? user.email.split("@")[0] : "") || ("user_" + me.replace(/-/g, "").slice(0, 8)))
+.toLowerCase().replace(/[^a-z0-9_]/g, "").slice(0, 20);
+if (/^[a-z0-9_]{3,20}$/.test(fallbackId)){
+prof.novi_id = fallbackId;
+await sb.from("profiles").upsert({ user_id: me, username: prof.username, novi_id: fallbackId }, { onConflict: "user_id" });
 renderProfile();
 }
 }
 const { data: sData } = await sb.auth.getSession();
 if (sData && sData.session) saveAccountSession(sData.session);
-loadWidgets(); updatePresenceUI(); startHeartbeat(); renderMyQr(); renderAccountSwitcher(); refreshLinkedProvidersUI();
+loadWidgets(); updatePresenceUI(); startHeartbeat(); renderQuickMyQr(false); renderAccountSwitcher(); refreshLinkedProvidersUI();
 });
 refreshUnread(); startNotif(); recordLogin();
 initCallSignaling(); initRealtimeMessages();
+restoreSavedAlarm();
+restoreDrafts();
+checkDueCapsulesAndNotify();
+renderCapsules();
 }
 function go(view){
+if (view === "mood" || view === "moment" || view === "search"){
+view = view === "search" ? "friends" : "home";
+}
 curView = view;
 if (chatTimer){ clearInterval(chatTimer); chatTimer = null; }
+if (view !== "friends") stopLiveQrScan();
 document.querySelector(".create").classList.toggle("hidden", view === "chat");
 document.querySelectorAll(".view").forEach(v => v.classList.add("hidden"));
 if ($("v-" + view)) $("v-" + view).classList.remove("hidden");
@@ -1779,9 +2214,8 @@ renderBottomNav();
 document.querySelector("main").scrollTop = 0;
 if (view === "friends") ftab("friends");
 if (view === "alerts"){ loadNotifs(); loadPrefs(); }
-if (view === "search") openSearch();
-if (view === "home") loadHomeMoments();
-if (view === "settings") switchSettingsTab("general");
+if (view === "home"){ loadGlobal(); loadMine(); loadHomeFeed(); loadMoments(false); }
+if (view === "tools"){ checkDueCapsulesAndNotify(); renderCapsules(); }
 }
 function errText(e){
 const t = (e && e.message || "").toLowerCase();
@@ -1874,6 +2308,500 @@ const { data } = await sb.auth.getSession();
 if (data && data.session) showApp(data.session.user);
 }
 
+/* ---------- 下書き自動保存 ---------- */
+function saveDrafts(){
+try{
+if ($("hqText")) localStorage.setItem("novi_draft_hq", $("hqText").value);
+if ($("moodText")) localStorage.setItem("novi_draft_create", $("moodText").value);
+if ($("chText")) localStorage.setItem("novi_draft_chat", $("chText").value);
+}catch(_){}
+}
+function restoreDrafts(){
+try{
+const dHq = localStorage.getItem("novi_draft_hq");
+if ($("hqText") && dHq) $("hqText").value = dHq;
+const dCr = localStorage.getItem("novi_draft_create");
+if ($("moodText") && dCr){ $("moodText").value = dCr; if ($("cnt")) $("cnt").textContent = String(dCr.length); updatePreview(); }
+const dCh = localStorage.getItem("novi_draft_chat");
+if ($("chText") && dCh) $("chText").value = dCh;
+}catch(_){}
+}
+
+/* ---------- 便利ツール①：逆算アラーム ---------- */
+let alarmInterval = null, alarmFired = false;
+
+function playAlarmSound(){
+try{
+const ctx = new (window.AudioContext || window.webkitAudioContext)();
+[0, 0.25, 0.5].forEach(delay => {
+const osc = ctx.createOscillator(), gain = ctx.createGain();
+osc.type = "triangle";
+osc.frequency.setValueAtTime(880, ctx.currentTime + delay);
+gain.gain.setValueAtTime(0.18, ctx.currentTime + delay);
+gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + delay + 0.2);
+osc.connect(gain); gain.connect(ctx.destination);
+osc.start(ctx.currentTime + delay);
+osc.stop(ctx.currentTime + delay + 0.2);
+});
+if (navigator.vibrate) navigator.vibrate([400, 150, 400]);
+}catch(_){}
+}
+
+function updateReverseAlarmTick(){
+const raw = localStorage.getItem("novi_reverse_alarm");
+if (!raw) return;
+const cfg = JSON.parse(raw);
+const now = new Date();
+const [hh, mm] = cfg.targetTime.split(":").map(Number);
+const targetDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hh, mm, 0);
+if (targetDate.getTime() < now.getTime() - 60 * 60 * 1000){
+targetDate.setDate(targetDate.getDate() + 1);
+}
+const totalOffsetMs = (Number(cfg.travelMin) + Number(cfg.prepMin)) * 60000;
+const leaveDate = new Date(targetDate.getTime() - totalOffsetMs);
+const leaveHH = String(leaveDate.getHours()).padStart(2, "0");
+const leaveMM = String(leaveDate.getMinutes()).padStart(2, "0");
+
+$("alResultBox").classList.remove("hidden");
+$("alStopBtn").classList.remove("hidden");
+$("alSummaryTxt").textContent = `${cfg.label ? cfg.label + "｜" : ""}${cfg.targetTime} 発 → ${leaveHH}:${leaveMM} までに家を出る`;
+
+const diffMs = leaveDate.getTime() - now.getTime();
+if (diffMs <= 0){
+$("alCountdownTxt").textContent = "今すぐ出発！";
+$("alCountdownTxt").style.color = "var(--danger)";
+$("alSubStatus").textContent = "設定した出発時刻になりました。急いで向かいましょう！";
+if (!alarmFired){
+alarmFired = true;
+playAlarmSound();
+alert(`🚃 出発時間です！（${cfg.label || cfg.targetTime}）\n今すぐ向かいましょう！`);
+}
+} else {
+const totalSec = Math.ceil(diffMs / 1000);
+const remH = Math.floor(totalSec / 3600);
+const remM = Math.floor((totalSec % 3600) / 60);
+const remS = totalSec % 60;
+$("alCountdownTxt").style.color = remH === 0 && remM < 5 ? "#FFD84D" : "var(--accent)";
+$("alCountdownTxt").textContent = (remH > 0 ? `${remH}時間 ` : "") + `あと ${remM}分 ${String(remS).padStart(2, "0")}秒`;
+$("alSubStatus").textContent = `移動 ${cfg.travelMin}分 ＋ 準備 ${cfg.prepMin}分 を逆算中`;
+}
+}
+
+function setReverseAlarm(){
+const targetTime = $("alTargetTime").value;
+if (!targetTime) return alert("出発時刻・予定時刻を入力してください。");
+const cfg = {
+targetTime,
+travelMin: Math.max(0, Number($("alTravelMin").value) || 0),
+prepMin: Math.max(0, Number($("alPrepMin").value) || 0),
+label: $("alLabel").value.trim()
+};
+localStorage.setItem("novi_reverse_alarm", JSON.stringify(cfg));
+alarmFired = false;
+if (alarmInterval) clearInterval(alarmInterval);
+updateReverseAlarmTick();
+alarmInterval = setInterval(updateReverseAlarmTick, 1000);
+}
+
+function stopReverseAlarm(){
+localStorage.removeItem("novi_reverse_alarm");
+if (alarmInterval){ clearInterval(alarmInterval); alarmInterval = null; }
+$("alResultBox").classList.add("hidden");
+$("alStopBtn").classList.add("hidden");
+}
+
+function restoreSavedAlarm(){
+const raw = localStorage.getItem("novi_reverse_alarm");
+if (!raw) return;
+try{
+const cfg = JSON.parse(raw);
+$("alTargetTime").value = cfg.targetTime || "";
+$("alTravelMin").value = cfg.travelMin ?? 15;
+$("alPrepMin").value = cfg.prepMin ?? 10;
+$("alLabel").value = cfg.label || "";
+if (alarmInterval) clearInterval(alarmInterval);
+updateReverseAlarmTick();
+alarmInterval = setInterval(updateReverseAlarmTick, 1000);
+}catch(_){}
+}
+
+/* ---------- 便利ツール②：タイムカプセル機能（未読バッジ＆開封演出付き） ---------- */
+function getCapsules(){
+try{ return JSON.parse(localStorage.getItem("novi_capsules_" + (me || "guest")) || "[]"); }catch(_){ return []; }
+}
+function saveCapsules(list){
+localStorage.setItem("novi_capsules_" + (me || "guest"), JSON.stringify(list));
+updateCapsuleBadge();
+}
+function getLocalCapsuleNotifs(){
+try{ return JSON.parse(localStorage.getItem("novi_cap_notifs_" + (me || "guest")) || "[]"); }catch(_){ return []; }
+}
+function saveLocalCapsuleNotifs(list){
+localStorage.setItem("novi_cap_notifs_" + (me || "guest"), JSON.stringify(list));
+}
+
+function updateCapsuleBadge(){
+const badge = $("capUnreadBadge");
+if (!badge) return;
+const nowMs = Date.now();
+const unreadDue = getCapsules().filter(x => nowMs >= new Date(x.unlockAt).getTime() && !x.opened).length;
+badge.textContent = String(unreadDue);
+badge.classList.toggle("hidden", !(unreadDue > 0));
+}
+
+async function deliverCapsuleInApp(item){
+if (item.delivered) return;
+item.delivered = true;
+const bodyText = `⏳ 未来の自分からタイムカプセルが届きました：「${item.title}」`;
+
+if (sb && me){
+try{
+await sb.from("notifications").insert({
+user_id: me,
+kind: "system",
+body: bodyText,
+is_read: false
+});
+}catch(_){}
+}
+
+const localN = getLocalCapsuleNotifs();
+localN.unshift({
+id: "cap_notif_" + item.id,
+kind: "system",
+body: bodyText,
+created_at: new Date().toISOString(),
+is_read: false,
+fromCapsule: true
+});
+saveLocalCapsuleNotifs(localN.slice(0, 30));
+refreshUnread();
+}
+
+function checkDueCapsulesAndNotify(){
+const list = getCapsules();
+if (!list.length){ updateCapsuleBadge(); return; }
+const nowMs = Date.now();
+let changed = false;
+list.forEach(item => {
+if (!item.delivered && nowMs >= new Date(item.unlockAt).getTime()){
+deliverCapsuleInApp(item);
+changed = true;
+}
+});
+if (changed) saveCapsules(list);
+else updateCapsuleBadge();
+}
+
+function createTimeCapsule(){
+const years = Number($("capYears").value);
+const title = $("capTitle").value.trim() || `${years === 0 ? "今日" : years + "年後"}の自分へ`;
+const body = $("capBody").value.trim();
+const m = $("capMsg");
+if (!body){ m.textContent = "メッセージを入力してください。"; m.className = "msg err"; return; }
+
+const now = new Date();
+const unlock = new Date(now.getTime());
+unlock.setFullYear(unlock.getFullYear() + years);
+
+const isDueNow = years === 0;
+const list = getCapsules();
+list.unshift({
+id: Date.now().toString(36),
+years,
+title,
+body,
+createdAt: now.toISOString(),
+unlockAt: unlock.toISOString(),
+delivered: isDueNow,
+opened: false
+});
+saveCapsules(list);
+if (isDueNow){
+deliverCapsuleInApp(list[0]);
+}
+$("capTitle").value = "";
+$("capBody").value = "";
+m.textContent = isDueNow
+? "アプリ内にタイムカプセルが届きました！下の一覧から開封できます。"
+: `タイムカプセルを封印しました！（アプリ内開封日: ${unlock.toLocaleDateString("ja-JP")}）`;
+m.className = "msg ok";
+renderCapsules();
+}
+
+function renderCapsules(){
+checkDueCapsulesAndNotify();
+const box = $("capList"); if (!box) return; box.textContent = "";
+const list = getCapsules();
+if (!list.length){
+box.appendChild(mk("div", "note", "まだタイムカプセルはありません。上のフォームから未来の自分へ手紙を書けます。"));
+return;
+}
+const nowMs = Date.now();
+list.forEach(item => {
+const unlockDate = new Date(item.unlockAt);
+const isOpen = nowMs >= unlockDate.getTime();
+const row = mk("div", "wrow");
+const top = mk("div", "row");
+const titleWrap = mk("span");
+titleWrap.appendChild(mk("strong", "", item.title));
+if (isOpen && !item.opened){
+titleWrap.appendChild(mk("span", "cap-unread-pill", "未読"));
+}
+top.appendChild(titleWrap);
+top.appendChild(mk("span", isOpen ? "cap-badge-open" : "cap-badge-lock", isOpen ? "🎉 届きました（開封可）" : `🔒 ${unlockDate.toLocaleDateString("ja-JP")} 到着`));
+row.appendChild(top);
+row.appendChild(mk("div", "note", `封印日: ${new Date(item.createdAt).toLocaleDateString("ja-JP")}｜到着予定: ${unlockDate.toLocaleDateString("ja-JP")}`));
+
+if (isOpen){
+if (!item.opened){
+const openBtn = mk("button", "primary", "✨ タイムカプセルを開封する"); openBtn.type = "button";
+openBtn.style.marginTop = "8px";
+openBtn.onclick = () => {
+const updated = getCapsules().map(x => x.id === item.id ? Object.assign({}, x, { opened: true }) : x);
+saveCapsules(updated);
+renderCapsules();
+};
+row.appendChild(openBtn);
+} else {
+const content = mk("div", "cap-opened-box", item.body);
+row.appendChild(content);
+}
+} else {
+row.appendChild(mk("div", "note", "🔒 到着日まで中身は封印されています。到着するとアプリ内で読めます。"));
+}
+
+const bt = mk("div", "bt");
+const delBtn = mk("button", "del", "削除"); delBtn.type = "button";
+delBtn.onclick = () => {
+if (!confirm("このタイムカプセルを削除しますか？")) return;
+saveCapsules(getCapsules().filter(x => x.id !== item.id));
+renderCapsules();
+};
+bt.appendChild(delBtn);
+row.appendChild(bt);
+box.appendChild(row);
+});
+}
+
+/* ---------- 便利ツール③：動物と話せる機能 ---------- */
+let selectedAnimal = "dog";
+let animalAudioCtx = null;
+let customAnimalAudioMap = {};
+
+try {
+customAnimalAudioMap = JSON.parse(localStorage.getItem("novi_animal_audio_v1") || "{}");
+} catch (_) {
+customAnimalAudioMap = {};
+}
+
+const ANIMAL_DICT = {
+dog: { name: "犬", icon: "🐶", words: ["ワン！", "ワォーン！", "クゥーン…", "バウ！", "ワンワンッ！"] },
+cat: { name: "猫", icon: "🐱", words: ["ニャーン", "ミャオ！", "ゴロゴロ…", "ニャッ！", "ナァ〜オ"] },
+bird: { name: "鳥", icon: "🐤", words: ["ピヨピヨ！", "チュンチュン！", "ピーッ！", "チチチッ！", "ピィ〜♪"] },
+frog: { name: "カエル", icon: "🐸", words: ["ケロケロ！", "ゲコゲコッ", "クワッ！", "ケロ〜ン", "ゲコッ！"] }
+};
+
+function updateAnimalAudioUI() {
+const st = $("anCustomAudioStatus");
+const clr = $("anClearAudioBtn");
+const entry = customAnimalAudioMap[selectedAnimal];
+if (!st || !clr) return;
+if (entry && entry.dataUrl) {
+st.textContent = "音声：" + (entry.name || "カスタム音源");
+st.style.color = "#4DDB8A";
+clr.classList.remove("hidden");
+} else {
+st.textContent = "音声：リアル声質合成（未設定）";
+st.style.color = "";
+clr.classList.add("hidden");
+}
+}
+
+function createBreathNoiseBuffer(ctx, durationSec) {
+const sampleRate = ctx.sampleRate;
+const length = Math.max(1, Math.floor(sampleRate * durationSec));
+const buf = ctx.createBuffer(1, length, sampleRate);
+const ch = buf.getChannelData(0);
+for (let i = 0; i < length; i++) {
+ch[i] = (Math.random() * 2 - 1) * 0.65;
+}
+return buf;
+}
+
+function playSynthAnimalVoice(speciesKey, count) {
+try {
+if (!animalAudioCtx) {
+animalAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
+}
+if (animalAudioCtx.state === "suspended") {
+animalAudioCtx.resume();
+}
+const ctx = animalAudioCtx;
+const repeats = Math.min(4, Math.max(2, count));
+
+for (let i = 0; i < repeats; i++) {
+const t0 = ctx.currentTime + i * 0.36;
+
+const noise = ctx.createBufferSource();
+noise.buffer = createBreathNoiseBuffer(ctx, 0.25);
+const nFilter = ctx.createBiquadFilter();
+const nGain = ctx.createGain();
+nFilter.type = "bandpass";
+nFilter.frequency.setValueAtTime(speciesKey === "bird" ? 2600 : 900, t0);
+nFilter.Q.setValueAtTime(1.8, t0);
+nGain.gain.setValueAtTime(0.001, t0);
+nGain.gain.linearRampToValueAtTime(0.14, t0 + 0.03);
+nGain.gain.exponentialRampToValueAtTime(0.001, t0 + 0.22);
+noise.connect(nFilter);
+nFilter.connect(nGain);
+nGain.connect(ctx.destination);
+noise.start(t0);
+noise.stop(t0 + 0.23);
+
+if (speciesKey === "dog") {
+const osc = ctx.createOscillator();
+const filter = ctx.createBiquadFilter();
+const gain = ctx.createGain();
+osc.type = "sawtooth";
+const fBase = i % 2 === 0 ? 175 : 205;
+osc.frequency.setValueAtTime(fBase * 0.75, t0);
+osc.frequency.exponentialRampToValueAtTime(fBase * 1.7, t0 + 0.05);
+osc.frequency.exponentialRampToValueAtTime(fBase * 0.62, t0 + 0.2);
+
+filter.type = "lowpass";
+filter.frequency.setValueAtTime(1250, t0);
+filter.Q.setValueAtTime(2.2, t0);
+
+gain.gain.setValueAtTime(0.001, t0);
+gain.gain.linearRampToValueAtTime(0.32, t0 + 0.025);
+gain.gain.exponentialRampToValueAtTime(0.001, t0 + 0.22);
+
+osc.connect(filter);
+filter.connect(gain);
+gain.connect(ctx.destination);
+osc.start(t0);
+osc.stop(t0 + 0.23);
+} else if (speciesKey === "cat") {
+const osc = ctx.createOscillator();
+const filter = ctx.createBiquadFilter();
+const gain = ctx.createGain();
+osc.type = "sawtooth";
+const fStart = i % 2 === 0 ? 430 : 475;
+osc.frequency.setValueAtTime(fStart, t0);
+osc.frequency.linearRampToValueAtTime(fStart * 1.25, t0 + 0.14);
+osc.frequency.exponentialRampToValueAtTime(fStart * 0.76, t0 + 0.44);
+
+filter.type = "bandpass";
+filter.frequency.setValueAtTime(850, t0);
+filter.frequency.linearRampToValueAtTime(1600, t0 + 0.15);
+filter.frequency.linearRampToValueAtTime(600, t0 + 0.44);
+filter.Q.setValueAtTime(3.8, t0);
+
+gain.gain.setValueAtTime(0.001, t0);
+gain.gain.linearRampToValueAtTime(0.26, t0 + 0.07);
+gain.gain.exponentialRampToValueAtTime(0.001, t0 + 0.46);
+
+osc.connect(filter);
+filter.connect(gain);
+gain.connect(ctx.destination);
+osc.start(t0);
+osc.stop(t0 + 0.47);
+} else if (speciesKey === "bird") {
+const osc = ctx.createOscillator();
+const gain = ctx.createGain();
+osc.type = "sine";
+const f0 = 2050 + (i % 3) * 260;
+osc.frequency.setValueAtTime(f0, t0);
+osc.frequency.exponentialRampToValueAtTime(f0 * 1.35, t0 + 0.05);
+osc.frequency.exponentialRampToValueAtTime(f0 * 0.9, t0 + 0.12);
+osc.frequency.exponentialRampToValueAtTime(f0 * 1.22, t0 + 0.17);
+
+gain.gain.setValueAtTime(0.001, t0);
+gain.gain.linearRampToValueAtTime(0.22, t0 + 0.02);
+gain.gain.exponentialRampToValueAtTime(0.001, t0 + 0.19);
+
+osc.connect(gain);
+gain.connect(ctx.destination);
+osc.start(t0);
+osc.stop(t0 + 0.2);
+} else {
+const carrier = ctx.createOscillator();
+const mod = ctx.createOscillator();
+const modGain = ctx.createGain();
+const filter = ctx.createBiquadFilter();
+const gain = ctx.createGain();
+
+carrier.type = "sawtooth";
+carrier.frequency.setValueAtTime(160, t0);
+carrier.frequency.linearRampToValueAtTime(235, t0 + 0.09);
+carrier.frequency.linearRampToValueAtTime(140, t0 + 0.23);
+
+mod.type = "sine";
+mod.frequency.setValueAtTime(36, t0);
+modGain.gain.setValueAtTime(52, t0);
+
+filter.type = "bandpass";
+filter.frequency.setValueAtTime(880, t0);
+filter.Q.setValueAtTime(2.8, t0);
+
+gain.gain.setValueAtTime(0.001, t0);
+gain.gain.linearRampToValueAtTime(0.3, t0 + 0.03);
+gain.gain.exponentialRampToValueAtTime(0.001, t0 + 0.25);
+
+mod.connect(modGain);
+modGain.connect(carrier.frequency);
+carrier.connect(filter);
+filter.connect(gain);
+gain.connect(ctx.destination);
+
+carrier.start(t0);
+mod.start(t0);
+carrier.stop(t0 + 0.26);
+mod.stop(t0 + 0.26);
+}
+}
+} catch (e) {
+console.warn("合成音声エラー:", e);
+}
+}
+
+function playAnimalVoice(speciesKey, count) {
+const custom = customAnimalAudioMap[speciesKey];
+if (custom && custom.dataUrl) {
+const audio = new Audio(custom.dataUrl);
+audio.play().catch(() => playSynthAnimalVoice(speciesKey, count));
+return;
+}
+playSynthAnimalVoice(speciesKey, count);
+}
+
+function translateToAnimal(text, speciesKey) {
+const info = ANIMAL_DICT[speciesKey] || ANIMAL_DICT.dog;
+const chunks = Math.max(2, Math.min(8, Math.ceil(text.length / 4)));
+const out = [];
+for (let i = 0; i < chunks; i++) {
+const code = text.charCodeAt(i % text.length) + i * 7;
+out.push(info.words[code % info.words.length]);
+}
+if (text.includes("？") || text.includes("?")) out.push(info.words[0] + "？");
+if (text.includes("！") || text.includes("!") || text.includes("好き")) {
+out.push("💕" + info.words[info.words.length - 1]);
+}
+return out.join(" ");
+}
+
+function speakToAnimal() {
+const txt = $("anInput").value.trim();
+if (!txt) return alert("動物に伝えたい言葉を入力してください。");
+const info = ANIMAL_DICT[selectedAnimal] || ANIMAL_DICT.dog;
+const translated = translateToAnimal(txt, selectedAnimal);
+$("anHeaderTxt").textContent = `${info.icon} ${info.name}語に翻訳して伝えました：`;
+$("anVoiceText").textContent = translated;
+$("anResultBox").classList.remove("hidden");
+playAnimalVoice(selectedAnimal, Math.ceil(txt.length / 5));
+}
+
 /* ---------- ムード ---------- */
 const MOODS = {
 happy:["うれしい","#FFD84D"], sad:["かなしい","#4D8DFF"], angry:["いかり","#FF4D5E"],
@@ -1943,6 +2871,7 @@ const msg = $("moodMsg"), prog = $("momUpProg"); msg.className = "msg"; prog.tex
 const content = $("moodText").value.trim();
 if (ptype === "mood" && !selMood){ msg.textContent = "感情を1つ選んでください。"; msg.className = "msg err"; return; }
 if (ptype === "moment" && !content){ msg.textContent = "ひとことを入力してください。"; msg.className = "msg err"; return; }
+if (!canPostMoodNow()){ msg.textContent = "連投防止のため少し待ってから投稿してください。"; msg.className = "msg err"; return; }
 $("moodPost").disabled = true; msg.textContent = "投稿中...";
 let error = null;
 if (ptype === "mood"){
@@ -1978,26 +2907,27 @@ $("momPhoto").value = "";
 $("moodPost").disabled = false;
 if (error){ msg.textContent = "投稿できませんでした：" + error.message; msg.className = "msg err"; return; }
 msg.textContent = "投稿しました。"; msg.className = "msg ok";
+localStorage.removeItem("novi_draft_create");
 $("moodText").value = ""; $("cnt").textContent = "0"; updatePreview();
-if (ptype === "mood"){ await loadMine(); loadGlobal(); loadFeed(); go("mood"); }
-else { go("moment"); loadMoments(false); }
+if (ptype === "mood"){ await loadMine(); loadGlobal(); loadHomeFeed(); go("home"); }
+else { go("home"); loadMoments(false); }
 }
 
 async function delMood(id){
 if (!confirm("このムードを削除しますか？")) return;
 const { error } = await sb.from("moods").delete().eq("id", id).eq("user_id", me);
 if (error){ alert("削除できませんでした：" + error.message); return; }
-await loadMine(); loadGlobal(); loadFeed();
+await loadMine(); loadGlobal(); loadHomeFeed();
 }
 
-/* ---------- みんなのムード（匿名）＋共感 ---------- */
-async function loadFeed(){
-const box = $("feed");
-const { data, error } = await sb.rpc("get_public_moods");
+/* ---------- みんなのムード（ホームに統合表示） ---------- */
+function renderMoodListInto(box, data, error, reloadFn){
 box.textContent = "";
 if (error){ box.appendChild(mk("div", "note", "読み込めませんでした：" + error.message)); return; }
 if (!data || !data.length){ box.appendChild(mk("div", "note", "公開ムードはまだありません。")); return; }
-data.forEach((r, idx) => {
+const lim = Number($("homeFeedLimit") ? $("homeFeedLimit").value : 5) || 5;
+const items = Array.isArray(data) ? data.slice(0, lim) : data;
+items.forEach((r, idx) => {
 const m = MOODS[r.mood] || ["?", "#888"];
 const it = mk("div", "item"); it.style.setProperty("--c", m[1]);
 if (idx === 0) it.style.borderTop = "0";
@@ -2013,16 +2943,24 @@ it.append(mk("span", "dot"), body);
 const b = mk("button", "react" + (r.reacted ? " on" : ""), (r.reacted ? "♥ " : "♡ ") + r.reaction_count);
 b.type = "button";
 if (r.is_mine){ b.disabled = true; b.textContent = "♡ " + r.reaction_count; }
-else b.onclick = () => toggleReact(r.id, r.reacted, b);
+else b.onclick = () => toggleReact(r.id, r.reacted, b, reloadFn);
 it.appendChild(b); box.appendChild(it);
 });
 }
-async function toggleReact(id, reacted, btn){
+
+async function loadHomeFeed(){
+const box = $("homeFeed"); if (!box || !sb) return;
+const { data, error } = await sb.rpc("get_public_moods");
+renderMoodListInto(box, data, error, () => loadHomeFeed());
+}
+
+async function toggleReact(id, reacted, btn, reloadFn){
 btn.disabled = true;
 const q = reacted ? sb.from("reactions").delete().eq("mood_id", id).eq("user_id", me) : sb.from("reactions").insert({ mood_id: id, user_id: me });
 const { error } = await q;
 if (error) alert("共感できませんでした：" + error.message);
-loadFeed();
+if (reloadFn) reloadFn();
+else loadHomeFeed();
 }
 
 /* ---------- 作成画面 ---------- */
@@ -2060,7 +2998,7 @@ box.appendChild(b);
 });
 }
 
-/* ---------- モーメント ---------- */
+/* ---------- モーメント（ホーム画面に統合表示） ---------- */
 let pos = null;
 function getPos(){
 return new Promise((res, rej) => {
@@ -2077,16 +3015,16 @@ let areaSel = "gps";
 function prefName(n){ return n === "北海道" ? n : n === "東京" ? "東京都" : (n === "大阪" || n === "京都") ? n + "府" : n + "県"; }
 function buildAreaSelects(){
 ["momArea", "cArea"].forEach(id => {
-const sel = $(id); sel.textContent = "";
+const sel = $(id); if (!sel) return; sel.textContent = "";
 const g = mk("option", "", "現在地（位置情報を使う）"); g.value = "gps"; sel.appendChild(g);
 PREFS.forEach((x, i) => { const o = mk("option", "", prefName(x[0]) + "あたり"); o.value = String(i); sel.appendChild(o); });
 sel.onchange = e => setArea(e.target.value);
 });
 }
 function setArea(v){
-areaSel = v; ["momArea", "cArea"].forEach(id => { $(id).value = v; });
+areaSel = v; ["momArea", "cArea"].forEach(id => { if ($(id)) $(id).value = v; });
 if (v === "gps"){ if (pos && pos.manual) pos = null; } else { const a = PREFS[Number(v)]; pos = { lat: a[1], lng: a[2], manual: true }; }
-if (!$("v-moment").classList.contains("hidden")) loadMoments(false);
+if (!$("v-home").classList.contains("hidden")) loadMoments(false);
 }
 function momentPhoto(path){
 if (!path || !PHOTO_RE.test(path)) return null;
@@ -2129,7 +3067,9 @@ else bt.appendChild(repBtn("moment", r.id));
 body.appendChild(bt); it.append(mk("span", "dot"), body); return it;
 }
 async function loadMoments(ask){
-const box = $("momList"), st = $("momStatus"); st.className = "msg"; st.textContent = "";
+const box = $("momList"), st = $("momStatus");
+if (!box || !st) return;
+st.className = "msg"; st.textContent = "";
 try{ if (areaSel === "gps" && (!pos || pos.manual || ask)) pos = await getPos(); }
 catch(e){ st.textContent = e.message + "（下の「場所」で都道府県を選べます）"; st.className = "msg err"; return; }
 const { data, error } = await sb.rpc("get_nearby_moments", { p_lat: pos.lat, p_lng: pos.lng, p_km: Number($("momKm").value) });
@@ -2137,14 +3077,6 @@ box.textContent = "";
 if (error){ box.appendChild(mk("div", "note", "読み込めませんでした：" + error.message)); return; }
 if (!data.length){ box.appendChild(mk("div", "note", "この範囲にモーメントはありません。")); return; }
 data.forEach((r, i) => { const it = momentItem(r, () => loadMoments(false)); if (i === 0) it.style.borderTop = "0"; box.appendChild(it); });
-}
-async function loadHomeMoments(){
-const box = $("homeMoments"); if (!box || !pos) return;
-const { data, error } = await sb.rpc("get_nearby_moments", { p_lat: pos.lat, p_lng: pos.lng, p_km: 10 }); if (error || !data) return;
-box.textContent = "";
-if (!data.length) box.appendChild(mk("div", "note", "10km以内にモーメントはありません。"));
-data.slice(0, 3).forEach((r, i) => { const it = momentItem(r, loadHomeMoments); if (i === 0) it.style.borderTop = "0"; box.appendChild(it); });
-const m = mk("button", "del", tStr("see_nearby")); m.type = "button"; m.style.marginTop = "8px"; m.onclick = () => go("moment"); box.appendChild(m);
 }
 async function loadArchive(){
 const box = $("arBox"); box.classList.remove("hidden"); box.textContent = "";
@@ -2183,20 +3115,24 @@ let hqMood = null;
 function buildHq(){
 const box = $("hqChips"); if (!box) return; box.textContent = "";
 Object.keys(MOODS).forEach(k => {
-const b = mk("button", "chip sm2" + (hqMood === k ? " on" : ""), moodLabel(k)); b.type = "button"; b.style.setProperty("--c", MOODS[k][1]);
+const b = mk("button", "chip sm2" + (hqMood === k ? " on" : ""), moodLabel(k)); b.type = "button";
+b.style.setProperty("--c", MOODS[k][1]);
 b.onclick = () => { hqMood = hqMood === k ? null : k; buildHq(); }; box.appendChild(b);
 });
 }
 async function hqSubmit(){
 const m = $("hqMsg"); m.className = "msg";
 if (!hqMood){ m.textContent = "感情を1つ選んでください。"; m.className = "msg err"; return; }
+if (!canPostMoodNow()){ m.textContent = "連投防止のため少し待ってから投稿してください。"; m.className = "msg err"; return; }
 $("hqPost").disabled = true;
 const t = $("hqText").value.trim();
 const { error } = await sb.from("moods").insert({ user_id: me, mood: hqMood, content: t || null, visibility: $("hqVis").value, effect: "orb" });
 $("hqPost").disabled = false;
 if (error){ m.textContent = "投稿できませんでした：" + error.message; m.className = "msg err"; return; }
-m.textContent = "投稿しました。"; m.className = "msg ok"; $("hqText").value = ""; hqMood = null; buildHq();
-loadMine(); loadGlobal(); loadFeed();
+m.textContent = "投稿しました。"; m.className = "msg ok";
+localStorage.removeItem("novi_draft_hq");
+$("hqText").value = ""; hqMood = null; buildHq();
+loadMine(); loadGlobal(); loadHomeFeed();
 }
 
 /* ---------- 感情の色 ---------- */
@@ -2204,7 +3140,7 @@ const MOOD_DEF = {}; Object.keys(MOODS).forEach(k => { MOOD_DEF[k] = MOODS[k][1]
 let mcIn = {};
 function applyMoodColors(map){
 Object.keys(MOODS).forEach(k => { MOODS[k][1] = map && HEX.test(map[k]) ? map[k].toUpperCase() : MOOD_DEF[k]; });
-buildChips(); buildSearchChips(); buildHq();
+buildChips(); buildHq();
 }
 function syncMcRows(){ Object.keys(MOODS).forEach(k => { if (mcIn[k]){ mcIn[k][0].value = MOODS[k][1].toLowerCase(); mcIn[k][1].value = MOODS[k][1]; } }); }
 function buildMcRows(){
@@ -2355,12 +3291,12 @@ bt.append(use, del); row.appendChild(bt); box.appendChild(row);
 }
 
 /* ---------- プロフィール ---------- */
-let prof = { username: "NOVIユーザー", novi_id: "", av_frame: "none", av_acc: "none" };
+let prof = { username: "NOVIユーザー", novi_id: "", av_frame: "none", av_acc: "none", is_banned: false, ban_reason: "" };
 function safeImg(u){
 return typeof u === "string" && u.startsWith(SUPABASE_URL + "/storage/v1/object/public/profile-assets/") && !/["'()\\\s]/.test(u) ? u : null;
 }
 async function loadProfile(){
-const { data } = await sb.from("profiles").select("username,bio,avatar_url,cover_url,novi_id,request_scope,read_receipts,discoverable,mood_sharing,online_status,av_frame,av_acc").eq("user_id", me).maybeSingle();
+const { data } = await sb.from("profiles").select("username,bio,avatar_url,cover_url,novi_id,request_scope,read_receipts,discoverable,mood_sharing,online_status,av_frame,av_acc,is_banned,ban_reason").eq("user_id", me).maybeSingle();
 if (data){
 prof = Object.assign({}, prof, data);
 if (data.av_frame) gfx.avFrame = data.av_frame;
@@ -2383,14 +3319,7 @@ $("pAvatar").style.backgroundImage = a ? 'url("' + a + '")' : "";
 $("pCover").style.backgroundImage = c ? 'url("' + c + '")' : "";
 applyDressUp();
 renderWidgets();
-renderMyQr();
-}
-function renderMyQr(){
-const img = $("myQrImg"), lbl = $("myQrLabel");
-if (!img || !prof.novi_id) return;
-const qrData = encodeURIComponent("NOVI_ID:" + prof.novi_id);
-img.src = "https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=" + qrData;
-if (lbl) lbl.textContent = "@" + prof.novi_id;
+renderQuickMyQr(false);
 }
 function eMsg(text, ok){ const m = $("eMsg"); m.textContent = text; m.className = "msg " + (ok ? "ok" : "err"); }
 async function saveProfile(){
@@ -2556,11 +3485,230 @@ row.appendChild(bt); box.appendChild(row);
 });
 }
 
-/* ---------- 友だち・申請・グループ（未読カウント対応）・リアルタイム・タイピング・リアクション ---------- */
+/* ---------- 友だち・申請・グループ・単一QRコード ---------- */
 let chatTimer = null, rtMsgChannel = null, cachedFriends = [], dressCache = {};
 let grpLastSeen = JSON.parse(localStorage.getItem("novi_grp_seen") || "{}");
 let grpUnreadMap = {};
 let chat = { id:null, peerId:null, name:"", avatar:null, canSend:true, reply:null, isGroup:false, groupObj:null, online:false, peerTyping:false };
+let qrCamStream = null, qrScanTimer = null, qrNonce = Date.now().toString(36);
+
+function getEffectiveQrId(){
+if (prof && prof.novi_id) return prof.novi_id;
+if (me) return "user_" + me.replace(/-/g, "").slice(0, 8);
+return "";
+}
+
+function parseNoviQrValue(raw){
+if (!raw) return "";
+const s = String(raw).trim();
+if (s.startsWith("NOVI_ID:")){
+return s.replace("NOVI_ID:", "").split("&")[0].trim().toLowerCase().replace(/^@/, "");
+}
+return s.toLowerCase().replace(/^@/, "");
+}
+
+function renderQuickMyQr(forceNewToken){
+const img = $("quickMyQrImg"), lbl = $("quickMyQrLabel");
+if (!img) return;
+if (forceNewToken) qrNonce = Date.now().toString(36) + Math.random().toString(36).slice(2, 5);
+const idVal = getEffectiveQrId();
+if (!idVal){
+if (lbl) lbl.textContent = "ログインするとQRコードが表示されます";
+return;
+}
+const payload = encodeURIComponent(`NOVI_ID:${idVal}&v=${qrNonce}`);
+img.src = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${payload}`;
+if (lbl) lbl.textContent = `@${idVal}` + (forceNewToken ? "（更新済み）" : "");
+}
+
+async function sendFriendRequestFromScannedId(scannedId){
+const cleanId = parseNoviQrValue(scannedId);
+const st = $("qrScanStatus");
+if (!cleanId) return;
+if (st){
+st.textContent = `@${cleanId} を確認中...`;
+st.className = "msg";
+}
+const r = await sb.rpc("search_user", { p_novi_id: cleanId });
+if (r.error || !r.data || !r.data.length){
+if (st){
+st.textContent = `@${cleanId} が見つかりませんでした。`;
+st.className = "msg err";
+}
+return;
+}
+const p = r.data[0];
+if (p.status === "self"){
+if (st){ st.textContent = "自分のQRコードです。"; st.className = "msg err"; }
+return;
+}
+if (p.status === "friend"){
+if (st){ st.textContent = `${p.username} さんとはすでに友だちです。`; st.className = "msg ok"; }
+return;
+}
+if (p.status === "sent"){
+if (st){ st.textContent = `${p.username} さんにすでに申請済みです。`; st.className = "msg ok"; }
+return;
+}
+const res = await call("send_friend_request", { p_novi_id: p.novi_id });
+if (res.ok){
+if (st){
+st.textContent = res.data === "accepted"
+? `${p.username} さんと友だちになりました！`
+: `${p.username} さんにフレンド申請を送りました！`;
+st.className = "msg ok";
+}
+loadFriendList();
+}
+}
+
+function stopLiveQrScan(){
+if (qrScanTimer){ clearInterval(qrScanTimer); qrScanTimer = null; }
+if (qrCamStream){
+qrCamStream.getTracks().forEach(t => t.stop());
+qrCamStream = null;
+}
+const vid = $("qrCamVideo"), stopBtn = $("btnStopQrCam");
+if (vid){ vid.srcObject = null; vid.classList.add("hidden"); }
+if (stopBtn) stopBtn.classList.add("hidden");
+}
+
+async function startLiveQrScan(){
+const st = $("qrScanStatus"), vid = $("qrCamVideo"), stopBtn = $("btnStopQrCam");
+stopLiveQrScan();
+
+if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){
+if (st){
+st.textContent = "カメラ非対応の環境です。「QR画像から読取」または上のID検索をお使いください。";
+st.className = "msg err";
+}
+return;
+}
+
+try{
+qrCamStream = await navigator.mediaDevices.getUserMedia({
+video: { facingMode: { ideal: "environment" } },
+audio: false
+});
+if (vid){
+vid.srcObject = qrCamStream;
+vid.classList.remove("hidden");
+await vid.play();
+}
+if (stopBtn) stopBtn.classList.remove("hidden");
+if (st){
+st.textContent = "QRコードにカメラをかざしてください...";
+st.className = "msg ok";
+}
+
+const hasDetector = ("BarcodeDetector" in window);
+const detector = hasDetector ? new BarcodeDetector({ formats: ["qr_code"] }) : null;
+
+qrScanTimer = setInterval(async () => {
+if (!vid || vid.readyState < 2) return;
+if (detector){
+try{
+const codes = await detector.detect(vid);
+if (codes && codes.length > 0 && codes[0].rawValue){
+const targetId = parseNoviQrValue(codes[0].rawValue);
+stopLiveQrScan();
+await sendFriendRequestFromScannedId(targetId);
+}
+}catch(_){}
+}
+}, 350);
+
+if (!hasDetector && st){
+st.textContent = "この端末は自動QR解析に非対応です。「QR画像から読取」またはID検索をお使いください。";
+}
+}catch(err){
+if (st){
+st.textContent = "カメラを起動できませんでした（権限が拒否されています）。「QR画像から読取」または上のID検索から申請できます。";
+st.className = "msg err";
+}
+}
+}
+
+async function scanQrFromImageFile(file){
+const st = $("qrScanStatus");
+if (!file) return;
+if ("BarcodeDetector" in window){
+try{
+const bmp = await createImageBitmap(file);
+const det = new BarcodeDetector({ formats: ["qr_code"] });
+const codes = await det.detect(bmp);
+if (codes && codes.length > 0 && codes[0].rawValue){
+await sendFriendRequestFromScannedId(codes[0].rawValue);
+return;
+}
+}catch(_){}
+}
+const manualId = prompt("画像から自動読み取りできませんでした。相手のログインIDを入力してください：");
+if (manualId) await sendFriendRequestFromScannedId(manualId);
+else if (st){ st.textContent = "読み取りをキャンセルしました。"; st.className = "msg"; }
+}
+
+async function quickFindAndAdd(){
+const q = ($("quickFindId").value || "").trim().toLowerCase().replace(/^@/, "");
+const box = $("quickFindRes");
+if (!q || !box) return;
+box.textContent = "";
+const r = await sb.rpc("search_user", { p_novi_id: q });
+if (r.error) return empty(box, "検索できませんでした：" + r.error.message);
+if (!r.data || !r.data.length) return empty(box, "該当するユーザーが見つかりませんでした。");
+const p = r.data[0];
+const st = p.status || "none";
+const label = { self: "あなたです", friend: "友だち", sent: "申請済み", received: "承認する", none: "友だち申請を送る" }[st];
+const row = personRow(p, [[label, async () => {
+const res = await call("send_friend_request", { p_novi_id: p.novi_id });
+if (res.ok){
+alert(res.data === "accepted" ? "友だちになりました！" : "フレンド申請を送りました！");
+quickFindAndAdd();
+loadFriendList();
+}
+}, st === "self" || st === "friend" || st === "sent"]]);
+box.appendChild(row);
+}
+
+async function runCombinedSearchInFriends(){
+const q = ($("ftFindQuery").value || "").trim();
+const box = $("ftFindRes");
+if (!box) return;
+box.textContent = "";
+if (!q) return empty(box, "キーワードまたはログインIDを入力してください。");
+
+const cleanId = q.toLowerCase().replace(/^@/, "");
+const uRes = await sb.rpc("search_user", { p_novi_id: cleanId });
+const mRes = await sb.rpc("search_moods", { p_q: q, p_mood: null });
+
+if (!uRes.error && Array.isArray(uRes.data) && uRes.data.length){
+uRes.data.forEach(p => {
+const st = p.status || "none";
+const label = { self: "あなたです", friend: "友だち", sent: "申請済み", received: "承認する", none: "友だち申請" }[st];
+box.appendChild(personRow(p, [[label, async () => {
+const res = await call("send_friend_request", { p_novi_id: p.novi_id });
+if (res.ok){ alert(res.data === "accepted" ? "友だちになりました。" : "申請しました。"); runCombinedSearchInFriends(); }
+}, st === "self" || st === "friend" || st === "sent"]]));
+});
+}
+if (!mRes.error && Array.isArray(mRes.data) && mRes.data.length){
+const card = mk("div", "card"); card.style.marginTop = "10px";
+mRes.data.slice(0, 10).forEach((mRow, idx) => {
+const m = MOODS[mRow.mood] || ["?", "#888"];
+const it = mk("div", "item"); it.style.setProperty("--c", m[1]);
+if (idx === 0) it.style.borderTop = "0";
+const body = mk("div", "body");
+body.appendChild(mk("div", "", moodLabel(mRow.mood) + (mRow.content ? "：" + mRow.content : "")));
+body.appendChild(mk("div", "meta", fmt(mRow.created_at)));
+it.append(mk("span", "dot"), body);
+card.appendChild(it);
+});
+box.appendChild(card);
+}
+if (!box.children.length){
+empty(box, "一致する結果が見つかりませんでした。");
+}
+}
 
 function initRealtimeMessages(){
 if (!sb || !me) return;
@@ -2642,10 +3790,12 @@ buttons.forEach(x => { const e = mk("button", "del", x[0]); e.type = "button"; e
 r.appendChild(b); return r;
 }
 function ftab(k){
+if (k !== "friends") stopLiveQrScan();
 ["friends", "msgs", "reqs", "find"].forEach(x => $("ft-" + x).classList.toggle("hidden", x !== k));
 document.querySelectorAll("#fTabs button").forEach(b => b.classList.toggle("on", b.dataset.ft === k));
-if (k === "friends") loadFriendList(); if (k === "msgs") loadConvs(); if (k === "reqs") loadReqs();
-if (k === "find") renderMyQr();
+if (k === "friends"){ loadFriendList(); renderQuickMyQr(false); }
+if (k === "msgs") loadConvs();
+if (k === "reqs") loadReqs();
 }
 function empty(box, t){ box.textContent = ""; box.appendChild(mk("div", "note", t)); }
 async function fetchDressForUsers(uids){
@@ -2657,7 +3807,7 @@ async function loadFriendList(){
 const box = $("friendList"), bl = $("blockList");
 const r = await sb.rpc("get_friends"); box.textContent = "";
 if (r.error) empty(box, "読み込めませんでした：" + r.error.message);
-else if (!r.data.length){ cachedFriends = []; empty(box, "まだ友だちがいません。「探す・QR」から申請できます。"); }
+else if (!r.data.length){ cachedFriends = []; empty(box, "まだ友だちがいません。下の検索やQRコードから申請できます。"); }
 else {
 cachedFriends = r.data;
 await fetchDressForUsers(r.data.map(x => x.user_id));
@@ -2738,19 +3888,6 @@ ins.forEach(x => bi.appendChild(personRow(x, [
 ["拒否", async () => { await call("respond_friend_request", { p_id: x.id, p_accept: false }); loadReqs(); }]])));
 if (!outs.length) empty(bo, "送った申請はありません。");
 outs.forEach(x => bo.appendChild(personRow(x, [["取り消し", async () => { await call("cancel_friend_request", { p_id: x.id }); loadReqs(); }]])));
-}
-async function findUser(){
-const q = $("findId").value.trim().toLowerCase().replace(/^@/, ""), box = $("findRes"); if (!q) return;
-const r = await sb.rpc("search_user", { p_novi_id: q }); box.textContent = "";
-if (r.error) return empty(box, "検索できませんでした：" + r.error.message);
-if (!r.data.length) return empty(box, "見つかりませんでした。");
-const p = r.data[0], st = p.status;
-const label = { self:"あなたです", friend:"友だち", sent:"申請済み", received:"承認する", none:"友だち申請" }[st];
-const row = personRow(p, [[label, async () => {
-const res = await call("send_friend_request", { p_novi_id: p.novi_id });
-if (res.ok){ alert(res.data === "accepted" ? "友だちになりました。" : "申請しました。"); findUser(); }
-}, st === "self" || st === "friend" || st === "sent"]]);
-box.appendChild(row);
 }
 
 /* ---------- グループ作成・編集モーダル ---------- */
@@ -2995,12 +4132,16 @@ if (near) box.scrollTop = box.scrollHeight;
 async function chatSend(overrideContent){
 const t = overrideContent != null ? overrideContent : $("chText").value.trim();
 if (!t) return;
+if (overrideContent == null && !canSendChatNow()) return;
 $("chSend").disabled = true;
 const r = chat.isGroup
 ? await call("send_group_message", { p_group: chat.id, p_content: t, p_reply: chat.reply })
 : await call("send_message", { p_conv: chat.id, p_content: t, p_mood: null, p_reply: chat.reply });
 $("chSend").disabled = false; if (!r.ok) return;
-if (overrideContent == null) $("chText").value = "";
+if (overrideContent == null){
+$("chText").value = "";
+localStorage.removeItem("novi_draft_chat");
+}
 setReply(null); loadChat(true); refreshMsgBadge();
 }
 
@@ -3217,7 +4358,7 @@ if (error){ m.textContent = error.code === "23505" ? "このログインIDはす
 Object.assign(prof, f); renderProfile(); updatePresenceUI(); m.textContent = "保存しました。"; m.className = "msg ok";
 }
 
-/* ---------- 通知 ---------- */
+/* ---------- 通知（サーバー通知＋アプリ内タイムカプセル到着通知） ---------- */
 let notifTimer = null, notifFilter = "all", notifs = [];
 const NK = { friend_request:["👥", "friends"], friend_accepted:["🤝", "friends"], message:["✉️", "messages"], reaction:["♥", "activity"], comment:["💬", "activity"], moment_reaction:["♥", "activity"], moment_comment:["💬", "activity"], system:["⚙️", "system"] };
 const PREF = { nPrefFriends:"pref_friends", nPrefMessages:"pref_messages", nPrefActivity:"pref_activity", nPrefSystem:"pref_system" };
@@ -3236,20 +4377,28 @@ function setBadges(n){
 if ($("sysDnd") && $("sysDnd").checked) n = 0;
 document.querySelectorAll(".ubadge").forEach(b => { b.textContent = n > 99 ? "99+" : String(n); b.classList.toggle("hidden", !(n > 0)); });
 }
-async function refreshUnread(){ if (!me) return; const r = await sb.rpc("count_unread"); if (!r.error) setBadges(Number(r.data) || 0); refreshMsgBadge(); }
+async function refreshUnread(){
+if (!me) return;
+checkDueCapsulesAndNotify();
+const localUnread = getLocalCapsuleNotifs().filter(x => !x.is_read).length;
+const r = await sb.rpc("count_unread");
+const srvUnread = (!r.error) ? (Number(r.data) || 0) : 0;
+setBadges(srvUnread + localUnread);
+refreshMsgBadge();
+}
 function startNotif(){
 if (notifTimer) clearInterval(notifTimer);
 notifTimer = setInterval(() => { refreshUnread(); if (!$("v-alerts").classList.contains("hidden")) loadNotifs(); }, 20000);
 }
 async function loadNotifs(){
+checkDueCapsulesAndNotify();
 const r = await sb.rpc("get_notifications", { p_limit: 50 }), box = $("nList");
-if (r.error){
-box.textContent = "";
-const c = mk("div", "card");
-c.appendChild(mk("div", "note", "読み込めませんでした：" + r.error.message));
-box.appendChild(c); return;
-}
-notifs = r.data || []; renderNotifs(); refreshUnread();
+const srvList = (!r.error && Array.isArray(r.data)) ? r.data : [];
+const capList = getLocalCapsuleNotifs();
+const merged = [...capList, ...srvList].sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+notifs = merged;
+renderNotifs();
+refreshUnread();
 }
 function renderNotifs(){
 const box = $("nList"); box.textContent = "";
@@ -3261,20 +4410,42 @@ const t = mk("div", "ntxt"); t.appendChild(mk("div", "", nText(n))); t.appendChi
 c.append(mk("div", "nico", NK[n.kind][0]), t);
 if (!n.is_read) c.appendChild(mk("span", "ndot"));
 const x = mk("button", "del", "削除"); x.type = "button";
-x.onclick = async e => { e.stopPropagation(); await call("delete_notification", { p_id: n.id }); loadNotifs(); };
+x.onclick = async e => {
+e.stopPropagation();
+if (n.fromCapsule){
+saveLocalCapsuleNotifs(getLocalCapsuleNotifs().filter(item => item.id !== n.id));
+loadNotifs();
+} else {
+await call("delete_notification", { p_id: n.id }); loadNotifs();
+}
+};
 c.appendChild(x); c.onclick = () => openNotif(n); box.appendChild(c);
 });
 }
 async function openNotif(n){
-if (!n.is_read) await call("mark_notifications_read", { p_id: n.id });
-if (n.kind === "friend_request"){ go("friends"); ftab("reqs"); }
+if (!n.is_read){
+if (n.fromCapsule){
+const arr = getLocalCapsuleNotifs().map(item => item.id === n.id ? Object.assign({}, item, { is_read: true }) : item);
+saveLocalCapsuleNotifs(arr);
+} else {
+await call("mark_notifications_read", { p_id: n.id });
+}
+}
+if (n.fromCapsule){
+go("tools");
+document.querySelectorAll("#toolTabs button").forEach(b => b.classList.toggle("on", b.dataset.tt === "capsule"));
+["alarm", "capsule", "animal"].forEach(name => $("tt-" + name).classList.toggle("hidden", name !== "capsule"));
+renderCapsules();
+}
+else if (n.kind === "friend_request"){ go("friends"); ftab("reqs"); }
 else if (n.kind === "friend_accepted"){ go("friends"); }
 else if (n.kind === "message"){
 const r = await sb.rpc("get_conversations"), c = (r.data || []).find(x => x.conversation_id === n.ref);
 if (c) openChat(c.conversation_id, c.username, c.can_send, c.avatar_url, false, null, c.online_status, c.user_id); else { go("friends"); ftab("msgs"); }
 }
-else if (n.kind === "reaction" || n.kind === "comment"){ go("mood"); }
-else if (n.kind === "moment_reaction" || n.kind === "moment_comment"){ go("moment"); }
+else if (n.kind === "reaction" || n.kind === "comment" || n.kind === "moment_reaction" || n.kind === "moment_comment"){
+go("home");
+}
 refreshUnread();
 }
 async function loadPrefs(){
@@ -3285,125 +4456,6 @@ async function savePrefs(){
 const row = { user_id: me }; Object.keys(PREF).forEach(id => { row[PREF[id]] = $(id).checked; });
 const { error } = await sb.from("notification_preferences").upsert(row), m = $("nPrefMsg");
 m.textContent = error ? "保存できませんでした：" + error.message : "保存しました。"; m.className = "msg " + (error ? "err" : "ok");
-}
-
-/* ---------- 検索とDISCOVER ---------- */
-let sType = "users", sMood = null, lastSearch = null;
-function moodItem(r, idx, reload){
-const m = MOODS[r.mood] || ["?", "#888"];
-const it = mk("div", "item e-" + (r.effect || "orb")); it.style.setProperty("--c", m[1]); if (idx === 0) it.style.borderTop = "0";
-const body = mk("div", "body");
-body.appendChild(mk("div", "", moodLabel(r.mood) + (r.content ? "：" + r.content : "")));
-body.appendChild(mk("div", "meta", fmt(r.created_at) + (r.is_mine ? "・あなたの投稿" : "")));
-const cb = mk("button", "react", "💬 " + r.comment_count); cb.type = "button"; cb.style.marginTop = "8px";
-cb.onclick = () => openComments(r.id, body); body.appendChild(cb); if (!r.is_mine) body.appendChild(repBtn("mood", r.id));
-it.append(mk("span", "dot"), body);
-const b = mk("button", "react" + (r.reacted ? " on" : ""), (r.reacted ? "♥ " : "♡ ") + r.reaction_count); b.type = "button";
-if (r.is_mine){ b.disabled = true; b.textContent = "♡ " + r.reaction_count; }
-else b.onclick = async () => {
-b.disabled = true;
-const q = r.reacted ? sb.from("reactions").delete().eq("mood_id", r.id).eq("user_id", me) : sb.from("reactions").insert({ mood_id: r.id, user_id: me });
-const { error } = await q; if (error) alert("共感できませんでした：" + error.message); reload();
-};
-it.appendChild(b); return it;
-}
-function userCard(p){
-const c = mk("div", "card"); c.style.marginBottom = "10px";
-const top = mk("div", "prow-top");
-const dObj = p.status === "self" ? { av_frame: prof.av_frame, av_acc: prof.av_acc } : (dressCache[p.user_id] || null);
-top.appendChild(avatarEl(p.avatar_url, null, dObj));
-const i = mk("div", "pinfo"); i.appendChild(mk("div", "uname", p.username)); i.appendChild(mk("div", "meta", "@" + p.novi_id)); top.appendChild(i); c.appendChild(top);
-if (p.bio){ const b = mk("div", "note", p.bio); b.style.marginTop = "8px"; c.appendChild(b); }
-const st = p.status || "none", label = { self:"あなたです", friend:"友だち", sent:"申請済み", received:"承認する", none:"友だち申請" }[st];
-const bt = mk("div", "bt"); bt.style.marginTop = "10px";
-const pb = mk("button", "del", "プロフィール"); pb.type = "button"; pb.onclick = () => showProfile(p.user_id);
-const ab = mk("button", "del", label); ab.type = "button"; if (st === "self" || st === "friend" || st === "sent") ab.disabled = true;
-ab.onclick = async () => {
-const res = await call("send_friend_request", { p_novi_id: p.novi_id });
-if (res.ok){ await call("save_search", { p_target: p.user_id }); alert(res.data === "accepted" ? "友だちになりました。" : "申請しました。"); if (lastSearch) lastSearch(); else loadDiscover(); loadHistory(); }
-};
-bt.append(pb, ab); c.appendChild(bt); return c;
-}
-async function showProfile(uid){ await call("save_search", { p_target: uid }); openUserProfile(uid); loadHistory(); }
-async function loadHistory(){
-const box = $("srHist"), r = await sb.rpc("get_search_history"); box.textContent = "";
-if (r.error || !r.data.length){ box.appendChild(mk("div", "note", "検索したユーザーがここに残ります。")); return; }
-r.data.forEach(h => box.appendChild(personRow(h, [["開く", () => showProfile(h.target_id)],
-["削除", async () => { await call("delete_search", { p_target: h.target_id }); loadHistory(); }]])));
-}
-function note2(box, t){ box.textContent = ""; box.appendChild(mk("div", "note", t)); }
-async function loadDiscover(){
-const tb = $("dvTrend"), pp = $("dvPop"), rc = $("dvRec"), nw = $("dvNew");
-const t = await sb.rpc("get_global_mood"); tb.textContent = "";
-if (t.error || !t.data || !t.data.length) tb.appendChild(mk("div", "note", "公開ムードが集まると表示されます。"));
-else {
-const total = t.data.reduce((a, r) => a + Number(r.cnt), 0);
-t.data.slice().sort((a, b) => b.cnt - a.cnt).forEach(r => {
-const m = MOODS[r.mood]; if (!m) return;
-const row = mk("div", "bar"); row.style.setProperty("--c", m[1]);
-const i = mk("i"); i.style.width = Math.max(4, Math.round(r.cnt / total * 160)) + "px";
-row.append(mk("b", "", moodLabel(r.mood)), i, mk("span", "", Math.round(r.cnt / total * 100) + "%")); tb.appendChild(row);
-});
-}
-const p = await sb.rpc("get_popular_posts"); pp.textContent = "";
-if (p.error || !p.data.length) pp.appendChild(mk("div", "note", "共感のついた公開ムードがここに出ます。"));
-else p.data.forEach((r, i) => pp.appendChild(moodItem(r, i, loadDiscover)));
-for (const [box, kind] of [[rc, "recommended"], [nw, "new"]]){
-const u = await sb.rpc("get_user_cards", { p_kind: kind }); box.textContent = "";
-if (u.error || !u.data.length){ const c = mk("div", "card"); c.appendChild(mk("div", "note", "表示できるユーザーはまだいません。")); box.appendChild(c); }
-else {
-await fetchDressForUsers(u.data.map(x => x.user_id));
-u.data.forEach(x => box.appendChild(userCard(x)));
-}
-}
-}
-function openSearch(){
-$("srRes").textContent = ""; $("srProfile").classList.add("hidden"); $("srBack").classList.add("hidden"); $("srHome").classList.remove("hidden");
-lastSearch = null; loadHistory(); loadDiscover();
-}
-async function doSearch(){
-const q = $("srQ").value.trim(), res = $("srRes"); res.textContent = ""; $("srProfile").classList.add("hidden");
-if (sType === "users" && !q) return alert("検索ワードを入力してください。");
-if (sType === "moods" && !q && !sMood) return alert("検索ワードを入力するか、感情を選んでください。");
-if (sType === "moments" && !q) return alert("検索ワードを入力してください。");
-lastSearch = doSearch;
-if (sType === "users"){
-const r = await sb.rpc("search_users", { p_q: q });
-if (r.error) note2(res, "検索できませんでした：" + r.error.message);
-else if (!r.data.length) note2(res, "見つかりませんでした。");
-else {
-await fetchDressForUsers(r.data.map(x => x.user_id));
-r.data.forEach(x => res.appendChild(userCard(x)));
-}
-} else if (sType === "moods"){
-const r = await sb.rpc("search_moods", { p_q: q || null, p_mood: sMood });
-if (r.error) note2(res, "検索できませんでした：" + r.error.message);
-else if (!r.data.length) note2(res, "見つかりませんでした。");
-else { const c = mk("div", "card"); r.data.forEach((x, i) => c.appendChild(moodItem(x, i, doSearch))); res.appendChild(c); }
-} else {
-try{ if (!pos) pos = await getPos(); }catch(e){ note2(res, e.message); return; }
-const r = await sb.rpc("search_moments", { p_q: q, p_lat: pos.lat, p_lng: pos.lng, p_km: 50 });
-if (r.error) note2(res, "検索できませんでした：" + r.error.message);
-else if (!r.data.length) note2(res, "50km以内に見つかりませんでした。");
-else {
-const c = mk("div", "card");
-r.data.forEach((m, i) => {
-const it = mk("div", "item e-" + m.effect); it.style.setProperty("--c", "#8B7CFF"); if (i === 0) it.style.borderTop = "0";
-const body = mk("div", "body"); body.appendChild(mk("div", "", m.content));
-body.appendChild(mk("div", "meta", "約" + Math.max(1, m.distance_km) + "km圏内・" + fmt(m.created_at)));
-it.append(mk("span", "dot"), body); c.appendChild(it);
-});
-res.appendChild(c);
-}
-}
-$("srHome").classList.add("hidden"); $("srBack").classList.remove("hidden");
-}
-function buildSearchChips(){
-const box = $("srMoods"); if (!box) return; box.textContent = "";
-Object.keys(MOODS).forEach(k => {
-const b = mk("button", "chip sm2" + (sMood === k ? " on" : ""), moodLabel(k)); b.type = "button"; b.style.setProperty("--c", MOODS[k][1]);
-b.onclick = () => { sMood = sMood === k ? null : k; buildSearchChips(); }; box.appendChild(b);
-});
 }
 
 /* ---------- 安全・2段階認証・メアド変更 ---------- */
@@ -3623,7 +4675,7 @@ if (g.children.length) box.appendChild(g);
 }
 }
 
-/* ---------- 独立設定画面（全29カテゴリー） ---------- */
+/* ---------- プロフィール内設定（全29カテゴリー） ---------- */
 const CATS_29 = [
 { id:"01", title:"01 アカウント設定・切り替え・削除", sub:"Google/Discord連携・アカウント切替・完全削除", action:"st_sec" },
 { id:"02", title:"02 セキュリティセンター", sub:"2段階認証・パスワード変更・ログイン履歴・端末管理", action:"st_sec" },
@@ -3634,7 +4686,7 @@ const CATS_29 = [
 { id:"07", title:"07 ソーシャル設定", sub:"友だち申請の受付範囲・ブロック管理", action:"profile_edit" },
 { id:"08", title:"08 メッセージ設定", sub:"既読表示・グループチャット・通話設定", toggle:"read_receipts", label:"メッセージ既読表示" },
 { id:"09", title:"09 ムード設定", sub:"ムード履歴・公開範囲・共有設定", toggle:"mood_sharing", label:"ムードの外部共有" },
-{ id:"10", title:"10 モーメント設定", sub:"表示期限・位置情報精度・アーカイブ", action:"moment" },
+{ id:"10", title:"10 モーメント設定", sub:"表示期限・位置情報精度・アーカイブ", action:"home" },
 { id:"11", title:"11 検索・おすすめ設定", sub:"検索結果への表示・検索履歴削除", toggle:"discoverable", label:"検索・おすすめに表示" },
 { id:"12", title:"12 言語と翻訳", sub:"アプリ表示言語（9言語即時切替）", action:"st_gfx" },
 { id:"13", title:"13 データ管理", sub:"設定データのJSON形式書き出し", action:"export" },
@@ -3656,17 +4708,23 @@ const CATS_29 = [
 { id:"29", title:"29 設定の整合性チェック", sub:"設定変更の同期確認", info:"すべての設定項目は正常に同期されています。" }
 ];
 
-function switchSettingsTab(sub){
-document.querySelectorAll("#sSubTabs button").forEach(x => x.classList.toggle("on", x.dataset.st === sub));
-["general", "gfx", "theme", "sec"].forEach(k => $("st-" + k).classList.toggle("hidden", k !== sub));
-if (sub === "sec") loadSecurity();
-if (sub === "general") renderSysCategories($("sysSearch") ? $("sysSearch").value : "");
+function switchProfileTab(pt){
+document.querySelectorAll("#pTabs button").forEach(x => x.classList.toggle("on", x.dataset.pt === pt));
+["show", "edit", "sys"].forEach(k => $("pt-" + k).classList.toggle("hidden", k !== pt));
+if (pt === "sys"){
+switchSettingsTab("general");
+}
 }
 
-function openProfileEditTab(){
-go("profile");
-document.querySelectorAll("#pTabs button").forEach(x => x.classList.toggle("on", x.dataset.pt === "edit"));
-["show", "edit"].forEach(k => $("pt-" + k).classList.toggle("hidden", k !== "edit"));
+function switchSettingsTab(sub){
+if (sub === "admin" && !isAdminUser()) return;
+document.querySelectorAll("#sSubTabs button").forEach(x => x.classList.toggle("on", x.dataset.st === sub));
+["general", "gfx", "theme", "sec", "admin"].forEach(k => {
+if ($("st-" + k)) $("st-" + k).classList.toggle("hidden", k !== sub);
+});
+if (sub === "sec") loadSecurity();
+if (sub === "general") renderSysCategories($("sysSearch") ? $("sysSearch").value : "");
+if (sub === "admin") loadAdminDashboard();
 }
 
 function renderSysCategories(filter){
@@ -3685,7 +4743,7 @@ const body = mk("div", "set-cat-body hidden");
 if (c.action){
 const btn = mk("button", "del", "この設定を開く →"); btn.type = "button";
 btn.onclick = () => {
-if (c.action === "profile_edit") openProfileEditTab();
+if (c.action === "profile_edit") switchProfileTab("edit");
 else if (c.action === "st_sec") switchSettingsTab("sec");
 else if (c.action === "st_theme") switchSettingsTab("theme");
 else if (c.action === "st_gfx") switchSettingsTab("gfx");
@@ -3730,6 +4788,102 @@ applyGfx(); applyLanguage(gfx.lang); startRenderLoop(); initBatteryMonitor();
 
 let mins = 0;
 setInterval(() => { mins++; if ($("wellbeingTime")) $("wellbeingTime").textContent = mins + "分"; }, 60000);
+
+/* 下書き自動保存バインド */
+if ($("hqText")) $("hqText").addEventListener("input", saveDrafts);
+if ($("chText")) $("chText").addEventListener("input", saveDrafts);
+
+/* 👑 運営監視パネル（更新・検索・一斉お知らせ） */
+if ($("btnAdminReload")) $("btnAdminReload").onclick = loadAdminDashboard;
+if ($("btnAdmSearch")) $("btnAdmSearch").onclick = loadAdminDashboard;
+if ($("admSearchIn")) $("admSearchIn").addEventListener("keydown", e => { if (e.key === "Enter") loadAdminDashboard(); });
+if ($("btnAdmBroadcast")) $("btnAdmBroadcast").onclick = sendAdminBroadcast;
+
+/* 逆算アラームプリセット */
+document.querySelectorAll("[data-alpreset]").forEach(b => b.onclick = () => {
+const p = b.dataset.alpreset;
+if (p === "commute"){ $("alTravelMin").value = 15; $("alPrepMin").value = 10; }
+else if (p === "outing"){ $("alTravelMin").value = 25; $("alPrepMin").value = 15; }
+else if (p === "rush"){ $("alTravelMin").value = 5; $("alPrepMin").value = 3; }
+});
+
+/* ホーム内のムードタイムライン（みんなのムード / ムード履歴＋表示件数切替）タブ切替 */
+document.querySelectorAll("#homeMoodTabs button").forEach(b => b.onclick = () => {
+const k = b.dataset.hmt;
+document.querySelectorAll("#homeMoodTabs button").forEach(x => x.classList.toggle("on", x === b));
+$("hmt-public").classList.toggle("hidden", k !== "public");
+$("hmt-mine").classList.toggle("hidden", k !== "mine");
+if (k === "public") loadHomeFeed();
+else loadMine();
+});
+if ($("homeFeedLimit")) $("homeFeedLimit").onchange = () => loadHomeFeed();
+if ($("homeFeedReload")) $("homeFeedReload").onclick = () => { loadHomeFeed(); loadMine(); };
+
+/* 友だち画面内の検索・追加・単一QRコード表示・更新・かざして/画像で申請 */
+if ($("quickFindGo")) $("quickFindGo").onclick = quickFindAndAdd;
+if ($("quickFindId")) $("quickFindId").addEventListener("keydown", e => { if (e.key === "Enter") quickFindAndAdd(); });
+if ($("btnRefreshQr")) $("btnRefreshQr").onclick = () => renderQuickMyQr(true);
+if ($("btnLiveQrCam")) $("btnLiveQrCam").onclick = startLiveQrScan;
+if ($("btnStopQrCam")) $("btnStopQrCam").onclick = stopLiveQrScan;
+if ($("btnPickQrImg") && $("qrImgFileIn")){
+$("btnPickQrImg").onclick = () => $("qrImgFileIn").click();
+$("qrImgFileIn").onchange = e => { const f = e.target.files && e.target.files[0]; e.target.value = ""; scanQrFromImageFile(f); };
+}
+if ($("ftFindGo")) $("ftFindGo").onclick = runCombinedSearchInFriends;
+if ($("ftFindQuery")) $("ftFindQuery").addEventListener("keydown", e => { if (e.key === "Enter") runCombinedSearchInFriends(); });
+
+/* 便利ツール（逆算アラーム / タイムカプセル / 動物と話せる機能） */
+document.querySelectorAll("#toolTabs button").forEach(b => b.onclick = () => {
+const k = b.dataset.tt;
+document.querySelectorAll("#toolTabs button").forEach(x => x.classList.toggle("on", x === b));
+["alarm", "capsule", "animal"].forEach(name => $("tt-" + name).classList.toggle("hidden", name !== k));
+if (k === "capsule") renderCapsules();
+});
+$("alSetBtn").onclick = setReverseAlarm;
+$("alStopBtn").onclick = stopReverseAlarm;
+$("capSaveBtn").onclick = createTimeCapsule;
+
+document.querySelectorAll("#anSpeciesGrid button").forEach(b => b.onclick = () => {
+selectedAnimal = b.dataset.an;
+document.querySelectorAll("#anSpeciesGrid button").forEach(x => x.classList.toggle("on", x === b));
+updateAnimalAudioUI();
+});
+updateAnimalAudioUI();
+
+if ($("anPickAudioBtn") && $("anAudioFileIn")){
+$("anPickAudioBtn").onclick = () => $("anAudioFileIn").click();
+$("anAudioFileIn").onchange = e => {
+const f = e.target.files && e.target.files[0];
+e.target.value = "";
+if (!f) return;
+if (f.size > 2.5 * 1024 * 1024){
+return alert("端末保存のため2.5MB以下の音声ファイルを選んでください。");
+}
+const reader = new FileReader();
+reader.onload = () => {
+customAnimalAudioMap[selectedAnimal] = { name: f.name, dataUrl: reader.result };
+try{
+localStorage.setItem("novi_animal_audio_v1", JSON.stringify(customAnimalAudioMap));
+}catch(_){
+alert("保存容量の上限を超えたため、このセッション中のみ有効になります。");
+}
+updateAnimalAudioUI();
+};
+reader.readAsDataURL(f);
+};
+}
+if ($("anClearAudioBtn")){
+$("anClearAudioBtn").onclick = () => {
+delete customAnimalAudioMap[selectedAnimal];
+localStorage.setItem("novi_animal_audio_v1", JSON.stringify(customAnimalAudioMap));
+updateAnimalAudioUI();
+};
+}
+$("anSpeakBtn").onclick = speakToAnimal;
+$("anReplayBtn").onclick = () => {
+const txt = $("anInput").value.trim() || "ワン";
+playAnimalVoice(selectedAnimal, Math.ceil(txt.length / 5));
+};
 
 /* パスワード目のマーク */
 const bindEye = (btnId, inpId, iconId) => {
@@ -3781,7 +4935,7 @@ $("delAccModal").classList.remove("hidden");
 $("delAccCancelBtn").onclick = () => $("delAccModal").classList.add("hidden");
 $("delAccExecBtn").onclick = executeDeleteAccount;
 
-/* 設定画面サブタブ */
+/* 設定サブタブ（プロフィール画面内） */
 document.querySelectorAll("#sSubTabs button").forEach(b => b.onclick = () => switchSettingsTab(b.dataset.st));
 
 /* グラフィック・リキッドグラス・背景モーダル */
@@ -3854,28 +5008,6 @@ $("cropY").oninput = e => { cropState.oy = Number(e.target.value); drawCropCanva
 $("cropApply").onclick = commitCropUpload;
 $("cropCancel").onclick = () => $("cropModal").classList.add("hidden");
 
-/* QRコードスキャン */
-$("btnScanQr").onclick = () => $("qrFileIn").click();
-$("qrFileIn").onchange = async e => {
-const f = e.target.files && e.target.files[0]; e.target.value = "";
-if (!f) return;
-if ("BarcodeDetector" in window){
-try{
-const bmp = await createImageBitmap(f);
-const det = new BarcodeDetector({ formats: ["qr_code"] });
-const codes = await det.detect(bmp);
-if (codes.length && codes[0].rawValue.startsWith("NOVI_ID:")){
-const scannedId = codes[0].rawValue.replace("NOVI_ID:", "").trim();
-$("findId").value = scannedId;
-findUser();
-return;
-}
-}catch(_){}
-}
-const manualId = prompt("QRコードのID（NOVI_ID）を入力してください：");
-if (manualId){ $("findId").value = manualId.trim(); findUser(); }
-};
-
 /* グループ作成・設定・写真アイコン・チャットメディア・長押しリアクション・タイピング・通話 */
 $("grpNewBtn").onclick = () => openGroupModal(null);
 $("grpPhotoBtn").onclick = () => $("grpPhotoIn").click();
@@ -3924,13 +5056,12 @@ if (callStream) callStream.getVideoTracks().forEach(t => t.enabled = isCamOn);
 };
 $("callEndBtn").onclick = endCall;
 
-/* ステータス＆独立設定画面 */
+/* ステータス＆プロフィール内設定 */
 $("pStatusBtn").onclick = () => { $("stCustomIn").value = ""; $("statusModal").classList.remove("hidden"); };
 document.querySelectorAll("#stChips button").forEach(b => b.onclick = () => { $("stCustomIn").value = b.dataset.st; });
 $("stSaveBtn").onclick = () => { const v = $("stCustomIn").value.trim(); if (v){ gfx.status = v; saveGfxLocal(); applyGfx(); } $("statusModal").classList.add("hidden"); };
 $("stCloseBtn").onclick = () => $("statusModal").classList.add("hidden");
 
-$("setBackBtn").onclick = () => go("profile");
 $("sysDnd").onchange = () => refreshUnread();
 $("sysLargeText").onchange = e => { document.documentElement.style.fontSize = e.target.checked ? "18px" : "16px"; };
 $("sysQuickOnline").onchange = e => { $("eOnline").checked = e.target.checked; saveSettings(); };
@@ -3950,7 +5081,7 @@ saveGfxLocal(); applyGfx(); applyLanguage(gfx.lang); alert("プリセットを�
 });
 
 /* 既存イベント結線 */
-$("hqPost").onclick = hqSubmit; $("homeMomGo").onclick = () => go("moment"); $("arGo").onclick = loadArchive;
+$("hqPost").onclick = hqSubmit; $("arGo").onclick = loadArchive;
 $("mcSave").onclick = () => saveMoodColors(false); $("mcReset").onclick = () => saveMoodColors(true);
 Object.keys(RR).forEach(k => { const o = mk("option", "", RR[k]); o.value = k; $("rptReason").appendChild(o); });
 $("rptSend").onclick = sendReport; $("rptCancel").onclick = () => $("rptBox").classList.add("hidden");
@@ -3959,28 +5090,22 @@ $("btnChangeEmail").onclick = changeEmail;
 $("pvSave").onclick = savePrivacy; $("pwSave").onclick = changePw;
 $("logoutAll").onclick = async () => { if (confirm("すべての端末からログアウトしますか？")) await sb.auth.signOut({ scope: "global" }); };
 $("upBack").onclick = () => go(uprofReturn || "home");
-buildSearchChips();
-document.querySelectorAll("#sTabs button").forEach(b => b.onclick = () => {
-sType = b.dataset.st; document.querySelectorAll("#sTabs button").forEach(x => x.classList.toggle("on", x === b));
-$("srMoods").classList.toggle("hidden", sType !== "moods");
-});
-$("srGo").onclick = doSearch; $("srBack").onclick = openSearch;
-$("srClear").onclick = async () => { if (!confirm("検索履歴をすべて削除しますか？")) return; await call("clear_search", {}); loadHistory(); };
 document.querySelectorAll("#nTabs button").forEach(b => b.onclick = () => {
 notifFilter = b.dataset.nt; document.querySelectorAll("#nTabs button").forEach(x => x.classList.toggle("on", x === b)); renderNotifs();
 });
 $("nReadAll").onclick = async () => { await call("mark_notifications_read", {}); loadNotifs(); };
 Object.keys(PREF).forEach(id => { $(id).onchange = savePrefs; });
 document.querySelectorAll("#fTabs button").forEach(b => b.onclick = () => ftab(b.dataset.ft));
-$("findGo").onclick = findUser; $("chSend").onclick = () => chatSend(); $("eIdSave").onclick = saveSettings;
+$("chSend").onclick = () => chatSend(); $("eIdSave").onclick = saveSettings;
 $("chBack").onclick = () => { go("friends"); ftab("msgs"); };
 buildThemeUI();
 Object.keys(WT).forEach(k => { const b = mk("button", "chip", WT[k]); b.type = "button"; b.style.setProperty("--c", "#8B7CFF"); b.onclick = () => wAdd(k); $("wgAdd").appendChild(b); });
+
+/* プロフィール内の「表示 / 編集 / 設定」タブ切替 */
 document.querySelectorAll("#pTabs button").forEach(b => b.onclick = () => {
-if (b.dataset.pt === "sys"){ go("settings"); return; }
-document.querySelectorAll("#pTabs button").forEach(x => x.classList.toggle("on", x === b));
-["show", "edit"].forEach(k => $("pt-" + k).classList.toggle("hidden", k !== b.dataset.pt));
+switchProfileTab(b.dataset.pt);
 });
+
 $("eSave").onclick = saveProfile;
 $("thApply").onclick = saveDesign;
 $("thReset").onclick = async () => { if (!confirm("初期テーマに戻しますか？")) return; theme = Object.assign({}, DEF); syncThemeUI(); refreshTheme(); await saveDesign(); };
@@ -3993,10 +5118,9 @@ buildFx(); setType("mood");
 $("tMood").onclick = () => setType("mood"); $("tMoment").onclick = () => setType("moment");
 $("momGo").onclick = () => loadMoments(true);
 $("momKm").onchange = () => { if (pos) loadMoments(false); };
-$("feedReload").onclick = loadFeed;
 buildChips();
 $("moodPost").onclick = postMood;
-$("moodText").addEventListener("input", e => { $("cnt").textContent = e.target.value.length; updatePreview(); });
+$("moodText").addEventListener("input", e => { $("cnt").textContent = e.target.value.length; updatePreview(); saveDrafts(); });
 $("tabLogin").onclick = () => setMode("login");
 $("tabSignup").onclick = () => setMode("signup");
 $("go").onclick = submit;
