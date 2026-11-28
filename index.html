@@ -705,11 +705,25 @@ nav .ubadge,nav .mbadge{top:2px;right:4px}
 <!-- 設定サブ④：安全・外部連携・アカウント切り替え・ログアウト＆アカウント削除集約 -->
 <div id="st-sec" class="hidden">
 <div class="sec"><h2>外部アカウント連携（Google / Discord）</h2><div class="card">
-<div class="note" style="margin-bottom:10px">Google または Discord アカウントでのサインイン・連携を行います。</div>
-<div class="oauth-row" style="margin-top:0">
-<button id="btnSetOAuthGoogle" class="oauth-btn" type="button">Google 連携</button>
-<button id="btnSetOAuthDiscord" class="oauth-btn" type="button">Discord 連携</button>
+<div class="note" style="margin-bottom:10px">現在のアカウントに Google や Discord を紐づけると、次回からどちらの方法でも同じアカウントにログインできます。</div>
+
+<div class="acc-row">
+<div>
+<div style="font-size:14px;font-weight:600">Google</div>
+<div id="linkStatusGoogle" class="note">確認中...</div>
 </div>
+<button id="btnSetOAuthGoogle" class="del" type="button" style="border-color:var(--accent);color:var(--accent)">連携する</button>
+</div>
+
+<div class="acc-row">
+<div>
+<div style="font-size:14px;font-weight:600">Discord</div>
+<div id="linkStatusDiscord" class="note">確認中...</div>
+</div>
+<button id="btnSetOAuthDiscord" class="del" type="button" style="border-color:var(--accent);color:var(--accent)">連携する</button>
+</div>
+
+<div id="linkMsg" class="msg"></div>
 </div></div>
 
 <div class="sec"><h2>アカウント切り替え</h2><div class="card">
@@ -728,10 +742,11 @@ nav .ubadge,nav .mbadge{top:2px;right:4px}
 
 <div class="sec"><h2>プライバシー（誰に見せるか）</h2><div class="card"><div id="pvBox"></div><button id="pvSave" class="primary" type="button" data-i18n="save_btn">保存</button><div id="pvMsg" class="msg"></div></div></div>
 <div class="sec"><h2>2段階認証（認証アプリ）</h2><div class="card"><div id="mfaState" class="note"></div><div id="mfaSetup" style="margin-top:10px"></div><div id="mfaMsg" class="msg"></div></div></div>
-<div class="sec"><h2>パスワードの変更</h2><div class="card">
+<div class="sec"><h2 id="pwSecTitle">パスワードの設定・変更</h2><div class="card">
+<div id="pwSecDesc" class="note" style="margin-bottom:4px">Google / Discord でログインした場合も、ここでパスワードを追加するとメールアドレス（またはID）＋パスワードでもログインできます。</div>
 <input id="pwNew" type="password" class="in" autocomplete="new-password" placeholder="新しいパスワード（8文字以上）">
 <input id="pwNew2" type="password" class="in" autocomplete="new-password" placeholder="もう一度入力">
-<button id="pwSave" class="primary" type="button">変更する</button><div id="pwMsg" class="msg"></div></div></div>
+<button id="pwSave" class="primary" type="button">パスワードを保存する</button><div id="pwMsg" class="msg"></div></div></div>
 <div class="sec"><h2>ログイン履歴（直近20件）</h2><div class="card" id="lhBox"></div></div>
 <div class="sec"><h2>端末の管理</h2><div class="card" id="udBox"></div></div>
 
@@ -804,7 +819,7 @@ nav .ubadge,nav .mbadge{top:2px;right:4px}
 </div></div>
 
 <div class="sec"><h2>プライバシー基本設定</h2><div class="card">
-<select id="eScope" class="in" style="margin-top:0"><option value="everyone">友だち申請：誰でも</option><option value="friends_of_friends">友だち申請：友だちの友だちだけ</option><option value="nobody">友だち申請：誰も受け付けない</option></select>
+<select id="eScope" class="in" style="margin-top:0"><option value="everyone">友だち申請：誰でも</option><option value="friends_of_friends">友だちの友だちだけ</option><option value="nobody">友だち申請：誰も受け付けない</option></select>
 <label class="trow" style="margin-top:10px"><span>オンライン状態を表示する（OFF時は常にオフライン）</span><input type="checkbox" id="eOnline" checked></label>
 <label class="trow"><span>既読を表示する（相手にも見えます）</span><input type="checkbox" id="eRead"></label>
 <label class="trow"><span>検索・おすすめに表示する</span><input type="checkbox" id="eDisc" checked></label>
@@ -969,7 +984,123 @@ const $ = (id) => document.getElementById(id);
 let sb = null, mode = "login", me = null, currentUserEmail = "", selMood = null, addingAccount = false;
 const mk = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
 
-/* ---------- OAuth（Google / Discord） ---------- */
+/* ---------- OAuth（Google / Discord）ログイン＆既存アカウント連携 ---------- */
+let linkedIdentitiesCache = [];
+
+function setLinkMsg(text, isErr){
+const m = $("linkMsg");
+if (!m) return;
+m.textContent = text || "";
+m.className = "msg " + (text ? (isErr ? "err" : "ok") : "");
+}
+
+function updatePasswordSectionUI(){
+const titleEl = $("pwSecTitle");
+const descEl = $("pwSecDesc");
+const btnEl = $("pwSave");
+if (!titleEl || !descEl || !btnEl) return;
+
+const hasEmailLogin = linkedIdentitiesCache.some(x => x.provider === "email");
+if (hasEmailLogin){
+titleEl.textContent = "パスワードの変更（設定済み）";
+descEl.textContent = "このアカウントはメールアドレス（またはログインID）＋パスワードでもログインできます。";
+btnEl.textContent = "パスワードを変更する";
+} else {
+titleEl.textContent = "パスワードの追加・設定（Google/Discordログイン用）";
+descEl.textContent = "現在パスワード未設定です。ここでパスワードを追加すると、メールアドレス（またはID）＋パスワードでもログインできるようになります。";
+btnEl.textContent = "パスワードを追加する";
+}
+}
+
+async function refreshLinkedProvidersUI(){
+if (!sb || !me) return;
+const { data, error } = await sb.auth.getUserIdentities();
+if (error || !data) return;
+linkedIdentitiesCache = data.identities || [];
+
+[
+{ id: "google", label: "Google", stEl: $("linkStatusGoogle"), btnEl: $("btnSetOAuthGoogle") },
+{ id: "discord", label: "Discord", stEl: $("linkStatusDiscord"), btnEl: $("btnSetOAuthDiscord") }
+].forEach(item => {
+const found = linkedIdentitiesCache.find(x => x.provider === item.id);
+if (item.stEl){
+item.stEl.textContent = found ? "連携済み（同じアカウントでログイン可能）" : "未連携";
+item.stEl.style.color = found ? "#4DDB8A" : "";
+}
+if (item.btnEl){
+item.btnEl.textContent = found ? "解除" : "連携する";
+item.btnEl.style.borderColor = found ? "var(--danger)" : "var(--accent)";
+item.btnEl.style.color = found ? "var(--danger)" : "var(--accent)";
+}
+});
+
+updatePasswordSectionUI();
+}
+
+async function handleProviderLinkOrUnlink(provider){
+if (!sb || !me) return;
+setLinkMsg("");
+const existing = linkedIdentitiesCache.find(x => x.provider === provider);
+
+if (existing){
+const hasEmailIdentity = linkedIdentitiesCache.some(x => x.provider === "email");
+
+if (linkedIdentitiesCache.length <= 1){
+setLinkMsg(
+"現在のログイン手段は " + provider.toUpperCase() + " のみです。解除する前に、下の「メールアドレス設定・変更」と「パスワードの追加・設定」からメール＆パスワードを追加してください。",
+true
+);
+const emIn = $("newEmailIn");
+if (emIn) emIn.scrollIntoView({ behavior: "smooth", block: "center" });
+return;
+}
+
+if (!currentUserEmail || !hasEmailIdentity){
+setLinkMsg(
+"解除後にアカウントへ入れなくなるのを防ぐため、先にメールアドレスの登録とパスワードの追加を行ってください。",
+true
+);
+const pwIn = $("pwNew");
+if (pwIn) pwIn.scrollIntoView({ behavior: "smooth", block: "center" });
+return;
+}
+
+if (!confirm(provider.toUpperCase() + " の連携を解除しますか？解除後もメール・パスワードでログインできます。")) return;
+const { error } = await sb.auth.unlinkIdentity(existing);
+if (error){
+const emsg = error.message || "";
+if (emsg.toLowerCase().includes("manual linking")){
+setLinkMsg("Supabase 側で Manual linking がオフになっています。Authentication の設定で有効にしてください。", true);
+} else {
+setLinkMsg("解除できませんでした：" + emsg, true);
+}
+return;
+}
+await refreshLinkedProvidersUI();
+setLinkMsg(provider.toUpperCase() + " の連携を解除しました。メール・パスワードで引き続きログインできます。", false);
+return;
+}
+
+const { data, error } = await sb.auth.linkIdentity({
+provider,
+options: { redirectTo: location.origin }
+});
+if (error){
+const msg = error.message || "";
+if (msg.toLowerCase().includes("already") || msg.toLowerCase().includes("identity")){
+setLinkMsg("この " + provider.toUpperCase() + " アカウントはすでに別のアカウントで使われています。", true);
+} else if (msg.toLowerCase().includes("manual linking")){
+setLinkMsg("Supabase 側で Manual linking がオフになっています。Authentication の設定で有効にしてください。", true);
+} else {
+setLinkMsg("連携できませんでした：" + msg, true);
+}
+return;
+}
+if (data && data.url){
+location.href = data.url;
+}
+}
+
 async function signInWithProvider(provider){
 if (!sb) return;
 const { error } = await sb.auth.signInWithOAuth({
@@ -1599,7 +1730,7 @@ $("go").textContent = "アカウントを作成";
 showMsg("");
 }
 function showAuth(){
-applyTheme(DEF); me = null; currentUserEmail = ""; $("mfa").classList.add("hidden");
+applyTheme(DEF); me = null; currentUserEmail = ""; linkedIdentitiesCache = []; $("mfa").classList.add("hidden");
 document.querySelectorAll(".mbadge").forEach(b => b.classList.add("hidden"));
 if (notifTimer){ clearInterval(notifTimer); notifTimer = null; }
 if (hbTimer){ clearInterval(hbTimer); hbTimer = null; }
@@ -1633,7 +1764,7 @@ renderProfile();
 }
 const { data: sData } = await sb.auth.getSession();
 if (sData && sData.session) saveAccountSession(sData.session);
-loadWidgets(); updatePresenceUI(); startHeartbeat(); renderMyQr(); renderAccountSwitcher();
+loadWidgets(); updatePresenceUI(); startHeartbeat(); renderMyQr(); renderAccountSwitcher(); refreshLinkedProvidersUI();
 });
 refreshUnread(); startNotif(); recordLogin();
 initCallSignaling(); initRealtimeMessages();
@@ -3334,17 +3465,35 @@ async function changeEmail(){
 const em = $("newEmailIn").value.trim(), m = $("emailMsg");
 if (!em || !em.includes("@")){ m.textContent = "正しいメールアドレスを入力してください。"; m.className = "msg err"; return; }
 const { error } = await sb.auth.updateUser({ email: em });
-m.textContent = error ? "変更できませんでした：" + error.message : "確認メールを送信しました。新旧両方のメール内のリンクを確認してください。";
+m.textContent = error ? "変更できませんでした：" + error.message : "確認メールを送信しました。メール内のリンクを確認してください。";
 m.className = "msg " + (error ? "err" : "ok");
 if (!error) $("newEmailIn").value = "";
 }
 async function changePw(){
 const a = $("pwNew").value, b = $("pwNew2").value, m = $("pwMsg");
+if (!currentUserEmail){
+m.textContent = "先に上の「メールアドレス設定・変更」からメールアドレスを登録してください。";
+m.className = "msg err";
+return;
+}
 if (a.length < 8){ m.textContent = "パスワードは8文字以上にしてください。"; m.className = "msg err"; return; }
 if (a !== b){ m.textContent = "2つのパスワードが一致しません。"; m.className = "msg err"; return; }
+
+$("pwSave").disabled = true;
 const { error } = await sb.auth.updateUser({ password: a });
-m.textContent = error ? "変更できませんでした：" + error.message : "変更しました。"; m.className = "msg " + (error ? "err" : "ok");
-if (!error){ $("pwNew").value = ""; $("pwNew2").value = ""; }
+$("pwSave").disabled = false;
+
+if (error){
+m.textContent = "設定できませんでした：" + error.message;
+m.className = "msg err";
+return;
+}
+
+$("pwNew").value = "";
+$("pwNew2").value = "";
+await refreshLinkedProvidersUI();
+m.textContent = "パスワードを保存しました！次回からメールアドレス（またはID）＋パスワードでもログインできます。";
+m.className = "msg ok";
 }
 
 /* ---------- 端末・ログイン履歴 ---------- */
@@ -3394,7 +3543,7 @@ const o = {}; PV.forEach(x => { o[x[0]] = $("pv_" + x[0]).value; });
 const { error } = await sb.rpc("save_privacy", { p: o }), m = $("pvMsg");
 m.textContent = error ? "保存できませんでした：" + error.message : "保存しました。"; m.className = "msg " + (error ? "err" : "ok");
 }
-function loadSecurity(){ renderAccountSwitcher(); loadPrivacy(); loadMfaState(); loadDevices(); }
+function loadSecurity(){ setLinkMsg(""); refreshLinkedProvidersUI(); renderAccountSwitcher(); loadPrivacy(); loadMfaState(); loadDevices(); }
 
 /* ---------- 通報 ---------- */
 const RR = { harassment:"嫌がらせ", bullying:"いじめ", spam:"スパム", hate:"ヘイト・差別", inappropriate:"不適切な内容", impersonation:"なりすまし", privacy:"プライバシーの侵害", other:"その他" };
@@ -3600,11 +3749,11 @@ bindEye("toggleDelEye", "delAccPassIn", "delEyeIcon");
 $("forgotPwBtn").onclick = sendPasswordReset;
 $("recSaveBtn").onclick = saveRecoveredPassword;
 
-/* Google / Discord ログイン・連携 */
+/* Google / Discord ログイン・既存アカウント連携 */
 $("btnOAuthGoogle").onclick = () => signInWithProvider("google");
 $("btnOAuthDiscord").onclick = () => signInWithProvider("discord");
-$("btnSetOAuthGoogle").onclick = () => signInWithProvider("google");
-$("btnSetOAuthDiscord").onclick = () => signInWithProvider("discord");
+$("btnSetOAuthGoogle").onclick = () => handleProviderLinkOrUnlink("google");
+$("btnSetOAuthDiscord").onclick = () => handleProviderLinkOrUnlink("discord");
 
 /* アカウント追加・切り替え・ログアウト・削除 */
 $("btnAddAccount").onclick = () => {
